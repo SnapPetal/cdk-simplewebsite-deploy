@@ -24,7 +24,7 @@
     "docgen": "npx projen docgen"
   },
   "author": {
-    "name": "Thon",
+    "name": "Thon Becker",
     "email": "thon.becker@gmail.com",
     "organization": false
   },
@@ -69,7 +69,7 @@
     "cdk"
   ],
   "main": "lib/index.js",
-  "license": "GPLv3",
+  "license": "Apache-2.0",
   "version": "0.0.0",
   "jest": {
     "clearMocks": true,
