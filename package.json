@@ -1,5 +1,6 @@
 {
   "name": "cdk-cloudfront-deploy",
+  "description": "This is an AWS CDK Construct to simplify deploying a single-page website use CloudFront distributions.",
   "repository": {
     "type": "git",
     "url": "https://github.com/SnapPetal/cdk-cloudfront-deploy"
@@ -54,19 +55,21 @@
     "@aws-cdk/aws-certificatemanager": "^1.77.0",
     "@aws-cdk/aws-cloudfront": "^1.77.0",
     "@aws-cdk/aws-s3": "^1.77.0",
+    "@aws-cdk/core": "^1.77.0",
     "constructs": "^3.2.27"
   },
   "dependencies": {
     "@aws-cdk/aws-certificatemanager": "^1.77.0",
     "@aws-cdk/aws-cloudfront": "^1.77.0",
-    "@aws-cdk/aws-s3": "^1.77.0"
+    "@aws-cdk/aws-s3": "^1.77.0",
+    "@aws-cdk/core": "^1.77.0"
   },
   "bundledDependencies": [],
   "keywords": [
     "cdk"
   ],
   "main": "lib/index.js",
-  "license": "Apache-2.0",
+  "license": "GPLv3",
   "version": "0.0.0",
   "jest": {
     "clearMocks": true,
