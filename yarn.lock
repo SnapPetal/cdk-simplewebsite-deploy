@@ -53,7 +53,7 @@
     "@aws-cdk/core" "1.77.0"
     constructs "^3.2.0"
 
-"@aws-cdk/aws-cloudfront@^1.77.0":
+"@aws-cdk/aws-cloudfront@1.77.0", "@aws-cdk/aws-cloudfront@^1.77.0":
   version "1.77.0"
   resolved "https://registry.yarnpkg.com/@aws-cdk/aws-cloudfront/-/aws-cloudfront-1.77.0.tgz#bc19d393ec1e3697e6ecb625d6aed2eacb780bff"
   integrity sha512-T7EYZag71AhXw8juqooFGzELd/cMuiDJRpzJrPztuHF/63xgc4A2wXKBfn00rLvEYuAg0Cv2xgaGZMiazOnpgg==
@@ -224,6 +224,19 @@
     "@aws-cdk/aws-s3" "1.77.0"
     "@aws-cdk/core" "1.77.0"
     "@aws-cdk/cx-api" "1.77.0"
+    constructs "^3.2.0"
+
+"@aws-cdk/aws-s3-deployment@^1.77.0":
+  version "1.77.0"
+  resolved "https://registry.yarnpkg.com/@aws-cdk/aws-s3-deployment/-/aws-s3-deployment-1.77.0.tgz#2550958acfc6e7ffbeee96e4d892f5739ea211ae"
+  integrity sha512-V+MUb4TZ+b8M6Efq+uCUvu13Zm4o/4rXN+KTwTVqCOH8bMi6ZLHjR0IjPftxIsG5KGuzufrJzIIRbfNCn/yrMw==
+  dependencies:
+    "@aws-cdk/aws-cloudfront" "1.77.0"
+    "@aws-cdk/aws-iam" "1.77.0"
+    "@aws-cdk/aws-lambda" "1.77.0"
+    "@aws-cdk/aws-s3" "1.77.0"
+    "@aws-cdk/aws-s3-assets" "1.77.0"
+    "@aws-cdk/core" "1.77.0"
     constructs "^3.2.0"
 
 "@aws-cdk/aws-s3@1.77.0", "@aws-cdk/aws-s3@^1.77.0":
