@@ -8,7 +8,7 @@ const project = new AwsCdkConstructLibrary({
   name: 'cdk-cloudfront-deploy',
   repository: 'https://github.com/SnapPetal/cdk-cloudfront-deploy',
   cdkAssert: true,
-  cdkDependencies: ['@aws-cdk/core', '@aws-cdk/aws-s3', '@aws-cdk/aws-s3-deployment', '@aws-cdk/aws-certificatemanager', '@aws-cdk/aws-cloudfront'],
+  cdkDependencies: ['@aws-cdk/core', '@aws-cdk/aws-route53', '@aws-cdk/aws-s3', '@aws-cdk/aws-s3-deployment', '@aws-cdk/aws-certificatemanager', '@aws-cdk/aws-cloudfront', '@aws-cdk/aws-cloudfront-origins'],
   cdkTestDependencies: undefined,
   description: 'This is an AWS CDK Construct to simplify deploying a single-page website use CloudFront distributions.',
   jest: true,
