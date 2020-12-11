@@ -60,4 +60,3 @@ tsconfig.json
 !/src
 !/tsconfig.jest.json
 !/.eslintrc.json
-!/API.md

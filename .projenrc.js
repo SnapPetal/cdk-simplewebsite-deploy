@@ -25,6 +25,7 @@ const project = new AwsCdkConstructLibrary({
   mergifyAutoMergeLabel: 'auto-merge',
   projenUpgradeAutoMerge: true,
   projenDevDependency: true,
+  docgen: false,
 });
 
 project.synth();
