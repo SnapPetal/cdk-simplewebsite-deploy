@@ -46,6 +46,7 @@ describe('Create basic website', () => {
     expect(stack).to(haveResource('AWS::S3::Bucket', {
       WebsiteConfiguration: {
         IndexDocument: 'index.html',
+        ErrorDocument: 'error.html',
       },
     }));
 
@@ -83,6 +84,75 @@ describe('Create basic website', () => {
       },
       WebsiteConfiguration: {
         IndexDocument: 'index.html',
+      },
+    }));
+
+    expect(stack).to(haveResource('Custom::CDKBucketDeployment'));
+
+    expect(stack).to(haveResourceLike('AWS::S3::BucketPolicy', {
+      PolicyDocument: {
+        Statement: [
+          {
+            Action: 's3:GetObject',
+            Effect: 'Allow',
+            Principal: '*',
+          },
+        ],
+      },
+    }));
+  });
+  it('should have a valid basic website with custom domain', ()=>{
+    const stack = new cdk.Stack();
+    new CreateBasicSite(stack, 'test-website', {
+      websiteFolder: './test/my-website',
+      indexDoc: 'index.html',
+      websiteDomain: 'example.com',
+    });
+
+    expect(stack).to(haveResource('AWS::S3::Bucket', {
+      BucketName: 'example.com',
+      WebsiteConfiguration: {
+        IndexDocument: 'index.html',
+      },
+    }));
+
+    expect(stack).to(haveResource('Custom::CDKBucketDeployment'));
+
+    expect(stack).to(haveResourceLike('AWS::S3::BucketPolicy', {
+      PolicyDocument: {
+        Statement: [
+          {
+            Action: 's3:GetObject',
+            Effect: 'Allow',
+            Principal: '*',
+          },
+        ],
+      },
+    }));
+  });
+  it('should have a valid basic website with custom domain and sub-domain', ()=>{
+    const stack = new cdk.Stack();
+    new CreateBasicSite(stack, 'test-website', {
+      websiteFolder: './test/my-website',
+      indexDoc: 'index.html',
+      websiteDomain: 'example.com',
+      websiteSubDomain: 'www.example.com',
+    });
+
+    expect(stack).to(haveResource('AWS::S3::Bucket', {
+      BucketName: 'example.com',
+      WebsiteConfiguration: {
+        IndexDocument: 'index.html',
+      },
+    }));
+
+    expect(stack).to(haveResource('AWS::S3::Bucket', {
+      BucketName: 'www.example.com',
+      WebsiteConfiguration: {
+        RedirectAllRequestsTo: {
+          HostName: 'example.com',
+          Protocol: 'http',
+        },
       },
     }));
 

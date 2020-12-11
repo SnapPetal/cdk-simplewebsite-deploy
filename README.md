@@ -11,7 +11,7 @@ npm install --save cdk-cloudfront-deploy
 
 ```typescript
 import * as cdk from '@aws-cdk/core';
-import { CreateBasicSite } from '../src/cdk-cloudfront-deploy';
+import { CreateBasicSite } from 'cdk-cloudfront-deploy';
 
 export class PipelineStack extends cdk.Stack {
   constructor(scope: cdk.Construct, id: string, props?: cdk.StackProps) {
