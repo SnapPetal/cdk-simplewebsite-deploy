@@ -20,6 +20,7 @@ export class PipelineStack extends cdk.Stack {
     new CreateBasicSite(stack, 'test-website', {
       websiteFolder: './test/my-website',
       indexDoc: 'index.html',
+      encryptBucket: true,
     });
 
   }
