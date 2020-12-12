@@ -71,9 +71,10 @@ export class CreateCloudfrontSite extends cdk.Construct {
       destinationBucket: websiteBucket,
     });
 
-    const websiteCert = new acm.Certificate(this, 'WebsiteCert', {
+    const websiteCert = new acm.DnsValidatedCertificate(this, 'WebsiteCert', {
       domainName: props.websiteDomain,
-      validation: acm.CertificateValidation.fromDns(hostedZone),
+      hostedZone: hostedZone,
+      region: 'us-east-1',
     });
 
     const websiteDist = new cloudfront.Distribution(this, 'WebsiteDist', {
