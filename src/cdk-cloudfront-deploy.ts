@@ -1,7 +1,8 @@
 import * as acm from '@aws-cdk/aws-certificatemanager';
 import * as cloudfront from '@aws-cdk/aws-cloudfront';
 import * as origins from '@aws-cdk/aws-cloudfront-origins';
-import * as r53 from '@aws-cdk/aws-route53';
+import * as route53 from '@aws-cdk/aws-route53';
+import * as targets from '@aws-cdk/aws-route53-targets';
 import * as s3 from '@aws-cdk/aws-s3';
 import * as s3deploy from '@aws-cdk/aws-s3-deployment';
 import * as cdk from '@aws-cdk/core';
@@ -52,12 +53,11 @@ export class CreateBasicSite extends cdk.Construct {
   }
 }
 
-
 export class CreateCloudfrontSite extends cdk.Construct {
   constructor(scope: cdk.Construct, id:string, props:CloudfrontSiteConfiguration) {
     super(scope, id);
 
-    const hostedZone = r53.HostedZone.fromLookup(this, 'WebsiteHostedZone', {
+    const hostedZone = route53.HostedZone.fromLookup(this, 'WebsiteHostedZone', {
       domainName: props.hostedZoneDomain,
     });
 
@@ -76,11 +76,16 @@ export class CreateCloudfrontSite extends cdk.Construct {
       hostedZone,
     });
 
-    new cloudfront.Distribution(this, 'WebsiteDist', {
+    const websiteDist = new cloudfront.Distribution(this, 'WebsiteDist', {
       defaultBehavior: { origin: new origins.S3Origin(websiteBucket) },
       defaultRootObject: props.indexDoc,
       domainNames: [props.websiteDomain],
       certificate: websiteCert,
+    });
+
+    new route53.ARecord(this, 'WebisteAlias', {
+      zone: hostedZone,
+      target: route53.RecordTarget.fromAlias(new targets.CloudFrontTarget(websiteDist)),
     });
   }
 }
