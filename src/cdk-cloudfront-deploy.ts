@@ -46,7 +46,7 @@ export class CreateBasicSite extends cdk.Construct {
       encryption: props.encryptBucket ? s3.BucketEncryption.S3_MANAGED : s3.BucketEncryption.UNENCRYPTED,
     });
 
-    new s3deploy.BucketDeployment(scope, 'DeployWebsite', {
+    new s3deploy.BucketDeployment(scope, 'WebsiteDeploy', {
       sources: [s3deploy.Source.asset(props.websiteFolder)],
       destinationBucket: websiteBucket,
     });
@@ -66,14 +66,14 @@ export class CreateCloudfrontSite extends cdk.Construct {
       encryption: props.encryptBucket ? s3.BucketEncryption.S3_MANAGED : s3.BucketEncryption.UNENCRYPTED,
     });
 
-    new s3deploy.BucketDeployment(scope, 'DeployWebsite', {
+    new s3deploy.BucketDeployment(scope, 'WebsiteDeploy', {
       sources: [s3deploy.Source.asset(props.websiteFolder)],
       destinationBucket: websiteBucket,
     });
 
-    const websiteCert = new acm.DnsValidatedCertificate(this, 'WebsiteCert', {
+    const websiteCert = new acm.Certificate(this, 'WebsiteCert', {
       domainName: props.websiteDomain,
-      hostedZone,
+      validation: acm.CertificateValidation.fromDns(hostedZone),
     });
 
     const websiteDist = new cloudfront.Distribution(this, 'WebsiteDist', {
