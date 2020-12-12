@@ -1,5 +1,4 @@
 [![License](https://img.shields.io/badge/License-Apache%202.0-yellowgreen.svg)](https://opensource.org/licenses/Apache-2.0)
-[![Gitpod ready-to-code](https://img.shields.io/badge/Gitpod-ready--to--code-blue?logo=gitpod)](https://gitpod.io/#https://github.com/SnapPetal/cdk-cloudfront-deploy)
 ![Build](https://github.com/SnapPetal/cdk-cloudfront-deploy/workflows/Build/badge.svg)
 ![Release](https://github.com/SnapPetal/cdk-cloudfront-deploy/workflows/Release/badge.svg)
 
