@@ -246,7 +246,7 @@ describe('Create cloudfront website', () => {
     }));
 
     expect(stack).to(haveResourceLike('AWS::Route53::RecordSet', {
-      Name: 'example.com.',
+      Name: 'www.example.com.',
       Type: 'A',
       AliasTarget: {
         DNSName: {},

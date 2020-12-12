@@ -86,6 +86,7 @@ export class CreateCloudfrontSite extends cdk.Construct {
 
     new route53.ARecord(this, 'WebisteAlias', {
       zone: hostedZone,
+      recordName: props.websiteDomain,
       target: route53.RecordTarget.fromAlias(new targets.CloudFrontTarget(websiteDist)),
     });
   }
