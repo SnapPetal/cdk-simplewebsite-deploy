@@ -7,6 +7,9 @@
       "steps": [
         {
           "exec": "jsii --silence-warnings=reserved-word --no-fix-peer-dependencies"
+        },
+        {
+          "spawn": "docgen"
         }
       ]
     },
@@ -39,6 +42,9 @@
         },
         {
           "spawn": "package"
+        },
+        {
+          "spawn": "docgen"
         }
       ]
     },
@@ -127,6 +133,16 @@
       "steps": [
         {
           "exec": "eslint --ext .ts,.tsx --fix --no-error-on-unmatched-pattern src test .projenrc.js"
+        }
+      ]
+    },
+    "docgen": {
+      "name": "docgen",
+      "category": "20.release",
+      "description": "Generate API.md from .jsii manifest",
+      "steps": [
+        {
+          "exec": "jsii-docgen"
         }
       ]
     },

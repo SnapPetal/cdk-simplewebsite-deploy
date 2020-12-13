@@ -8,24 +8,61 @@ import * as s3deploy from '@aws-cdk/aws-s3-deployment';
 import * as cdk from '@aws-cdk/core';
 
 export interface BasicSiteConfiguration {
+  /**
+   * local path to the website folder you want to deploy on S3
+   */
   readonly websiteFolder: string;
-  readonly indexDoc:string;
-  readonly errorDoc?:string;
-  readonly encryptBucket?:boolean;
+  /**
+   * the index docuement of your S3 Bucket
+   */
+  readonly indexDoc: string;
+  /**
+   * the error document of your S3 Bucket
+   */
+  readonly errorDoc?: string;
+  /**
+   * enable encryption for files in your S3 Bucket
+   */
+  readonly encryptBucket?: boolean;
+  /**
+   * the domain you want to deploy to
+   */
   readonly websiteDomain?: string;
+  /**
+   * the subdomain you want to deploy to
+   */
   readonly websiteSubDomain?: string;
 }
 
 export interface CloudfrontSiteConfiguration {
+  /**
+   * local path to the website folder you want to deploy on S3
+   */
   readonly websiteFolder: string;
-  readonly indexDoc:string;
-  readonly encryptBucket?:boolean;
+  /**
+   * the index docuement of your CloudFront distribution
+   */
+  readonly indexDoc: string;
+  /**
+   * the error document of your CloudFront distribution
+   */
+  readonly errorDoc?: string;
+  /**
+   * enable encryption for files in your S3 Bucket
+   */
+  readonly encryptBucket?: boolean;
+  /**
+   * hosted zone used to create the DNS record of your CloudFront distribution
+   */
   readonly hostedZoneDomain: string;
+  /**
+   * the domain you want to deploy to
+   */
   readonly websiteDomain: string;
 }
 
 export class CreateBasicSite extends cdk.Construct {
-  constructor(scope: cdk.Construct, id:string, props:BasicSiteConfiguration) {
+  constructor(scope: cdk.Construct, id: string, props: BasicSiteConfiguration) {
     super(scope, id);
 
     if (props.websiteDomain && props.websiteSubDomain) {
@@ -43,7 +80,9 @@ export class CreateBasicSite extends cdk.Construct {
       websiteIndexDocument: props.indexDoc,
       websiteErrorDocument: props.errorDoc,
       publicReadAccess: true,
-      encryption: props.encryptBucket ? s3.BucketEncryption.S3_MANAGED : s3.BucketEncryption.UNENCRYPTED,
+      encryption: props.encryptBucket
+        ? s3.BucketEncryption.S3_MANAGED
+        : s3.BucketEncryption.UNENCRYPTED,
     });
 
     new s3deploy.BucketDeployment(scope, 'WebsiteDeploy', {
@@ -54,16 +93,26 @@ export class CreateBasicSite extends cdk.Construct {
 }
 
 export class CreateCloudfrontSite extends cdk.Construct {
-  constructor(scope: cdk.Construct, id:string, props:CloudfrontSiteConfiguration) {
+  constructor(
+    scope: cdk.Construct,
+    id: string,
+    props: CloudfrontSiteConfiguration,
+  ) {
     super(scope, id);
 
-    const hostedZone = route53.HostedZone.fromLookup(this, 'WebsiteHostedZone', {
-      domainName: props.hostedZoneDomain,
-    });
+    const hostedZone = route53.HostedZone.fromLookup(
+      this,
+      'WebsiteHostedZone',
+      {
+        domainName: props.hostedZoneDomain,
+      },
+    );
 
     const websiteBucket = new s3.Bucket(scope, 'WebsiteBucket', {
       publicReadAccess: false,
-      encryption: props.encryptBucket ? s3.BucketEncryption.S3_MANAGED : s3.BucketEncryption.UNENCRYPTED,
+      encryption: props.encryptBucket
+        ? s3.BucketEncryption.S3_MANAGED
+        : s3.BucketEncryption.UNENCRYPTED,
     });
 
     new s3deploy.BucketDeployment(scope, 'WebsiteDeploy', {
@@ -83,6 +132,21 @@ export class CreateCloudfrontSite extends cdk.Construct {
         allowedMethods: cloudfront.AllowedMethods.ALLOW_ALL,
         viewerProtocolPolicy: cloudfront.ViewerProtocolPolicy.REDIRECT_TO_HTTPS,
       },
+      errorResponses: [
+        {
+          httpStatus: 404,
+          responsePagePath: props.errorDoc ? props.errorDoc : props.indexDoc,
+        },
+        {
+          httpStatus: 500,
+          ttl: cdk.Duration.seconds(2),
+        },
+        {
+          httpStatus: 403,
+          responseHttpStatus: 200,
+          responsePagePath: props.indexDoc,
+        },
+      ],
       defaultRootObject: props.indexDoc,
       domainNames: [props.websiteDomain],
       certificate: websiteCert,
@@ -91,7 +155,9 @@ export class CreateCloudfrontSite extends cdk.Construct {
     new route53.ARecord(this, 'WebisteAlias', {
       zone: hostedZone,
       recordName: props.websiteDomain,
-      target: route53.RecordTarget.fromAlias(new targets.CloudFrontTarget(websiteDist)),
+      target: route53.RecordTarget.fromAlias(
+        new targets.CloudFrontTarget(websiteDist),
+      ),
     });
   }
 }

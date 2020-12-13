@@ -20,6 +20,7 @@
     "watch": "npx projen watch",
     "package": "npx projen package",
     "eslint": "npx projen eslint",
+    "docgen": "npx projen docgen",
     "compat": "npx projen compat"
   },
   "author": {
@@ -41,12 +42,14 @@
     "jest-junit": "^12",
     "jsii": "^1.16.0",
     "jsii-diff": "^1.16.0",
+    "jsii-docgen": "^1.4.117",
     "jsii-pacmak": "^1.16.0",
     "jsii-release": "^0.2.7",
     "json-schema": "^0.2.5",
     "projen": "^0.6.10",
     "standard-version": "^9.0.0",
     "ts-jest": "^26.4.4",
+    "typedoc": "^0.19.2",
     "typescript": "^3.9.5"
   },
   "peerDependencies": {
