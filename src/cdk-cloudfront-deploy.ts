@@ -135,7 +135,9 @@ export class CreateCloudfrontSite extends cdk.Construct {
       errorResponses: [
         {
           httpStatus: 404,
-          responsePagePath: props.errorDoc ? props.errorDoc : props.indexDoc,
+          responsePagePath: `/${
+            props.errorDoc ? props.errorDoc : props.indexDoc
+          }`,
         },
         {
           httpStatus: 500,
@@ -144,7 +146,7 @@ export class CreateCloudfrontSite extends cdk.Construct {
         {
           httpStatus: 403,
           responseHttpStatus: 200,
-          responsePagePath: props.indexDoc,
+          responsePagePath: `/${props.indexDoc}`,
         },
       ],
       defaultRootObject: props.indexDoc,

@@ -306,7 +306,7 @@ describe('Create cloudfront website', () => {
             {
               ErrorCode: 404,
               ResponseCode: 404,
-              ResponsePagePath: 'error.html',
+              ResponsePagePath: '/error.html',
             },
             {
               ErrorCachingMinTTL: 2,
@@ -315,7 +315,7 @@ describe('Create cloudfront website', () => {
             {
               ErrorCode: 403,
               ResponseCode: 200,
-              ResponsePagePath: 'index.html',
+              ResponsePagePath: '/index.html',
             },
           ],
           DefaultRootObject: 'index.html',
