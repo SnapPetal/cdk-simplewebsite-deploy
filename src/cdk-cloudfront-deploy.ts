@@ -78,7 +78,11 @@ export class CreateCloudfrontSite extends cdk.Construct {
     });
 
     const websiteDist = new cloudfront.Distribution(this, 'WebsiteDist', {
-      defaultBehavior: { origin: new origins.S3Origin(websiteBucket) },
+      defaultBehavior: {
+        origin: new origins.S3Origin(websiteBucket),
+        allowedMethods: cloudfront.AllowedMethods.ALLOW_ALL,
+        viewerProtocolPolicy: cloudfront.ViewerProtocolPolicy.REDIRECT_TO_HTTPS,
+      },
       defaultRootObject: props.indexDoc,
       domainNames: [props.websiteDomain],
       certificate: websiteCert,
