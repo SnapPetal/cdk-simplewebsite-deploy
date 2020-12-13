@@ -11,7 +11,7 @@ This is an AWS CDK Construct to simplify deploying a single-page website use Clo
 npm install --save cdk-cloudfront-deploy
 ```
 
-### CreateBasicSite
+### [CreateBasicSite](https://github.com/snappetal/cdk-cloudfront-deploy/blob/main/API.md#cdk-cloudfront-deploy-createbasicsite)
 
 ```typescript
 import * as cdk from '@aws-cdk/core';
@@ -31,7 +31,7 @@ export class PipelineStack extends cdk.Stack {
 }
 ```
 
-### CreateCloudfrontSite
+### [CreateCloudfrontSite](https://github.com/snappetal/cdk-cloudfront-deploy/blob/main/API.md#cdk-cloudfront-deploy-createcloudfrontsite)
 
 ```typescript
 import * as cdk from '@aws-cdk/core';
