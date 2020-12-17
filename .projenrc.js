@@ -3,7 +3,7 @@ const { AwsCdkConstructLibrary } = require('projen');
 const project = new AwsCdkConstructLibrary({
   authorAddress: 'thon.becker@gmail.com',
   authorName: 'Thon Becker',
-  cdkVersion: '1.78.0',
+  cdkVersion: '1.79.0',
   jsiiVersion: '1.16.0',
   name: 'cdk-cloudfront-deploy',
   repository: 'https://github.com/SnapPetal/cdk-cloudfront-deploy',
