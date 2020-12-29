@@ -108,6 +108,12 @@ export class CreateCloudfrontSite extends cdk.Construct {
       }
     );
 
+    const websiteCert = new acm.DnsValidatedCertificate(this, "WebsiteCert", {
+      domainName: props.websiteDomain,
+      hostedZone: hostedZone,
+      region: "us-east-1",
+    });
+
     const websiteBucket = new s3.Bucket(scope, "WebsiteBucket", {
       publicReadAccess: false,
       encryption: props.encryptBucket
@@ -115,23 +121,10 @@ export class CreateCloudfrontSite extends cdk.Construct {
         : s3.BucketEncryption.UNENCRYPTED,
     });
 
-    new s3deploy.BucketDeployment(scope, "WebsiteDeploy", {
-      sources: [s3deploy.Source.asset(props.websiteFolder)],
-      destinationBucket: websiteBucket,
-    });
-
-    const websiteCert = new acm.DnsValidatedCertificate(this, "WebsiteCert", {
-      domainName: props.websiteDomain,
-      hostedZone: hostedZone,
-      region: "us-east-1",
-    });
-
     const websiteDist = new cloudfront.Distribution(this, "WebsiteDist", {
       defaultBehavior: {
         origin: new origins.S3Origin(websiteBucket),
         allowedMethods: cloudfront.AllowedMethods.ALLOW_ALL,
-        cachePolicy:
-          cloudfront.CachePolicy.CACHING_OPTIMIZED_FOR_UNCOMPRESSED_OBJECTS,
         viewerProtocolPolicy: cloudfront.ViewerProtocolPolicy.REDIRECT_TO_HTTPS,
       },
       errorResponses: [
@@ -154,6 +147,13 @@ export class CreateCloudfrontSite extends cdk.Construct {
       defaultRootObject: props.indexDoc,
       domainNames: [props.websiteDomain],
       certificate: websiteCert,
+    });
+
+    new s3deploy.BucketDeployment(scope, "WebsiteDeploy", {
+      sources: [s3deploy.Source.asset(props.websiteFolder)],
+      destinationBucket: websiteBucket,
+      distribution: websiteDist,
+      distributionPaths: ["/", `/${props.indexDoc}`],
     });
 
     new route53.ARecord(this, "WebisteAlias", {
