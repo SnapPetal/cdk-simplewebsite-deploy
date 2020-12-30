@@ -8,7 +8,7 @@ This is an AWS CDK Construct to simplify deploying a single-page website use Clo
 ## Installation and Usage
 
 ```console
-npm install --save cdk-simplewebsite-deploy
+npm i cdk-simplewebsite-deploy
 ```
 
 ### [CreateBasicSite](https://github.com/snappetal/cdk-simplewebsite-deploy/blob/main/API.md#cdk-cloudfront-deploy-createbasicsite)
