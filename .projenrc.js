@@ -12,7 +12,6 @@ const project = new AwsCdkConstructLibrary({
   cdkTestDependencies: undefined,
   description: 'This is an AWS CDK Construct to simplify deploying a single-page website use CloudFront distributions.',
   jest: true,
-  jestOptions: undefined,
   license: 'Apache-2.0',
   licensed: true,
   allowLibraryDependencies: true,
@@ -26,6 +25,10 @@ const project = new AwsCdkConstructLibrary({
   projenUpgradeAutoMerge: true,
   projenDevDependency: true,
   docgen: true,
+  python: {
+    distName: 'cdk-simplewebsite-deploy',
+    module: 'cdk_simplewebsite_deploy',
+  },
 });
 
 project.synth();
