@@ -4,20 +4,20 @@
 
 Name|Description
 ----|-----------
-[CreateBasicSite](#cdk-cloudfront-deploy-createbasicsite)|*No description*
-[CreateCloudfrontSite](#cdk-cloudfront-deploy-createcloudfrontsite)|*No description*
+[CreateBasicSite](#cdk-simplewebsite-deploy-createbasicsite)|*No description*
+[CreateCloudfrontSite](#cdk-simplewebsite-deploy-createcloudfrontsite)|*No description*
 
 
 **Structs**
 
 Name|Description
 ----|-----------
-[BasicSiteConfiguration](#cdk-cloudfront-deploy-basicsiteconfiguration)|*No description*
-[CloudfrontSiteConfiguration](#cdk-cloudfront-deploy-cloudfrontsiteconfiguration)|*No description*
+[BasicSiteConfiguration](#cdk-simplewebsite-deploy-basicsiteconfiguration)|*No description*
+[CloudfrontSiteConfiguration](#cdk-simplewebsite-deploy-cloudfrontsiteconfiguration)|*No description*
 
 
 
-## class CreateBasicSite  <a id="cdk-cloudfront-deploy-createbasicsite"></a>
+## class CreateBasicSite  <a id="cdk-simplewebsite-deploy-createbasicsite"></a>
 
 
 
@@ -35,7 +35,7 @@ new CreateBasicSite(scope: Construct, id: string, props: BasicSiteConfiguration)
 
 * **scope** (<code>[Construct](#aws-cdk-core-construct)</code>)  *No description*
 * **id** (<code>string</code>)  *No description*
-* **props** (<code>[BasicSiteConfiguration](#cdk-cloudfront-deploy-basicsiteconfiguration)</code>)  *No description*
+* **props** (<code>[BasicSiteConfiguration](#cdk-simplewebsite-deploy-basicsiteconfiguration)</code>)  *No description*
   * **indexDoc** (<code>string</code>)  the index docuement of your S3 Bucket. 
   * **websiteFolder** (<code>string</code>)  local path to the website folder you want to deploy on S3. 
   * **encryptBucket** (<code>boolean</code>)  enable encryption for files in your S3 Bucket. __*Optional*__
@@ -46,7 +46,7 @@ new CreateBasicSite(scope: Construct, id: string, props: BasicSiteConfiguration)
 
 
 
-## class CreateCloudfrontSite  <a id="cdk-cloudfront-deploy-createcloudfrontsite"></a>
+## class CreateCloudfrontSite  <a id="cdk-simplewebsite-deploy-createcloudfrontsite"></a>
 
 
 
@@ -64,7 +64,7 @@ new CreateCloudfrontSite(scope: Construct, id: string, props: CloudfrontSiteConf
 
 * **scope** (<code>[Construct](#aws-cdk-core-construct)</code>)  *No description*
 * **id** (<code>string</code>)  *No description*
-* **props** (<code>[CloudfrontSiteConfiguration](#cdk-cloudfront-deploy-cloudfrontsiteconfiguration)</code>)  *No description*
+* **props** (<code>[CloudfrontSiteConfiguration](#cdk-simplewebsite-deploy-cloudfrontsiteconfiguration)</code>)  *No description*
   * **hostedZoneDomain** (<code>string</code>)  hosted zone used to create the DNS record of your CloudFront distribution. 
   * **indexDoc** (<code>string</code>)  the index docuement of your CloudFront distribution. 
   * **websiteDomain** (<code>string</code>)  the domain you want to deploy to. 
@@ -76,7 +76,7 @@ new CreateCloudfrontSite(scope: Construct, id: string, props: CloudfrontSiteConf
 
 
 
-## struct BasicSiteConfiguration  <a id="cdk-cloudfront-deploy-basicsiteconfiguration"></a>
+## struct BasicSiteConfiguration  <a id="cdk-simplewebsite-deploy-basicsiteconfiguration"></a>
 
 
 
@@ -94,7 +94,7 @@ Name | Type | Description
 
 
 
-## struct CloudfrontSiteConfiguration  <a id="cdk-cloudfront-deploy-cloudfrontsiteconfiguration"></a>
+## struct CloudfrontSiteConfiguration  <a id="cdk-simplewebsite-deploy-cloudfrontsiteconfiguration"></a>
 
 
 

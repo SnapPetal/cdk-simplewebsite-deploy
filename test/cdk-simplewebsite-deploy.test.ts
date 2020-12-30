@@ -4,7 +4,7 @@ import * as cdk from '@aws-cdk/core';
 import {
   CreateBasicSite,
   CreateCloudfrontSite,
-} from '../src/cdk-cloudfront-deploy';
+} from '../src/cdk-simplewebsite-deploy';
 
 describe('Create basic website', () => {
   it('should have a valid basic website', () => {

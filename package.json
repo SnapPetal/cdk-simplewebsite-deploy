@@ -1,9 +1,9 @@
 {
-  "name": "cdk-cloudfront-deploy",
+  "name": "cdk-simplewebsite-deploy",
   "description": "This is an AWS CDK Construct to simplify deploying a single-page website use CloudFront distributions.",
   "repository": {
     "type": "git",
-    "url": "https://github.com/SnapPetal/cdk-cloudfront-deploy"
+    "url": "https://github.com/SnapPetal/cdk-simplewebsite-deploy"
   },
   "scripts": {
     "projen": "npx projen",

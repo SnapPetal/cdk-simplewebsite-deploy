@@ -2,20 +2,20 @@
 ![Build](https://github.com/SnapPetal/cdk-cloudfront-deploy/workflows/Build/badge.svg)
 ![Release](https://github.com/SnapPetal/cdk-cloudfront-deploy/workflows/Release/badge.svg)
 
-# cdk-cloudfront-deploy
+# cdk-simplewebsite-deploy
 This is an AWS CDK Construct to simplify deploying a single-page website use CloudFront distributions.
 
 ## Installation and Usage
 
 ```console
-npm install --save cdk-cloudfront-deploy
+npm install --save cdk-simplewebsite-deploy
 ```
 
-### [CreateBasicSite](https://github.com/snappetal/cdk-cloudfront-deploy/blob/main/API.md#cdk-cloudfront-deploy-createbasicsite)
+### [CreateBasicSite](https://github.com/snappetal/cdk-simplewebsite-deploy/blob/main/API.md#cdk-cloudfront-deploy-createbasicsite)
 
 ```typescript
 import * as cdk from '@aws-cdk/core';
-import { CreateBasicSite } from 'cdk-cloudfront-deploy';
+import { CreateBasicSite } from 'cdk-simplewebsite-deploy';
 
 export class PipelineStack extends cdk.Stack {
   constructor(scope: cdk.Construct, id: string, props?: cdk.StackProps) {
@@ -31,11 +31,11 @@ export class PipelineStack extends cdk.Stack {
 }
 ```
 
-### [CreateCloudfrontSite](https://github.com/snappetal/cdk-cloudfront-deploy/blob/main/API.md#cdk-cloudfront-deploy-createcloudfrontsite)
+### [CreateCloudfrontSite](https://github.com/snappetal/cdk-simplewebsite-deploy/blob/main/API.md#cdk-cloudfront-deploy-createcloudfrontsite)
 
 ```typescript
 import * as cdk from '@aws-cdk/core';
-import { CreateCloudfrontSite } from 'cdk-cloudfront-deploy';
+import { CreateCloudfrontSite } from 'cdk-simplewebsite-deploy';
 
 export class PipelineStack extends cdk.Stack {
   constructor(scope: cdk.Construct, id: string, props?: cdk.StackProps) {

@@ -1,1 +1,1 @@
-export * from './cdk-cloudfront-deploy';
+export * from './cdk-simplewebsite-deploy';
