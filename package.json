@@ -47,7 +47,7 @@
     "jsii-pacmak": "^1.16.0",
     "jsii-release": "^0.2.7",
     "json-schema": "^0.2.5",
-    "projen": "^0.12.6",
+    "projen": "^0.12.7",
     "standard-version": "^9.0.0",
     "ts-jest": "^26.4.4",
     "typedoc": "^0.19.2",
@@ -119,6 +119,10 @@
       "python": {
         "distName": "cdk-simplewebsite-deploy",
         "module": "cdk_simplewebsite_deploy"
+      },
+      "dotnet": {
+        "namespace": "ThonBecker.CDK.SimpleWebsiteDeploy",
+        "packageId": "ThonBecker.CDK.SimpleWebsiteDeploy"
       }
     },
     "tsc": {

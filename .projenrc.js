@@ -29,6 +29,10 @@ const project = new AwsCdkConstructLibrary({
     distName: 'cdk-simplewebsite-deploy',
     module: 'cdk_simplewebsite_deploy',
   },
+  dotnet: {
+    dotNetNamespace: 'ThonBecker.CDK.SimpleWebsiteDeploy',
+    packageId: 'ThonBecker.CDK.SimpleWebsiteDeploy',
+  },
 });
 
 project.synth();
