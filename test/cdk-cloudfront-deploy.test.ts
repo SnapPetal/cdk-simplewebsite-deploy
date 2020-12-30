@@ -1,4 +1,5 @@
 import { expect, haveResource, haveResourceLike } from '@aws-cdk/assert';
+import * as cloudfront from '@aws-cdk/aws-cloudfront';
 import * as cdk from '@aws-cdk/core';
 import {
   CreateBasicSite,
@@ -366,6 +367,7 @@ describe('Create cloudfront website', () => {
         region: 'us-east-1',
       },
     });
+
     new CreateCloudfrontSite(stack, 'test-website', {
       websiteFolder: './test/my-website',
       indexDoc: 'index.html',
@@ -432,6 +434,135 @@ describe('Create cloudfront website', () => {
               },
             },
           ],
+        },
+      }),
+    );
+  });
+  it('should have a valid cloudfront website with price class all', () => {
+    const app = new cdk.App();
+    const stack = new cdk.Stack(app, 'TargetStack', {
+      env: {
+        account: '234567890123',
+        region: 'us-east-1',
+      },
+    });
+    new CreateCloudfrontSite(stack, 'test-website', {
+      websiteFolder: './test/my-website',
+      indexDoc: 'index.html',
+      hostedZoneDomain: 'example.com',
+      websiteDomain: 'www.example.com',
+      priceClass: cloudfront.PriceClass.PRICE_CLASS_ALL,
+    });
+
+    expect(stack).to(
+      haveResourceLike('AWS::S3::BucketPolicy', {
+        PolicyDocument: {
+          Statement: [
+            {
+              Action: ['s3:GetObject*', 's3:GetBucket*', 's3:List*'],
+              Effect: 'Allow',
+            },
+          ],
+        },
+      }),
+    );
+
+    expect(stack).to(haveResource('Custom::CDKBucketDeployment'));
+
+    expect(stack).to(
+      haveResourceLike('AWS::CloudFront::Distribution', {
+        DistributionConfig: {
+          Aliases: ['www.example.com'],
+          DefaultRootObject: 'index.html',
+          Enabled: true,
+          HttpVersion: 'http2',
+          IPV6Enabled: true,
+          Origins: [
+            {
+              DomainName: {
+                'Fn::GetAtt': ['WebsiteBucket75C24D94', 'RegionalDomainName'],
+              },
+              Id: 'TargetStacktestwebsiteWebsiteDistOrigin17319B9B7',
+              S3OriginConfig: {
+                OriginAccessIdentity: {
+                  'Fn::Join': [
+                    '',
+                    [
+                      'origin-access-identity/cloudfront/',
+                      {
+                        Ref: 'testwebsiteWebsiteDistOrigin1S3Origin1E3934D7',
+                      },
+                    ],
+                  ],
+                },
+              },
+            },
+          ],
+          PriceClass: 'PriceClass_All',
+        },
+      }),
+    );
+  });
+  it('should have a valid cloudfront website with default price class 100', () => {
+    const app = new cdk.App();
+    const stack = new cdk.Stack(app, 'TargetStack', {
+      env: {
+        account: '234567890123',
+        region: 'us-east-1',
+      },
+    });
+    new CreateCloudfrontSite(stack, 'test-website', {
+      websiteFolder: './test/my-website',
+      indexDoc: 'index.html',
+      hostedZoneDomain: 'example.com',
+      websiteDomain: 'www.example.com',
+    });
+
+    expect(stack).to(
+      haveResourceLike('AWS::S3::BucketPolicy', {
+        PolicyDocument: {
+          Statement: [
+            {
+              Action: ['s3:GetObject*', 's3:GetBucket*', 's3:List*'],
+              Effect: 'Allow',
+            },
+          ],
+        },
+      }),
+    );
+
+    expect(stack).to(haveResource('Custom::CDKBucketDeployment'));
+
+    expect(stack).to(
+      haveResourceLike('AWS::CloudFront::Distribution', {
+        DistributionConfig: {
+          Aliases: ['www.example.com'],
+          DefaultRootObject: 'index.html',
+          Enabled: true,
+          HttpVersion: 'http2',
+          IPV6Enabled: true,
+          Origins: [
+            {
+              DomainName: {
+                'Fn::GetAtt': ['WebsiteBucket75C24D94', 'RegionalDomainName'],
+              },
+              Id: 'TargetStacktestwebsiteWebsiteDistOrigin17319B9B7',
+              S3OriginConfig: {
+                OriginAccessIdentity: {
+                  'Fn::Join': [
+                    '',
+                    [
+                      'origin-access-identity/cloudfront/',
+                      {
+                        Ref: 'testwebsiteWebsiteDistOrigin1S3Origin1E3934D7',
+                      },
+                    ],
+                  ],
+                },
+              },
+            },
+          ],
+          PriceClass: 'PriceClass_100',
         },
       }),
     );
