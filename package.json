@@ -116,6 +116,13 @@
   "jsii": {
     "outdir": "dist",
     "targets": {
+      "java": {
+        "package": "com.thonbecker.simplewebsitedeploy",
+        "maven": {
+          "groupId": "com.thonbecker.simplewebsitedeploy",
+          "artifactId": "cdk-simplewebsite-deploy"
+        }
+      },
       "python": {
         "distName": "cdk-simplewebsite-deploy",
         "module": "cdk_simplewebsite_deploy"
