@@ -2,7 +2,7 @@
 # yarn lockfile v1
 
 
-"@aws-cdk/assert@^1.81.0":
+"@aws-cdk/assert@1.81.0":
   version "1.81.0"
   resolved "https://registry.yarnpkg.com/@aws-cdk/assert/-/assert-1.81.0.tgz#d3baff087fa6d726c47d0e891abb179d17bf079d"
   integrity sha512-Q1FVubf8FLotX19hLSfNZDobryWcQkDSEaV0traTIoVL3ctkt8+JteomcXko8Ycd+elV2Zq6WTGUI5rbR1KNlA==
@@ -73,7 +73,7 @@
     "@aws-cdk/core" "1.81.0"
     constructs "^3.2.0"
 
-"@aws-cdk/aws-certificatemanager@1.81.0", "@aws-cdk/aws-certificatemanager@^1.81.0":
+"@aws-cdk/aws-certificatemanager@1.81.0":
   version "1.81.0"
   resolved "https://registry.yarnpkg.com/@aws-cdk/aws-certificatemanager/-/aws-certificatemanager-1.81.0.tgz#b7469164cae692c9174e8918bce7bd225816d531"
   integrity sha512-4Eq0MnNlBFapF5zPFazc7T4H9k0oza4W7IT8o+xkMZkvs15538E/aE+6EYo29X8JSy56Vk3iT5GIZJKIczJFsQ==
@@ -97,7 +97,7 @@
     "@aws-cdk/cx-api" "1.81.0"
     constructs "^3.2.0"
 
-"@aws-cdk/aws-cloudfront-origins@^1.81.0":
+"@aws-cdk/aws-cloudfront-origins@1.81.0":
   version "1.81.0"
   resolved "https://registry.yarnpkg.com/@aws-cdk/aws-cloudfront-origins/-/aws-cloudfront-origins-1.81.0.tgz#8a7a8e5634f3c41072280e186875adbf1a25852d"
   integrity sha512-JLCdvnnUc9Ptza29Ydd/y1t2X5siZSjjUu2mVX9+J8/RK5dTvIpEx+c720PNwkCoBvYPhvb0V4+FpvSjV9ounw==
@@ -108,7 +108,7 @@
     "@aws-cdk/core" "1.81.0"
     constructs "^3.2.0"
 
-"@aws-cdk/aws-cloudfront@1.81.0", "@aws-cdk/aws-cloudfront@^1.81.0":
+"@aws-cdk/aws-cloudfront@1.81.0":
   version "1.81.0"
   resolved "https://registry.yarnpkg.com/@aws-cdk/aws-cloudfront/-/aws-cloudfront-1.81.0.tgz#e53bc34355855983f11fe032eb244389cfa6949f"
   integrity sha512-RiaEzAqlMQ3Sh3SjMQ9G7gMuFQO2QLyZDWy+gMsCjt9FLggUS52nsiXVsQ8eUXlpVD3FBVvrwx7O2YoXHB3DoQ==
@@ -298,7 +298,7 @@
     "@aws-cdk/core" "1.81.0"
     constructs "^3.2.0"
 
-"@aws-cdk/aws-route53-targets@^1.81.0":
+"@aws-cdk/aws-route53-targets@1.81.0":
   version "1.81.0"
   resolved "https://registry.yarnpkg.com/@aws-cdk/aws-route53-targets/-/aws-route53-targets-1.81.0.tgz#75e1cc05e50726448eece7d7cab2589d9054ad7b"
   integrity sha512-KhU+O0vpCrdcY1qVj4RBVs+LI/LwgKkqw3aef4Y3YDg6YdmJITz9JeXwRV1XesCkWaRBvoLgXF3I0gkmACn95Q==
@@ -317,7 +317,7 @@
     "@aws-cdk/region-info" "1.81.0"
     constructs "^3.2.0"
 
-"@aws-cdk/aws-route53@1.81.0", "@aws-cdk/aws-route53@^1.81.0":
+"@aws-cdk/aws-route53@1.81.0":
   version "1.81.0"
   resolved "https://registry.yarnpkg.com/@aws-cdk/aws-route53/-/aws-route53-1.81.0.tgz#06d9a43695e3a5b8ec0c79a291a6963f2c380c34"
   integrity sha512-trnWcspC5BpNFPsOSX2x+VUaN/XnwZcPk5ZmSUQ3scypkhmWtb+vHgXlfO9T3Tnch/xaJyB5Suo5WXuDTSNFDA==
@@ -342,7 +342,7 @@
     "@aws-cdk/cx-api" "1.81.0"
     constructs "^3.2.0"
 
-"@aws-cdk/aws-s3-deployment@^1.81.0":
+"@aws-cdk/aws-s3-deployment@1.81.0":
   version "1.81.0"
   resolved "https://registry.yarnpkg.com/@aws-cdk/aws-s3-deployment/-/aws-s3-deployment-1.81.0.tgz#8ed47bd0f21c179205d4610e6edd4aa3d459d858"
   integrity sha512-4aXB9/M3xy9IHcg/ZDqDVU3bv5zDaJwaLETVRZHkzCEHnbXtnPL4tDQncWtdwyB57CpJsAdOD2NQSQEDS5FHEg==
@@ -357,7 +357,7 @@
     "@aws-cdk/lambda-layer-awscli" "1.81.0"
     constructs "^3.2.0"
 
-"@aws-cdk/aws-s3@1.81.0", "@aws-cdk/aws-s3@^1.81.0":
+"@aws-cdk/aws-s3@1.81.0":
   version "1.81.0"
   resolved "https://registry.yarnpkg.com/@aws-cdk/aws-s3/-/aws-s3-1.81.0.tgz#67deac6a8b638bae41b04a9c3526ffc5458ae382"
   integrity sha512-eCgBUIzPGnMR6Xp68XSVv2XjJitDUeTNIvfN0WtmwqdDvi+XxziJShEbnw/IqbXbesNV9tF0YqyFZGYPY03Ykw==
@@ -430,7 +430,7 @@
     string-width "^4.2.0"
     table "^6.0.4"
 
-"@aws-cdk/core@1.81.0", "@aws-cdk/core@^1.81.0":
+"@aws-cdk/core@1.81.0":
   version "1.81.0"
   resolved "https://registry.yarnpkg.com/@aws-cdk/core/-/core-1.81.0.tgz#572eac2622b610e9ee3638fc3d39e1e8307950cf"
   integrity sha512-d4IbMVMV37Azi2tog2AphGnGJTyM9WLM+qDOUnIE2HV+5jynaFdtz82vF7z745juRbb6YfZvEgkIVRFqjT/UUQ==
@@ -4119,9 +4119,9 @@ jsii-diff@^1.16.0:
     yargs "^16.1.1"
 
 jsii-docgen@^1.4.117:
-  version "1.8.5"
-  resolved "https://registry.yarnpkg.com/jsii-docgen/-/jsii-docgen-1.8.5.tgz#0d014dc928f01a33f3b4e58a739539bf50bd6ffd"
-  integrity sha512-6RkeUYL62EyA8y+ETpUgniT76Vez36ZyTSPoFFBgOXrNANjZTxKMu7PZpUoZcbvnlsyFRJG0ZvEGEcWgm2n0Rg==
+  version "1.8.6"
+  resolved "https://registry.yarnpkg.com/jsii-docgen/-/jsii-docgen-1.8.6.tgz#c560e0609dec03b9ef642415ec51e08d1572ba9a"
+  integrity sha512-EfDf25wwp+aKYXn/92yi/znClrWuD7hlUUcUdG7QiZKlAbKrx0l0x2h7sVx3Wmqwsk31ltR666R2kd0hrC2QnQ==
   dependencies:
     "@jsii/spec" "^1.16.0"
     fs-extra "^9.0.1"
