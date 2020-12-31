@@ -7,6 +7,23 @@ import * as s3 from "@aws-cdk/aws-s3";
 import * as s3deploy from "@aws-cdk/aws-s3-deployment";
 import * as cdk from "@aws-cdk/core";
 
+class Helpers {
+  public static CreateDeploymentBucket(
+    scope: cdk.Construct,
+    websiteBucket: s3.Bucket,
+    websiteFolder: string,
+    indexDoc: string,
+    websiteDist?: cloudfront.IDistribution
+  ) {
+    new s3deploy.BucketDeployment(scope, "WebsiteDeploy", {
+      sources: [s3deploy.Source.asset(websiteFolder)],
+      destinationBucket: websiteBucket,
+      distribution: websiteDist,
+      distributionPaths: ["/", `/${indexDoc}`],
+    });
+  }
+}
+
 export interface BasicSiteConfiguration {
   /**
    * local path to the website folder you want to deploy on S3
@@ -95,10 +112,12 @@ export class CreateBasicSite extends cdk.Construct {
         : s3.BucketEncryption.UNENCRYPTED,
     });
 
-    new s3deploy.BucketDeployment(scope, "WebsiteDeploy", {
-      sources: [s3deploy.Source.asset(props.websiteFolder)],
-      destinationBucket: websiteBucket,
-    });
+    Helpers.CreateDeploymentBucket(
+      scope,
+      websiteBucket,
+      props.websiteFolder,
+      props.indexDoc
+    );
   }
 }
 
@@ -164,12 +183,13 @@ export class CreateCloudfrontSite extends cdk.Construct {
       certificate: websiteCert,
     });
 
-    new s3deploy.BucketDeployment(scope, "WebsiteDeploy", {
-      sources: [s3deploy.Source.asset(props.websiteFolder)],
-      destinationBucket: websiteBucket,
-      distribution: websiteDist,
-      distributionPaths: ["/", `/${props.indexDoc}`],
-    });
+    Helpers.CreateDeploymentBucket(
+      scope,
+      websiteBucket,
+      props.websiteFolder,
+      props.indexDoc,
+      websiteDist
+    );
 
     new route53.ARecord(this, "WebisteAlias", {
       zone: hostedZone,
