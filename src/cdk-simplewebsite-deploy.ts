@@ -73,9 +73,9 @@ export class CreateBasicSite extends cdk.Construct {
 
     if (props.websiteDomain && props.websiteSubDomain) {
       new s3.Bucket(scope, "WebsiteRedirectBucket", {
+        bucketName: props.websiteSubDomain,
         removalPolicy: cdk.RemovalPolicy.DESTROY,
         autoDeleteObjects: true,
-        bucketName: props.websiteSubDomain,
         websiteRedirect: {
           hostName: props.websiteDomain,
           protocol: s3.RedirectProtocol.HTTP,
@@ -125,9 +125,9 @@ export class CreateCloudfrontSite extends cdk.Construct {
     });
 
     const websiteBucket = new s3.Bucket(scope, "WebsiteBucket", {
-      publicReadAccess: false,
       removalPolicy: cdk.RemovalPolicy.DESTROY,
       autoDeleteObjects: true,
+      publicReadAccess: false,
       encryption: props.encryptBucket
         ? s3.BucketEncryption.S3_MANAGED
         : s3.BucketEncryption.UNENCRYPTED,
