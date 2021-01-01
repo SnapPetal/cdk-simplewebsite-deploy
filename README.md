@@ -25,6 +25,9 @@ export class PipelineStack extends cdk.Stack {
       websiteFolder: './src/build',
       indexDoc: 'index.html',
       encryptBucket: true,
+      hostedZoneDomain: 'example.com',
+      websiteDomain: 'example.com',
+      websiteSubDomain: 'www.example.com',
     });
 
   }
@@ -44,6 +47,7 @@ export class PipelineStack extends cdk.Stack {
     new CreateCloudfrontSite(stack, 'test-website', {
       websiteFolder: './src/dist',
       indexDoc: 'index.html',
+      encryptBucket: true,
       hostedZoneDomain: 'example.com',
       websiteDomain: 'www.example.com',
     });

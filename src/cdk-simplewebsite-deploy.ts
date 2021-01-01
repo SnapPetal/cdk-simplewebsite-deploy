@@ -24,34 +24,7 @@ class Helpers {
   }
 }
 
-export interface BasicSiteConfiguration {
-  /**
-   * local path to the website folder you want to deploy on S3
-   */
-  readonly websiteFolder: string;
-  /**
-   * the index docuement of your S3 Bucket
-   */
-  readonly indexDoc: string;
-  /**
-   * the error document of your S3 Bucket
-   */
-  readonly errorDoc?: string;
-  /**
-   * enable encryption for files in your S3 Bucket
-   */
-  readonly encryptBucket?: boolean;
-  /**
-   * the domain you want to deploy to
-   */
-  readonly websiteDomain?: string;
-  /**
-   * the subdomain you want to deploy to
-   */
-  readonly websiteSubDomain?: string;
-}
-
-export interface CloudfrontSiteConfiguration {
+export interface SimpleWebsiteConfiguration {
   /**
    * local path to the website folder you want to deploy on S3
    */
@@ -77,6 +50,11 @@ export interface CloudfrontSiteConfiguration {
    */
   readonly websiteDomain: string;
   /**
+   * the subdomain you want to deploy to
+   * default value is www
+   */
+  readonly websiteSubDomain?: string;
+  /**
    * the price class determines how many edge locations CloudFront will use for your distribution.
    * default value is PriceClass_100.
    * See https://aws.amazon.com/cloudfront/pricing/ for full list of supported regions.
@@ -85,20 +63,36 @@ export interface CloudfrontSiteConfiguration {
 }
 
 export class CreateBasicSite extends cdk.Construct {
-  constructor(scope: cdk.Construct, id: string, props: BasicSiteConfiguration) {
+  constructor(
+    scope: cdk.Construct,
+    id: string,
+    props: SimpleWebsiteConfiguration
+  ) {
     super(scope, id);
 
-    if (props.websiteDomain && props.websiteSubDomain) {
-      new s3.Bucket(scope, "WebsiteRedirectBucket", {
-        bucketName: props.websiteSubDomain,
+    const hostedZone = route53.HostedZone.fromLookup(
+      this,
+      "WebsiteHostedZone",
+      {
+        domainName: props.hostedZoneDomain,
+      }
+    );
+
+    const websiteRedirectBucket = new s3.Bucket(
+      scope,
+      "WebsiteRedirectBucket",
+      {
+        bucketName: props.websiteSubDomain
+          ? `www.${props.websiteDomain}`
+          : props.websiteSubDomain,
         removalPolicy: cdk.RemovalPolicy.DESTROY,
         autoDeleteObjects: true,
         websiteRedirect: {
           hostName: props.websiteDomain,
           protocol: s3.RedirectProtocol.HTTP,
         },
-      });
-    }
+      }
+    );
 
     const websiteBucket = new s3.Bucket(scope, "WebsiteBucket", {
       bucketName: props.websiteDomain,
@@ -118,6 +112,22 @@ export class CreateBasicSite extends cdk.Construct {
       props.websiteFolder,
       props.indexDoc
     );
+
+    new route53.ARecord(this, "WebisteAlias", {
+      zone: hostedZone,
+      recordName: props.websiteDomain,
+      target: route53.RecordTarget.fromAlias(
+        new targets.BucketWebsiteTarget(websiteBucket)
+      ),
+    });
+
+    new route53.ARecord(this, "WebisteRedirectAlias", {
+      zone: hostedZone,
+      recordName: props.websiteDomain,
+      target: route53.RecordTarget.fromAlias(
+        new targets.BucketWebsiteTarget(websiteRedirectBucket)
+      ),
+    });
   }
 }
 
@@ -125,7 +135,7 @@ export class CreateCloudfrontSite extends cdk.Construct {
   constructor(
     scope: cdk.Construct,
     id: string,
-    props: CloudfrontSiteConfiguration
+    props: SimpleWebsiteConfiguration
   ) {
     super(scope, id);
 
