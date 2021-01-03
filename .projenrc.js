@@ -3,7 +3,7 @@ const { AwsCdkConstructLibrary } = require('projen');
 const project = new AwsCdkConstructLibrary({
   authorAddress: 'thon.becker@gmail.com',
   authorName: 'Thon Becker',
-  cdkVersion: '1.81.0',
+  cdkVersion: '1.82.0',
   cdkVersionPinning: true,
   name: 'cdk-simplewebsite-deploy',
   repository: 'https://github.com/SnapPetal/cdk-simplewebsite-deploy',
@@ -36,7 +36,7 @@ const project = new AwsCdkConstructLibrary({
   java: {
     javaPackage: 'com.thonbecker.simplewebsitedeploy',
     mavenGroupId: 'com.thonbecker.simplewebsitedeploy',
-    mavenArtifactId: 'cdk-simplewebsite-deploy'
+    mavenArtifactId: 'cdk-simplewebsite-deploy',
   },
 });
 
