@@ -49,7 +49,8 @@ export class PipelineStack extends cdk.Stack {
       indexDoc: 'index.html',
       encryptBucket: true,
       hostedZoneDomain: 'example.com',
-      websiteDomain: 'www.example.com',
+      websiteDomain: 'example.com',
+      websiteSubDomain: 'www.example.com',
     });
 
   }
