@@ -9,37 +9,37 @@ import * as cdk from '@aws-cdk/core';
 
 export interface SimpleWebsiteConfiguration {
   /**
-   * local path to the website folder you want to deploy on S3
+   * Local path to the website folder you want to deploy on S3.
    */
   readonly websiteFolder: string;
   /**
-   * the index docuement of your CloudFront distribution
+   * The index docuement of the website.
    */
   readonly indexDoc: string;
   /**
-   * the error document of your CloudFront distribution
+   * The error document of the website.
    */
   readonly errorDoc?: string;
   /**
-   * enable encryption for files in your S3 Bucket
+   * Enable encryption for files in your S3 Bucket.
    */
   readonly encryptBucket?: boolean;
   /**
-   * hosted zone used to create the DNS record of your CloudFront distribution
+   * Hosted Zone used to create the DNS record for the website.
    */
   readonly hostedZoneDomain: string;
   /**
-   * the domain you want to deploy to
+   * The domain names you want to deploy.
    */
   readonly websiteDomain: string;
   /**
-   * the subdomain you want to deploy to
-   * default value is www
+   * The sub-domain name you want to deploy.
+   * Default value for a basic website is www
    */
   readonly websiteSubDomain?: string;
   /**
-   * the price class determines how many edge locations CloudFront will use for your distribution.
-   * default value is PriceClass_100.
+   * The price class determines how many edge locations CloudFront will use for your distribution.
+   * Default value is PriceClass_100.
    * See https://aws.amazon.com/cloudfront/pricing/ for full list of supported regions.
    */
   readonly priceClass?: cloudfront.PriceClass;
@@ -131,7 +131,7 @@ export class CreateCloudfrontSite extends cdk.Construct {
     );
 
     const websiteCert = new acm.DnsValidatedCertificate(this, 'WebsiteCert', {
-      domainName: props.websiteDomain,
+      domainName: `*.${props.websiteDomain}`,
       hostedZone: hostedZone,
       region: 'us-east-1',
     });
@@ -144,6 +144,10 @@ export class CreateCloudfrontSite extends cdk.Construct {
         ? s3.BucketEncryption.S3_MANAGED
         : s3.BucketEncryption.UNENCRYPTED,
     });
+
+    const domainNames = [props.websiteDomain];
+
+    if (props.websiteSubDomain) domainNames.push(props.websiteSubDomain);
 
     const websiteDist = new cloudfront.Distribution(this, 'WebsiteDist', {
       defaultBehavior: {
@@ -172,7 +176,7 @@ export class CreateCloudfrontSite extends cdk.Construct {
         },
       ],
       defaultRootObject: props.indexDoc,
-      domainNames: [props.websiteDomain],
+      domainNames,
       certificate: websiteCert,
     });
 
@@ -183,12 +187,22 @@ export class CreateCloudfrontSite extends cdk.Construct {
       distributionPaths: ['/', `/${props.indexDoc}`],
     });
 
-    new route53.ARecord(this, 'WebisteAlias', {
+    new route53.ARecord(this, 'WebisteDomainAlias', {
       zone: hostedZone,
       recordName: props.websiteDomain,
       target: route53.RecordTarget.fromAlias(
         new targets.CloudFrontTarget(websiteDist),
       ),
     });
+
+    if (props.websiteSubDomain) {
+      new route53.ARecord(this, 'WebisteSubDomainAlias', {
+        zone: hostedZone,
+        recordName: props.websiteSubDomain,
+        target: route53.RecordTarget.fromAlias(
+          new targets.CloudFrontTarget(websiteDist),
+        ),
+      });
+    }
   }
 }
