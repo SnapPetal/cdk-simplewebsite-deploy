@@ -130,8 +130,12 @@ export class CreateCloudfrontSite extends cdk.Construct {
       },
     );
 
+    const subjectAlternativeNames = [];
+    if (props.websiteSubDomain) {subjectAlternativeNames.push(props.websiteSubDomain);}
+
     const websiteCert = new acm.DnsValidatedCertificate(this, 'WebsiteCert', {
-      domainName: `*.${props.websiteDomain}`,
+      domainName: props.websiteDomain,
+      subjectAlternativeNames,
       hostedZone: hostedZone,
       region: 'us-east-1',
     });
