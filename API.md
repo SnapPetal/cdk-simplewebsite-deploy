@@ -35,14 +35,14 @@ new CreateBasicSite(scope: Construct, id: string, props: SimpleWebsiteConfigurat
 * **scope** (<code>[Construct](#aws-cdk-core-construct)</code>)  *No description*
 * **id** (<code>string</code>)  *No description*
 * **props** (<code>[SimpleWebsiteConfiguration](#cdk-simplewebsite-deploy-simplewebsiteconfiguration)</code>)  *No description*
-  * **hostedZoneDomain** (<code>string</code>)  hosted zone used to create the DNS record of your CloudFront distribution. 
-  * **indexDoc** (<code>string</code>)  the index docuement of your CloudFront distribution. 
-  * **websiteDomain** (<code>string</code>)  the domain you want to deploy to. 
-  * **websiteFolder** (<code>string</code>)  local path to the website folder you want to deploy on S3. 
-  * **encryptBucket** (<code>boolean</code>)  enable encryption for files in your S3 Bucket. __*Optional*__
-  * **errorDoc** (<code>string</code>)  the error document of your CloudFront distribution. __*Optional*__
-  * **priceClass** (<code>[PriceClass](#aws-cdk-aws-cloudfront-priceclass)</code>)  the price class determines how many edge locations CloudFront will use for your distribution. __*Optional*__
-  * **websiteSubDomain** (<code>string</code>)  the subdomain you want to deploy to default value is www. __*Optional*__
+  * **hostedZoneDomain** (<code>string</code>)  Hosted Zone used to create the DNS record for the website. 
+  * **indexDoc** (<code>string</code>)  The index docuement of the website. 
+  * **websiteDomain** (<code>string</code>)  The domain names you want to deploy. 
+  * **websiteFolder** (<code>string</code>)  Local path to the website folder you want to deploy on S3. 
+  * **encryptBucket** (<code>boolean</code>)  Enable encryption for files in your S3 Bucket. __*Optional*__
+  * **errorDoc** (<code>string</code>)  The error document of the website. __*Optional*__
+  * **priceClass** (<code>[PriceClass](#aws-cdk-aws-cloudfront-priceclass)</code>)  The price class determines how many edge locations CloudFront will use for your distribution. __*Optional*__
+  * **websiteSubDomain** (<code>string</code>)  The sub-domain name you want to deploy. __*Optional*__
 
 
 
@@ -66,14 +66,14 @@ new CreateCloudfrontSite(scope: Construct, id: string, props: SimpleWebsiteConfi
 * **scope** (<code>[Construct](#aws-cdk-core-construct)</code>)  *No description*
 * **id** (<code>string</code>)  *No description*
 * **props** (<code>[SimpleWebsiteConfiguration](#cdk-simplewebsite-deploy-simplewebsiteconfiguration)</code>)  *No description*
-  * **hostedZoneDomain** (<code>string</code>)  hosted zone used to create the DNS record of your CloudFront distribution. 
-  * **indexDoc** (<code>string</code>)  the index docuement of your CloudFront distribution. 
-  * **websiteDomain** (<code>string</code>)  the domain you want to deploy to. 
-  * **websiteFolder** (<code>string</code>)  local path to the website folder you want to deploy on S3. 
-  * **encryptBucket** (<code>boolean</code>)  enable encryption for files in your S3 Bucket. __*Optional*__
-  * **errorDoc** (<code>string</code>)  the error document of your CloudFront distribution. __*Optional*__
-  * **priceClass** (<code>[PriceClass](#aws-cdk-aws-cloudfront-priceclass)</code>)  the price class determines how many edge locations CloudFront will use for your distribution. __*Optional*__
-  * **websiteSubDomain** (<code>string</code>)  the subdomain you want to deploy to default value is www. __*Optional*__
+  * **hostedZoneDomain** (<code>string</code>)  Hosted Zone used to create the DNS record for the website. 
+  * **indexDoc** (<code>string</code>)  The index docuement of the website. 
+  * **websiteDomain** (<code>string</code>)  The domain names you want to deploy. 
+  * **websiteFolder** (<code>string</code>)  Local path to the website folder you want to deploy on S3. 
+  * **encryptBucket** (<code>boolean</code>)  Enable encryption for files in your S3 Bucket. __*Optional*__
+  * **errorDoc** (<code>string</code>)  The error document of the website. __*Optional*__
+  * **priceClass** (<code>[PriceClass](#aws-cdk-aws-cloudfront-priceclass)</code>)  The price class determines how many edge locations CloudFront will use for your distribution. __*Optional*__
+  * **websiteSubDomain** (<code>string</code>)  The sub-domain name you want to deploy. __*Optional*__
 
 
 
@@ -87,14 +87,14 @@ new CreateCloudfrontSite(scope: Construct, id: string, props: SimpleWebsiteConfi
 
 Name | Type | Description 
 -----|------|-------------
-**hostedZoneDomain** | <code>string</code> | hosted zone used to create the DNS record of your CloudFront distribution.
-**indexDoc** | <code>string</code> | the index docuement of your CloudFront distribution.
-**websiteDomain** | <code>string</code> | the domain you want to deploy to.
-**websiteFolder** | <code>string</code> | local path to the website folder you want to deploy on S3.
-**encryptBucket**? | <code>boolean</code> | enable encryption for files in your S3 Bucket.<br/>__*Optional*__
-**errorDoc**? | <code>string</code> | the error document of your CloudFront distribution.<br/>__*Optional*__
-**priceClass**? | <code>[PriceClass](#aws-cdk-aws-cloudfront-priceclass)</code> | the price class determines how many edge locations CloudFront will use for your distribution.<br/>__*Optional*__
-**websiteSubDomain**? | <code>string</code> | the subdomain you want to deploy to default value is www.<br/>__*Optional*__
+**hostedZoneDomain** | <code>string</code> | Hosted Zone used to create the DNS record for the website.
+**indexDoc** | <code>string</code> | The index docuement of the website.
+**websiteDomain** | <code>string</code> | The domain names you want to deploy.
+**websiteFolder** | <code>string</code> | Local path to the website folder you want to deploy on S3.
+**encryptBucket**? | <code>boolean</code> | Enable encryption for files in your S3 Bucket.<br/>__*Optional*__
+**errorDoc**? | <code>string</code> | The error document of the website.<br/>__*Optional*__
+**priceClass**? | <code>[PriceClass](#aws-cdk-aws-cloudfront-priceclass)</code> | The price class determines how many edge locations CloudFront will use for your distribution.<br/>__*Optional*__
+**websiteSubDomain**? | <code>string</code> | The sub-domain name you want to deploy.<br/>__*Optional*__
 
 
 
