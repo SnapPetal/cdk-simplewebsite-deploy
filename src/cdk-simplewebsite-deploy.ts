@@ -161,6 +161,7 @@ export class CreateCloudfrontSite extends cdk.Construct {
         allowedMethods: cloudfront.AllowedMethods.ALLOW_ALL,
         viewerProtocolPolicy: cloudfront.ViewerProtocolPolicy.REDIRECT_TO_HTTPS,
       },
+      minimumProtocolVersion: cloudfront.SecurityPolicyProtocol.TLS_V1_2_2019,
       priceClass: props.priceClass
         ? props.priceClass
         : cloudfront.PriceClass.PRICE_CLASS_100,
