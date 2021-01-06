@@ -36,7 +36,7 @@ new CreateBasicSite(scope: Construct, id: string, props: SimpleWebsiteConfigurat
 * **id** (<code>string</code>)  *No description*
 * **props** (<code>[SimpleWebsiteConfiguration](#cdk-simplewebsite-deploy-simplewebsiteconfiguration)</code>)  *No description*
   * **hostedZoneDomain** (<code>string</code>)  Hosted Zone used to create the DNS record for the website. 
-  * **indexDoc** (<code>string</code>)  The index docuement of the website. 
+  * **indexDoc** (<code>string</code>)  The index document of the website. 
   * **websiteDomain** (<code>string</code>)  The domain names you want to deploy. 
   * **websiteFolder** (<code>string</code>)  Local path to the website folder you want to deploy on S3. 
   * **encryptBucket** (<code>boolean</code>)  Enable encryption for files in your S3 Bucket. __*Optional*__
@@ -67,7 +67,7 @@ new CreateCloudfrontSite(scope: Construct, id: string, props: SimpleWebsiteConfi
 * **id** (<code>string</code>)  *No description*
 * **props** (<code>[SimpleWebsiteConfiguration](#cdk-simplewebsite-deploy-simplewebsiteconfiguration)</code>)  *No description*
   * **hostedZoneDomain** (<code>string</code>)  Hosted Zone used to create the DNS record for the website. 
-  * **indexDoc** (<code>string</code>)  The index docuement of the website. 
+  * **indexDoc** (<code>string</code>)  The index document of the website. 
   * **websiteDomain** (<code>string</code>)  The domain names you want to deploy. 
   * **websiteFolder** (<code>string</code>)  Local path to the website folder you want to deploy on S3. 
   * **encryptBucket** (<code>boolean</code>)  Enable encryption for files in your S3 Bucket. __*Optional*__
@@ -88,7 +88,7 @@ new CreateCloudfrontSite(scope: Construct, id: string, props: SimpleWebsiteConfi
 Name | Type | Description 
 -----|------|-------------
 **hostedZoneDomain** | <code>string</code> | Hosted Zone used to create the DNS record for the website.
-**indexDoc** | <code>string</code> | The index docuement of the website.
+**indexDoc** | <code>string</code> | The index document of the website.
 **websiteDomain** | <code>string</code> | The domain names you want to deploy.
 **websiteFolder** | <code>string</code> | Local path to the website folder you want to deploy on S3.
 **encryptBucket**? | <code>boolean</code> | Enable encryption for files in your S3 Bucket.<br/>__*Optional*__
