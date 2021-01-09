@@ -33,7 +33,7 @@ const project = new AwsCdkConstructLibrary({
     dotNetNamespace: 'ThonBecker.CDK.SimpleWebsiteDeploy',
     packageId: 'ThonBecker.CDK.SimpleWebsiteDeploy',
   },
-  java: {
+  publishToMaven: {
     javaPackage: 'com.thonbecker.simplewebsitedeploy',
     mavenGroupId: 'com.thonbecker.simplewebsitedeploy',
     mavenArtifactId: 'cdk-simplewebsite-deploy',
