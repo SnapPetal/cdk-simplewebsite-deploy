@@ -16,7 +16,7 @@ Name|Description
 
 
 
-## class CreateBasicSite  <a id="cdk-simplewebsite-deploy-createbasicsite"></a>
+## class CreateBasicSite 🔹 <a id="cdk-simplewebsite-deploy-createbasicsite"></a>
 
 
 
@@ -47,7 +47,7 @@ new CreateBasicSite(scope: Construct, id: string, props: SimpleWebsiteConfigurat
 
 
 
-## class CreateCloudfrontSite  <a id="cdk-simplewebsite-deploy-createcloudfrontsite"></a>
+## class CreateCloudfrontSite 🔹 <a id="cdk-simplewebsite-deploy-createcloudfrontsite"></a>
 
 
 
@@ -78,7 +78,7 @@ new CreateCloudfrontSite(scope: Construct, id: string, props: SimpleWebsiteConfi
 
 
 
-## struct SimpleWebsiteConfiguration  <a id="cdk-simplewebsite-deploy-simplewebsiteconfiguration"></a>
+## struct SimpleWebsiteConfiguration 🔹 <a id="cdk-simplewebsite-deploy-simplewebsiteconfiguration"></a>
 
 
 
@@ -87,14 +87,14 @@ new CreateCloudfrontSite(scope: Construct, id: string, props: SimpleWebsiteConfi
 
 Name | Type | Description 
 -----|------|-------------
-**hostedZoneDomain** | <code>string</code> | Hosted Zone used to create the DNS record for the website.
-**indexDoc** | <code>string</code> | The index document of the website.
-**websiteDomain** | <code>string</code> | The domain names you want to deploy.
-**websiteFolder** | <code>string</code> | Local path to the website folder you want to deploy on S3.
-**encryptBucket**? | <code>boolean</code> | Enable encryption for files in your S3 Bucket.<br/>__*Optional*__
-**errorDoc**? | <code>string</code> | The error document of the website.<br/>__*Optional*__
-**priceClass**? | <code>[PriceClass](#aws-cdk-aws-cloudfront-priceclass)</code> | The price class determines how many edge locations CloudFront will use for your distribution.<br/>__*Optional*__
-**websiteSubDomain**? | <code>string</code> | The sub-domain name you want to deploy.<br/>__*Optional*__
+**hostedZoneDomain**🔹 | <code>string</code> | Hosted Zone used to create the DNS record for the website.
+**indexDoc**🔹 | <code>string</code> | The index document of the website.
+**websiteDomain**🔹 | <code>string</code> | The domain names you want to deploy.
+**websiteFolder**🔹 | <code>string</code> | Local path to the website folder you want to deploy on S3.
+**encryptBucket**?🔹 | <code>boolean</code> | Enable encryption for files in your S3 Bucket.<br/>__*Optional*__
+**errorDoc**?🔹 | <code>string</code> | The error document of the website.<br/>__*Optional*__
+**priceClass**?🔹 | <code>[PriceClass](#aws-cdk-aws-cloudfront-priceclass)</code> | The price class determines how many edge locations CloudFront will use for your distribution.<br/>__*Optional*__
+**websiteSubDomain**?🔹 | <code>string</code> | The sub-domain name you want to deploy.<br/>__*Optional*__
 
 
 
