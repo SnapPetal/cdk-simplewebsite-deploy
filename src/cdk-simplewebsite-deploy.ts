@@ -21,10 +21,6 @@ export interface SimpleWebsiteConfiguration {
    */
   readonly errorDoc?: string;
   /**
-   * Enable encryption for files in your S3 Bucket.
-   */
-  readonly encryptBucket?: boolean;
-  /**
    * Hosted Zone used to create the DNS record for the website.
    */
   readonly hostedZoneDomain: string;
@@ -84,9 +80,7 @@ export class CreateBasicSite extends cdk.Construct {
       websiteIndexDocument: props.indexDoc,
       websiteErrorDocument: props.errorDoc,
       publicReadAccess: true,
-      encryption: props.encryptBucket
-        ? s3.BucketEncryption.S3_MANAGED
-        : s3.BucketEncryption.UNENCRYPTED,
+      encryption: s3.BucketEncryption.S3_MANAGED,
     });
 
     new s3deploy.BucketDeployment(scope, 'WebsiteDeploy', {
@@ -146,9 +140,7 @@ export class CreateCloudfrontSite extends cdk.Construct {
       removalPolicy: cdk.RemovalPolicy.DESTROY,
       autoDeleteObjects: true,
       publicReadAccess: false,
-      encryption: props.encryptBucket
-        ? s3.BucketEncryption.S3_MANAGED
-        : s3.BucketEncryption.UNENCRYPTED,
+      encryption: s3.BucketEncryption.S3_MANAGED,
     });
 
     const domainNames = [props.websiteDomain];

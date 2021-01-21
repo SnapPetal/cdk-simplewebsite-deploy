@@ -4,7 +4,7 @@ const project = new AwsCdkConstructLibrary({
   authorAddress: 'thon.becker@gmail.com',
   authorName: 'Thon Becker',
   stability: 'experimental',
-  cdkVersion: '1.85.0',
+  cdkVersion: '1.86.0',
   cdkVersionPinning: true,
   name: 'cdk-simplewebsite-deploy',
   repository: 'https://github.com/SnapPetal/cdk-simplewebsite-deploy',
@@ -26,11 +26,11 @@ const project = new AwsCdkConstructLibrary({
   projenUpgradeAutoMerge: true,
   projenDevDependency: true,
   docgen: true,
-  python: {
+  publishToPypi: {
     distName: 'cdk-simplewebsite-deploy',
     module: 'cdk_simplewebsite_deploy',
   },
-  dotnet: {
+  publishToNuget: {
     dotNetNamespace: 'ThonBecker.CDK.SimpleWebsiteDeploy',
     packageId: 'ThonBecker.CDK.SimpleWebsiteDeploy',
   },

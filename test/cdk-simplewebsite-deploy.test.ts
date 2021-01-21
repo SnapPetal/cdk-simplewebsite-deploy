@@ -59,7 +59,6 @@ describe('Create basic website', () => {
     new CreateBasicSite(stack, 'test-website', {
       websiteFolder: './test/my-website',
       indexDoc: 'index.html',
-      encryptBucket: true,
       hostedZoneDomain: 'example.com',
       websiteDomain: 'example.com',
     });
@@ -399,7 +398,6 @@ describe('Create cloudfront website', () => {
       indexDoc: 'index.html',
       hostedZoneDomain: 'example.com',
       websiteDomain: 'www.example.com',
-      encryptBucket: true,
     });
 
     expect(stack).to(
