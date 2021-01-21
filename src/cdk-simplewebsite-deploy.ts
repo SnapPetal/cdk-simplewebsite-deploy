@@ -31,7 +31,7 @@ export interface SimpleWebsiteConfiguration {
   readonly websiteDomain: string;
   /**
    * The sub-domain name you want to deploy.
-   * @default www (e.g., www.example.com)
+   * @default www  e.g. www.example.com.
    */
   readonly websiteSubDomain?: string;
   /**
