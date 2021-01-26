@@ -2,6 +2,23 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.3.0](https://github.com/SnapPetal/cdk-simplewebsite-deploy/compare/v0.1.2...v0.3.0) (2021-01-26)
+
+
+### ⚠ BREAKING CHANGES
+
+* **node:** Renamed the following properties.
+
+hostedZoneDomain = hostedZone
+websiteSubDomain = subDomain
+
+Removed websiteDomain and refrence domain based off the hosted zone.
+
+### Bug Fixes
+
+* **doc:** updated docs to match new properties ([0ec7536](https://github.com/SnapPetal/cdk-simplewebsite-deploy/commit/0ec7536fb4967c70ef2d8d1c003cade13c9d8b37))
+* **node:** simplified creation process ([613c8d9](https://github.com/SnapPetal/cdk-simplewebsite-deploy/commit/613c8d99cc07292b28d1d6273ed45732d103d43d))
+
 ### [0.1.2](https://github.com/SnapPetal/cdk-simplewebsite-deploy/compare/v0.0.30...v0.1.2) (2021-01-21)
 
 ### [0.1.1](https://github.com/SnapPetal/cdk-simplewebsite-deploy/compare/v0.0.30...v0.1.1) (2021-01-19)
