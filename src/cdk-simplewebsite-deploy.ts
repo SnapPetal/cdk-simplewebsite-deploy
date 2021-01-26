@@ -46,7 +46,7 @@ export class CreateBasicSite extends cdk.Construct {
   ) {
     super(scope, id);
 
-    const hostedZone = route53.HostedZone.fromLookup(
+    const hostedZoneLookup = route53.HostedZone.fromLookup(
       this,
       'WebsiteHostedZone',
       {
@@ -86,7 +86,7 @@ export class CreateBasicSite extends cdk.Construct {
     });
 
     new route53.ARecord(this, 'WebisteAlias', {
-      zone: hostedZone,
+      zone: hostedZoneLookup,
       recordName: props.hostedZone,
       target: route53.RecordTarget.fromAlias(
         new targets.BucketWebsiteTarget(websiteBucket),
@@ -94,7 +94,7 @@ export class CreateBasicSite extends cdk.Construct {
     });
 
     new route53.ARecord(this, 'WebisteRedirectAlias', {
-      zone: hostedZone,
+      zone: hostedZoneLookup,
       recordName: props.subDomain ? props.subDomain : `www.${props.hostedZone}`,
       target: route53.RecordTarget.fromAlias(
         new targets.BucketWebsiteTarget(websiteRedirectBucket),
@@ -111,7 +111,7 @@ export class CreateCloudfrontSite extends cdk.Construct {
   ) {
     super(scope, id);
 
-    const hostedZone = route53.HostedZone.fromLookup(
+    const hostedZoneLookup = route53.HostedZone.fromLookup(
       this,
       'WebsiteHostedZone',
       {
@@ -127,7 +127,7 @@ export class CreateCloudfrontSite extends cdk.Construct {
     const websiteCert = new acm.DnsValidatedCertificate(this, 'WebsiteCert', {
       domainName: props.hostedZone,
       subjectAlternativeNames,
-      hostedZone: hostedZone,
+      hostedZone: hostedZoneLookup,
       region: 'us-east-1',
     });
 
@@ -182,7 +182,7 @@ export class CreateCloudfrontSite extends cdk.Construct {
     });
 
     new route53.ARecord(this, 'WebisteDomainAlias', {
-      zone: hostedZone,
+      zone: hostedZoneLookup,
       recordName: props.hostedZone,
       target: route53.RecordTarget.fromAlias(
         new targets.CloudFrontTarget(websiteDist),
@@ -191,7 +191,7 @@ export class CreateCloudfrontSite extends cdk.Construct {
 
     if (props.subDomain) {
       new route53.ARecord(this, 'WebisteSubDomainAlias', {
-        zone: hostedZone,
+        zone: hostedZoneLookup,
         recordName: props.subDomain,
         target: route53.RecordTarget.fromAlias(
           new targets.CloudFrontTarget(websiteDist),

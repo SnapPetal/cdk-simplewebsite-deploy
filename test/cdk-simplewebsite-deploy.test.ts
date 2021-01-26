@@ -227,7 +227,6 @@ describe('Create cloudfront website', () => {
       websiteFolder: './test/my-website',
       indexDoc: 'index.html',
       hostedZone: 'example.com',
-      subDomain: 'www.example.com',
     });
 
     expect(stack).to(
@@ -248,7 +247,7 @@ describe('Create cloudfront website', () => {
     expect(stack).to(
       haveResourceLike('AWS::CloudFront::Distribution', {
         DistributionConfig: {
-          Aliases: ['example.com', 'www.example.com'],
+          Aliases: ['example.com'],
           DefaultRootObject: 'index.html',
           Enabled: true,
           HttpVersion: 'http2',
@@ -281,13 +280,6 @@ describe('Create cloudfront website', () => {
     expect(stack).to(
       haveResourceLike('AWS::Route53::RecordSet', {
         Name: 'example.com.',
-        Type: 'A',
-      }),
-    );
-
-    expect(stack).to(
-      haveResourceLike('AWS::Route53::RecordSet', {
-        Name: 'www.example.com.',
         Type: 'A',
       }),
     );
