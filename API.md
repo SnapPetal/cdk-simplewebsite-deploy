@@ -35,13 +35,12 @@ new CreateBasicSite(scope: Construct, id: string, props: SimpleWebsiteConfigurat
 * **scope** (<code>[Construct](#aws-cdk-core-construct)</code>)  *No description*
 * **id** (<code>string</code>)  *No description*
 * **props** (<code>[SimpleWebsiteConfiguration](#cdk-simplewebsite-deploy-simplewebsiteconfiguration)</code>)  *No description*
-  * **hostedZoneDomain** (<code>string</code>)  Hosted Zone used to create the DNS record for the website. 
+  * **hostedZone** (<code>string</code>)  Hosted Zone used to create the DNS record for the website. 
   * **indexDoc** (<code>string</code>)  The index document of the website. 
-  * **websiteDomain** (<code>string</code>)  The domain names you want to deploy. 
   * **websiteFolder** (<code>string</code>)  Local path to the website folder you want to deploy on S3. 
   * **errorDoc** (<code>string</code>)  The error document of the website. __*Default*__: No error document.
   * **priceClass** (<code>[PriceClass](#aws-cdk-aws-cloudfront-priceclass)</code>)  The price class determines how many edge locations CloudFront will use for your distribution. __*Default*__: PriceClass.PRICE_CLASS_100.
-  * **websiteSubDomain** (<code>string</code>)  The sub-domain name you want to deploy. __*Default*__: www  e.g. www.example.com.
+  * **subDomain** (<code>string</code>)  The sub-domain name you want to deploy. __*Default*__: www  e.g. www.example.com.
 
 
 
@@ -65,13 +64,12 @@ new CreateCloudfrontSite(scope: Construct, id: string, props: SimpleWebsiteConfi
 * **scope** (<code>[Construct](#aws-cdk-core-construct)</code>)  *No description*
 * **id** (<code>string</code>)  *No description*
 * **props** (<code>[SimpleWebsiteConfiguration](#cdk-simplewebsite-deploy-simplewebsiteconfiguration)</code>)  *No description*
-  * **hostedZoneDomain** (<code>string</code>)  Hosted Zone used to create the DNS record for the website. 
+  * **hostedZone** (<code>string</code>)  Hosted Zone used to create the DNS record for the website. 
   * **indexDoc** (<code>string</code>)  The index document of the website. 
-  * **websiteDomain** (<code>string</code>)  The domain names you want to deploy. 
   * **websiteFolder** (<code>string</code>)  Local path to the website folder you want to deploy on S3. 
   * **errorDoc** (<code>string</code>)  The error document of the website. __*Default*__: No error document.
   * **priceClass** (<code>[PriceClass](#aws-cdk-aws-cloudfront-priceclass)</code>)  The price class determines how many edge locations CloudFront will use for your distribution. __*Default*__: PriceClass.PRICE_CLASS_100.
-  * **websiteSubDomain** (<code>string</code>)  The sub-domain name you want to deploy. __*Default*__: www  e.g. www.example.com.
+  * **subDomain** (<code>string</code>)  The sub-domain name you want to deploy. __*Default*__: www  e.g. www.example.com.
 
 
 
@@ -85,13 +83,12 @@ new CreateCloudfrontSite(scope: Construct, id: string, props: SimpleWebsiteConfi
 
 Name | Type | Description 
 -----|------|-------------
-**hostedZoneDomain**🔹 | <code>string</code> | Hosted Zone used to create the DNS record for the website.
+**hostedZone**🔹 | <code>string</code> | Hosted Zone used to create the DNS record for the website.
 **indexDoc**🔹 | <code>string</code> | The index document of the website.
-**websiteDomain**🔹 | <code>string</code> | The domain names you want to deploy.
 **websiteFolder**🔹 | <code>string</code> | Local path to the website folder you want to deploy on S3.
 **errorDoc**?🔹 | <code>string</code> | The error document of the website.<br/>__*Default*__: No error document.
 **priceClass**?🔹 | <code>[PriceClass](#aws-cdk-aws-cloudfront-priceclass)</code> | The price class determines how many edge locations CloudFront will use for your distribution.<br/>__*Default*__: PriceClass.PRICE_CLASS_100.
-**websiteSubDomain**?🔹 | <code>string</code> | The sub-domain name you want to deploy.<br/>__*Default*__: www  e.g. www.example.com.
+**subDomain**?🔹 | <code>string</code> | The sub-domain name you want to deploy.<br/>__*Default*__: www  e.g. www.example.com.
 
 
 

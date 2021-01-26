@@ -19,8 +19,7 @@ describe('Create basic website', () => {
       websiteFolder: './test/my-website',
       indexDoc: 'index.html',
       errorDoc: 'error.html',
-      hostedZoneDomain: 'example.com',
-      websiteDomain: 'example.com',
+      hostedZone: 'example.com',
     });
 
     expect(stack).to(
@@ -59,8 +58,7 @@ describe('Create basic website', () => {
     new CreateBasicSite(stack, 'test-website', {
       websiteFolder: './test/my-website',
       indexDoc: 'index.html',
-      hostedZoneDomain: 'example.com',
-      websiteDomain: 'example.com',
+      hostedZone: 'example.com',
     });
 
     expect(stack).to(
@@ -107,8 +105,7 @@ describe('Create basic website', () => {
     new CreateBasicSite(stack, 'test-website', {
       websiteFolder: './test/my-website',
       indexDoc: 'index.html',
-      hostedZoneDomain: 'example.com',
-      websiteDomain: 'example.com',
+      hostedZone: 'example.com',
     });
 
     expect(stack).to(
@@ -161,9 +158,8 @@ describe('Create basic website', () => {
     new CreateBasicSite(stack, 'test-website', {
       websiteFolder: './test/my-website',
       indexDoc: 'index.html',
-      hostedZoneDomain: 'example.com',
-      websiteDomain: 'example.com',
-      websiteSubDomain: 'sub.example.com',
+      hostedZone: 'example.com',
+      subDomain: 'sub.example.com',
     });
 
     expect(stack).to(
@@ -230,9 +226,8 @@ describe('Create cloudfront website', () => {
     new CreateCloudfrontSite(stack, 'test-website', {
       websiteFolder: './test/my-website',
       indexDoc: 'index.html',
-      hostedZoneDomain: 'example.com',
-      websiteDomain: 'example.com',
-      websiteSubDomain: 'www.example.com',
+      hostedZone: 'example.com',
+      subDomain: 'www.example.com',
     });
 
     expect(stack).to(
@@ -309,8 +304,8 @@ describe('Create cloudfront website', () => {
       websiteFolder: './test/my-website',
       indexDoc: 'index.html',
       errorDoc: 'error.html',
-      hostedZoneDomain: 'example.com',
-      websiteDomain: 'www.example.com',
+      hostedZone: 'example.com',
+      subDomain: 'www.example.com',
     });
 
     expect(stack).to(
@@ -331,7 +326,7 @@ describe('Create cloudfront website', () => {
     expect(stack).to(
       haveResourceLike('AWS::CloudFront::Distribution', {
         DistributionConfig: {
-          Aliases: ['www.example.com'],
+          Aliases: ['example.com', 'www.example.com'],
           CustomErrorResponses: [
             {
               ErrorCode: 404,
@@ -396,8 +391,8 @@ describe('Create cloudfront website', () => {
     new CreateCloudfrontSite(stack, 'test-website', {
       websiteFolder: './test/my-website',
       indexDoc: 'index.html',
-      hostedZoneDomain: 'example.com',
-      websiteDomain: 'www.example.com',
+      hostedZone: 'example.com',
+      subDomain: 'www.example.com',
     });
 
     expect(stack).to(
@@ -432,7 +427,7 @@ describe('Create cloudfront website', () => {
     expect(stack).to(
       haveResourceLike('AWS::CloudFront::Distribution', {
         DistributionConfig: {
-          Aliases: ['www.example.com'],
+          Aliases: ['example.com', 'www.example.com'],
           DefaultRootObject: 'index.html',
           Enabled: true,
           HttpVersion: 'http2',
@@ -473,8 +468,8 @@ describe('Create cloudfront website', () => {
     new CreateCloudfrontSite(stack, 'test-website', {
       websiteFolder: './test/my-website',
       indexDoc: 'index.html',
-      hostedZoneDomain: 'example.com',
-      websiteDomain: 'www.example.com',
+      hostedZone: 'example.com',
+      subDomain: 'www.example.com',
       priceClass: cloudfront.PriceClass.PRICE_CLASS_ALL,
     });
 
@@ -496,7 +491,7 @@ describe('Create cloudfront website', () => {
     expect(stack).to(
       haveResourceLike('AWS::CloudFront::Distribution', {
         DistributionConfig: {
-          Aliases: ['www.example.com'],
+          Aliases: ['example.com', 'www.example.com'],
           DefaultRootObject: 'index.html',
           Enabled: true,
           HttpVersion: 'http2',
@@ -538,8 +533,8 @@ describe('Create cloudfront website', () => {
     new CreateCloudfrontSite(stack, 'test-website', {
       websiteFolder: './test/my-website',
       indexDoc: 'index.html',
-      hostedZoneDomain: 'example.com',
-      websiteDomain: 'www.example.com',
+      hostedZone: 'example.com',
+      subDomain: 'www.example.com',
     });
 
     expect(stack).to(
@@ -560,7 +555,7 @@ describe('Create cloudfront website', () => {
     expect(stack).to(
       haveResourceLike('AWS::CloudFront::Distribution', {
         DistributionConfig: {
-          Aliases: ['www.example.com'],
+          Aliases: ['example.com', 'www.example.com'],
           DefaultRootObject: 'index.html',
           Enabled: true,
           HttpVersion: 'http2',
