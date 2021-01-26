@@ -252,27 +252,6 @@ describe('Create cloudfront website', () => {
           Enabled: true,
           HttpVersion: 'http2',
           IPV6Enabled: true,
-          Origins: [
-            {
-              DomainName: {
-                'Fn::GetAtt': ['WebsiteBucket75C24D94', 'RegionalDomainName'],
-              },
-              Id: 'TargetStacktestwebsiteWebsiteDistOrigin17319B9B7',
-              S3OriginConfig: {
-                OriginAccessIdentity: {
-                  'Fn::Join': [
-                    '',
-                    [
-                      'origin-access-identity/cloudfront/',
-                      {
-                        Ref: 'testwebsiteWebsiteDistOrigin1S3Origin1E3934D7',
-                      },
-                    ],
-                  ],
-                },
-              },
-            },
-          ],
         },
       }),
     );
@@ -339,27 +318,6 @@ describe('Create cloudfront website', () => {
           Enabled: true,
           HttpVersion: 'http2',
           IPV6Enabled: true,
-          Origins: [
-            {
-              DomainName: {
-                'Fn::GetAtt': ['WebsiteBucket75C24D94', 'RegionalDomainName'],
-              },
-              Id: 'TargetStacktestwebsiteWebsiteDistOrigin17319B9B7',
-              S3OriginConfig: {
-                OriginAccessIdentity: {
-                  'Fn::Join': [
-                    '',
-                    [
-                      'origin-access-identity/cloudfront/',
-                      {
-                        Ref: 'testwebsiteWebsiteDistOrigin1S3Origin1E3934D7',
-                      },
-                    ],
-                  ],
-                },
-              },
-            },
-          ],
         },
       }),
     );
@@ -424,27 +382,6 @@ describe('Create cloudfront website', () => {
           Enabled: true,
           HttpVersion: 'http2',
           IPV6Enabled: true,
-          Origins: [
-            {
-              DomainName: {
-                'Fn::GetAtt': ['WebsiteBucket75C24D94', 'RegionalDomainName'],
-              },
-              Id: 'TargetStacktestwebsiteWebsiteDistOrigin17319B9B7',
-              S3OriginConfig: {
-                OriginAccessIdentity: {
-                  'Fn::Join': [
-                    '',
-                    [
-                      'origin-access-identity/cloudfront/',
-                      {
-                        Ref: 'testwebsiteWebsiteDistOrigin1S3Origin1E3934D7',
-                      },
-                    ],
-                  ],
-                },
-              },
-            },
-          ],
         },
       }),
     );
@@ -488,27 +425,6 @@ describe('Create cloudfront website', () => {
           Enabled: true,
           HttpVersion: 'http2',
           IPV6Enabled: true,
-          Origins: [
-            {
-              DomainName: {
-                'Fn::GetAtt': ['WebsiteBucket75C24D94', 'RegionalDomainName'],
-              },
-              Id: 'TargetStacktestwebsiteWebsiteDistOrigin17319B9B7',
-              S3OriginConfig: {
-                OriginAccessIdentity: {
-                  'Fn::Join': [
-                    '',
-                    [
-                      'origin-access-identity/cloudfront/',
-                      {
-                        Ref: 'testwebsiteWebsiteDistOrigin1S3Origin1E3934D7',
-                      },
-                    ],
-                  ],
-                },
-              },
-            },
-          ],
           PriceClass: 'PriceClass_All',
         },
       }),
@@ -552,27 +468,6 @@ describe('Create cloudfront website', () => {
           Enabled: true,
           HttpVersion: 'http2',
           IPV6Enabled: true,
-          Origins: [
-            {
-              DomainName: {
-                'Fn::GetAtt': ['WebsiteBucket75C24D94', 'RegionalDomainName'],
-              },
-              Id: 'TargetStacktestwebsiteWebsiteDistOrigin17319B9B7',
-              S3OriginConfig: {
-                OriginAccessIdentity: {
-                  'Fn::Join': [
-                    '',
-                    [
-                      'origin-access-identity/cloudfront/',
-                      {
-                        Ref: 'testwebsiteWebsiteDistOrigin1S3Origin1E3934D7',
-                      },
-                    ],
-                  ],
-                },
-              },
-            },
-          ],
           PriceClass: 'PriceClass_100',
         },
       }),

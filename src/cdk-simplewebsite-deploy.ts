@@ -85,7 +85,7 @@ export class CreateBasicSite extends cdk.Construct {
       destinationBucket: websiteBucket,
     });
 
-    new route53.ARecord(this, 'WebisteAlias', {
+    new route53.ARecord(scope, 'WebisteAlias', {
       zone: hostedZoneLookup,
       recordName: props.hostedZone,
       target: route53.RecordTarget.fromAlias(
@@ -93,7 +93,7 @@ export class CreateBasicSite extends cdk.Construct {
       ),
     });
 
-    new route53.ARecord(this, 'WebisteRedirectAlias', {
+    new route53.ARecord(scope, 'WebisteRedirectAlias', {
       zone: hostedZoneLookup,
       recordName: props.subDomain ? props.subDomain : `www.${props.hostedZone}`,
       target: route53.RecordTarget.fromAlias(
@@ -142,7 +142,7 @@ export class CreateCloudfrontSite extends cdk.Construct {
 
     if (props.subDomain) domainNames.push(props.subDomain);
 
-    const websiteDist = new cloudfront.Distribution(this, 'WebsiteDist', {
+    const websiteDist = new cloudfront.Distribution(scope, 'WebsiteDist', {
       defaultBehavior: {
         origin: new origins.S3Origin(websiteBucket),
         allowedMethods: cloudfront.AllowedMethods.ALLOW_ALL,
@@ -181,7 +181,7 @@ export class CreateCloudfrontSite extends cdk.Construct {
       distributionPaths: ['/', `/${props.indexDoc}`],
     });
 
-    new route53.ARecord(this, 'WebisteDomainAlias', {
+    new route53.ARecord(scope, 'WebisteDomainAlias', {
       zone: hostedZoneLookup,
       recordName: props.hostedZone,
       target: route53.RecordTarget.fromAlias(
@@ -190,7 +190,7 @@ export class CreateCloudfrontSite extends cdk.Construct {
     });
 
     if (props.subDomain) {
-      new route53.ARecord(this, 'WebisteSubDomainAlias', {
+      new route53.ARecord(scope, 'WebisteSubDomainAlias', {
         zone: hostedZoneLookup,
         recordName: props.subDomain,
         target: route53.RecordTarget.fromAlias(
