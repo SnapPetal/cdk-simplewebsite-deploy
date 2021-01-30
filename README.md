@@ -7,12 +7,12 @@ This is an AWS CDK Construct to simplify deploying a single-page website use Clo
 
 ## Installation and Usage
 
-```console
-npm i cdk-simplewebsite-deploy
-```
-
 ### [CreateBasicSite](https://github.com/snappetal/cdk-simplewebsite-deploy/blob/main/API.md#cdk-cloudfront-deploy-createbasicsite)
 
+##### Typescript
+```console
+npm install cdk-simplewebsite-deploy
+```
 ```typescript
 import * as cdk from '@aws-cdk/core';
 import { CreateBasicSite } from 'cdk-simplewebsite-deploy';
@@ -27,13 +27,41 @@ export class PipelineStack extends cdk.Stack {
       hostedZone: 'example.com',
       subDomain: 'www.example.com',
     });
-
   }
+}
+```
+##### C#
+```console
+dotnet add package ThonBecker.CDK.SimpleWebsiteDeploy
+```
+```cs
+using Amazon.CDK;
+using ThonBecker.CDK.SimpleWebsiteDeploy;
+
+namespace SimpleWebsiteDeploy
+{
+    public class PipelineStack : Stack
+    {
+        internal PipelineStack(Construct scope, string id, IStackProps props = null) : base(scope, id, props)
+        {
+            new CreateBasicSite(scope, "test-website", new SimpleWebsiteConfiguration()
+            {
+                WebsiteFolder = "./src/build",
+                IndexDoc = "index.html",
+                HostedZone = "example.com",
+                SubDomain = "www.example.com"
+            });
+        }
+    }
 }
 ```
 
 ### [CreateCloudfrontSite](https://github.com/snappetal/cdk-simplewebsite-deploy/blob/main/API.md#cdk-cloudfront-deploy-createcloudfrontsite)
 
+##### Typescript
+```console
+npm install cdk-simplewebsite-deploy
+```
 ```typescript
 import * as cdk from '@aws-cdk/core';
 import { CreateCloudfrontSite } from 'cdk-simplewebsite-deploy';
@@ -48,8 +76,32 @@ export class PipelineStack extends cdk.Stack {
       hostedZone: 'example.com',
       subDomain: 'www.example.com',
     });
-
   }
+}
+```
+##### C#
+```console
+dotnet add package ThonBecker.CDK.SimpleWebsiteDeploy
+```
+```cs
+using Amazon.CDK;
+using ThonBecker.CDK.SimpleWebsiteDeploy;
+
+namespace SimpleWebsiteDeploy
+{
+    public class PipelineStack : Stack
+    {
+        internal PipelineStack(Construct scope, string id, IStackProps props = null) : base(scope, id, props)
+        {
+            new CreateCloudfrontSite(scope, "test-website", new SimpleWebsiteConfiguration()
+            {
+                WebsiteFolder = "./src/build",
+                IndexDoc = "index.html",
+                HostedZone = "example.com",
+                SubDomain = "www.example.com"
+            });
+        }
+    }
 }
 ```
 
