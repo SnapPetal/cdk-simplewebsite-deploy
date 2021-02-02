@@ -3,12 +3,12 @@
 ![Release](https://github.com/SnapPetal/cdk-simplewebsite-deploy/workflows/Release/badge.svg?branch=main)
 
 # cdk-simplewebsite-deploy
-This is an AWS CDK Construct to simplify deploying a single-page website use CloudFront distributions.
+This is an AWS CDK Construct to simplify deploying a single-page website using either S3 buckets or CloudFront distributions.
 
 ## Installation and Usage
 
 ### [CreateBasicSite](https://github.com/snappetal/cdk-simplewebsite-deploy/blob/main/API.md#cdk-cloudfront-deploy-createbasicsite)
-
+#### Creates a simple website using S3 buckets with a domain hosted in Route 53.
 ##### Typescript
 ```console
 npm install cdk-simplewebsite-deploy
@@ -24,7 +24,7 @@ export class PipelineStack extends cdk.Stack {
     new CreateBasicSite(stack, 'test-website', {
       websiteFolder: './src/build',
       indexDoc: 'index.html',
-      hostedZone: 'example.com'
+      hostedZone: 'example.com',
     });
   }
 }
@@ -47,7 +47,7 @@ namespace SimpleWebsiteDeploy
             {
                 WebsiteFolder = "./src/build",
                 IndexDoc = "index.html",
-                HostedZone = "example.com"
+                HostedZone = "example.com",
             });
         }
     }
@@ -55,7 +55,7 @@ namespace SimpleWebsiteDeploy
 ```
 
 ### [CreateCloudfrontSite](https://github.com/snappetal/cdk-simplewebsite-deploy/blob/main/API.md#cdk-cloudfront-deploy-createcloudfrontsite)
-
+#### Creates a simple website using CloudFront distribution with a domain hosted in Route 53.
 ##### Typescript
 ```console
 npm install cdk-simplewebsite-deploy
@@ -96,7 +96,7 @@ namespace SimpleWebsiteDeploy
                 WebsiteFolder = "./src/build",
                 IndexDoc = "index.html",
                 HostedZone = "example.com",
-                SubDomain = "www.example.com"
+                SubDomain = "www.example.com",
             });
         }
     }
