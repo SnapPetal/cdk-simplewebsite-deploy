@@ -26,6 +26,14 @@ export interface SimpleWebsiteConfiguration {
    */
   readonly hostedZone: string;
   /**
+   * Used to deploy a Cloudfront site with a single domain. e.g. sample.example.com
+   * If you include a values for domain and subDomain,
+   * template creation will fail and an error will be thrown.
+   *
+   * @default - no value
+   */
+  readonly domain?: string;
+  /**
    * The sub-domain name you want to deploy.
    * @default www  e.g. www.example.com.
    */
@@ -111,6 +119,12 @@ export class CreateCloudfrontSite extends cdk.Construct {
   ) {
     super(scope, id);
 
+    if (props.domain && props.subDomain) {
+      throw new Error(
+        'Domain and sub domain parameters cannot both be defined',
+      );
+    }
+
     const hostedZoneLookup = route53.HostedZone.fromLookup(
       this,
       'WebsiteHostedZone',
@@ -120,9 +134,8 @@ export class CreateCloudfrontSite extends cdk.Construct {
     );
 
     const subjectAlternativeNames = [];
-    if (props.subDomain) {
-      subjectAlternativeNames.push(props.subDomain);
-    }
+    if (props.subDomain) subjectAlternativeNames.push(props.subDomain);
+    if (props.domain) subjectAlternativeNames.push(props.domain);
 
     const websiteCert = new acm.DnsValidatedCertificate(this, 'WebsiteCert', {
       domainName: props.hostedZone,
@@ -138,7 +151,12 @@ export class CreateCloudfrontSite extends cdk.Construct {
       encryption: s3.BucketEncryption.S3_MANAGED,
     });
 
-    const domainNames = [props.hostedZone];
+    const domainNames = [];
+    if (props.domain) {
+      domainNames.push(props.domain);
+    } else {
+      domainNames.push(props.hostedZone);
+    }
 
     if (props.subDomain) domainNames.push(props.subDomain);
 
@@ -183,7 +201,7 @@ export class CreateCloudfrontSite extends cdk.Construct {
 
     new route53.ARecord(scope, 'WebisteDomainAlias', {
       zone: hostedZoneLookup,
-      recordName: props.hostedZone,
+      recordName: props.domain ? props.domain : props.hostedZone,
       target: route53.RecordTarget.fromAlias(
         new targets.CloudFrontTarget(websiteDist),
       ),

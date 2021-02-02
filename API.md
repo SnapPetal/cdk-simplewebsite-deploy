@@ -38,6 +38,7 @@ new CreateBasicSite(scope: Construct, id: string, props: SimpleWebsiteConfigurat
   * **hostedZone** (<code>string</code>)  Hosted Zone used to create the DNS record for the website. 
   * **indexDoc** (<code>string</code>)  The index document of the website. 
   * **websiteFolder** (<code>string</code>)  Local path to the website folder you want to deploy on S3. 
+  * **domain** (<code>string</code>)  Used to deploy a Cloudfront site with a single domain. __*Default*__: no value
   * **errorDoc** (<code>string</code>)  The error document of the website. __*Default*__: No error document.
   * **priceClass** (<code>[PriceClass](#aws-cdk-aws-cloudfront-priceclass)</code>)  The price class determines how many edge locations CloudFront will use for your distribution. __*Default*__: PriceClass.PRICE_CLASS_100.
   * **subDomain** (<code>string</code>)  The sub-domain name you want to deploy. __*Default*__: www  e.g. www.example.com.
@@ -67,6 +68,7 @@ new CreateCloudfrontSite(scope: Construct, id: string, props: SimpleWebsiteConfi
   * **hostedZone** (<code>string</code>)  Hosted Zone used to create the DNS record for the website. 
   * **indexDoc** (<code>string</code>)  The index document of the website. 
   * **websiteFolder** (<code>string</code>)  Local path to the website folder you want to deploy on S3. 
+  * **domain** (<code>string</code>)  Used to deploy a Cloudfront site with a single domain. __*Default*__: no value
   * **errorDoc** (<code>string</code>)  The error document of the website. __*Default*__: No error document.
   * **priceClass** (<code>[PriceClass](#aws-cdk-aws-cloudfront-priceclass)</code>)  The price class determines how many edge locations CloudFront will use for your distribution. __*Default*__: PriceClass.PRICE_CLASS_100.
   * **subDomain** (<code>string</code>)  The sub-domain name you want to deploy. __*Default*__: www  e.g. www.example.com.
@@ -86,6 +88,7 @@ Name | Type | Description
 **hostedZone**🔹 | <code>string</code> | Hosted Zone used to create the DNS record for the website.
 **indexDoc**🔹 | <code>string</code> | The index document of the website.
 **websiteFolder**🔹 | <code>string</code> | Local path to the website folder you want to deploy on S3.
+**domain**?🔹 | <code>string</code> | Used to deploy a Cloudfront site with a single domain.<br/>__*Default*__: no value
 **errorDoc**?🔹 | <code>string</code> | The error document of the website.<br/>__*Default*__: No error document.
 **priceClass**?🔹 | <code>[PriceClass](#aws-cdk-aws-cloudfront-priceclass)</code> | The price class determines how many edge locations CloudFront will use for your distribution.<br/>__*Default*__: PriceClass.PRICE_CLASS_100.
 **subDomain**?🔹 | <code>string</code> | The sub-domain name you want to deploy.<br/>__*Default*__: www  e.g. www.example.com.

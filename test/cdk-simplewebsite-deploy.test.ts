@@ -1,4 +1,4 @@
-import { expect, haveResource, haveResourceLike } from '@aws-cdk/assert';
+import '@aws-cdk/assert/jest';
 import * as cloudfront from '@aws-cdk/aws-cloudfront';
 import * as cdk from '@aws-cdk/core';
 import {
@@ -22,30 +22,26 @@ describe('Create basic website', () => {
       hostedZone: 'example.com',
     });
 
-    expect(stack).to(
-      haveResource('AWS::S3::Bucket', {
-        WebsiteConfiguration: {
-          IndexDocument: 'index.html',
-          ErrorDocument: 'error.html',
-        },
-      }),
-    );
+    expect(stack).toHaveResource('AWS::S3::Bucket', {
+      WebsiteConfiguration: {
+        IndexDocument: 'index.html',
+        ErrorDocument: 'error.html',
+      },
+    });
 
-    expect(stack).to(haveResource('Custom::CDKBucketDeployment'));
+    expect(stack).toHaveResource('Custom::CDKBucketDeployment');
 
-    expect(stack).to(
-      haveResourceLike('AWS::S3::BucketPolicy', {
-        PolicyDocument: {
-          Statement: [
-            {
-              Action: 's3:GetObject',
-              Effect: 'Allow',
-              Principal: '*',
-            },
-          ],
-        },
-      }),
-    );
+    expect(stack).toHaveResourceLike('AWS::S3::BucketPolicy', {
+      PolicyDocument: {
+        Statement: [
+          {
+            Action: 's3:GetObject',
+            Effect: 'Allow',
+            Principal: '*',
+          },
+        ],
+      },
+    });
   });
   it('should have a valid basic website with encryption', () => {
     const app = new cdk.App();
@@ -61,38 +57,34 @@ describe('Create basic website', () => {
       hostedZone: 'example.com',
     });
 
-    expect(stack).to(
-      haveResource('AWS::S3::Bucket', {
-        BucketEncryption: {
-          ServerSideEncryptionConfiguration: [
-            {
-              ServerSideEncryptionByDefault: {
-                SSEAlgorithm: 'AES256',
-              },
+    expect(stack).toHaveResource('AWS::S3::Bucket', {
+      BucketEncryption: {
+        ServerSideEncryptionConfiguration: [
+          {
+            ServerSideEncryptionByDefault: {
+              SSEAlgorithm: 'AES256',
             },
-          ],
-        },
-        WebsiteConfiguration: {
-          IndexDocument: 'index.html',
-        },
-      }),
-    );
+          },
+        ],
+      },
+      WebsiteConfiguration: {
+        IndexDocument: 'index.html',
+      },
+    });
 
-    expect(stack).to(haveResource('Custom::CDKBucketDeployment'));
+    expect(stack).toHaveResource('Custom::CDKBucketDeployment');
 
-    expect(stack).to(
-      haveResourceLike('AWS::S3::BucketPolicy', {
-        PolicyDocument: {
-          Statement: [
-            {
-              Action: 's3:GetObject',
-              Effect: 'Allow',
-              Principal: '*',
-            },
-          ],
-        },
-      }),
-    );
+    expect(stack).toHaveResourceLike('AWS::S3::BucketPolicy', {
+      PolicyDocument: {
+        Statement: [
+          {
+            Action: 's3:GetObject',
+            Effect: 'Allow',
+            Principal: '*',
+          },
+        ],
+      },
+    });
   });
   it('should have a valid basic website with custom domain', () => {
     const app = new cdk.App();
@@ -108,44 +100,36 @@ describe('Create basic website', () => {
       hostedZone: 'example.com',
     });
 
-    expect(stack).to(
-      haveResource('AWS::S3::Bucket', {
-        BucketName: 'example.com',
-        WebsiteConfiguration: {
-          IndexDocument: 'index.html',
-        },
-      }),
-    );
+    expect(stack).toHaveResource('AWS::S3::Bucket', {
+      BucketName: 'example.com',
+      WebsiteConfiguration: {
+        IndexDocument: 'index.html',
+      },
+    });
 
-    expect(stack).to(haveResource('Custom::CDKBucketDeployment'));
+    expect(stack).toHaveResource('Custom::CDKBucketDeployment');
 
-    expect(stack).to(
-      haveResourceLike('AWS::S3::BucketPolicy', {
-        PolicyDocument: {
-          Statement: [
-            {
-              Action: 's3:GetObject',
-              Effect: 'Allow',
-              Principal: '*',
-            },
-          ],
-        },
-      }),
-    );
+    expect(stack).toHaveResourceLike('AWS::S3::BucketPolicy', {
+      PolicyDocument: {
+        Statement: [
+          {
+            Action: 's3:GetObject',
+            Effect: 'Allow',
+            Principal: '*',
+          },
+        ],
+      },
+    });
 
-    expect(stack).to(
-      haveResourceLike('AWS::Route53::RecordSet', {
-        Name: 'example.com.',
-        Type: 'A',
-      }),
-    );
+    expect(stack).toHaveResourceLike('AWS::Route53::RecordSet', {
+      Name: 'example.com.',
+      Type: 'A',
+    });
 
-    expect(stack).to(
-      haveResourceLike('AWS::Route53::RecordSet', {
-        Name: 'www.example.com.',
-        Type: 'A',
-      }),
-    );
+    expect(stack).toHaveResourceLike('AWS::Route53::RecordSet', {
+      Name: 'www.example.com.',
+      Type: 'A',
+    });
   });
   it('should have a valid basic website with custom sub domain', () => {
     const app = new cdk.App();
@@ -162,56 +146,46 @@ describe('Create basic website', () => {
       subDomain: 'sub.example.com',
     });
 
-    expect(stack).to(
-      haveResource('AWS::S3::Bucket', {
-        BucketName: 'example.com',
-        WebsiteConfiguration: {
-          IndexDocument: 'index.html',
-        },
-      }),
-    );
+    expect(stack).toHaveResource('AWS::S3::Bucket', {
+      BucketName: 'example.com',
+      WebsiteConfiguration: {
+        IndexDocument: 'index.html',
+      },
+    });
 
-    expect(stack).to(
-      haveResource('AWS::S3::Bucket', {
-        BucketName: 'www.example.com',
-        WebsiteConfiguration: {
-          RedirectAllRequestsTo: {
-            HostName: 'example.com',
-            Protocol: 'http',
+    expect(stack).toHaveResource('AWS::S3::Bucket', {
+      BucketName: 'www.example.com',
+      WebsiteConfiguration: {
+        RedirectAllRequestsTo: {
+          HostName: 'example.com',
+          Protocol: 'http',
+        },
+      },
+    });
+
+    expect(stack).toHaveResource('Custom::CDKBucketDeployment');
+
+    expect(stack).toHaveResourceLike('AWS::S3::BucketPolicy', {
+      PolicyDocument: {
+        Statement: [
+          {
+            Action: 's3:GetObject',
+            Effect: 'Allow',
+            Principal: '*',
           },
-        },
-      }),
-    );
+        ],
+      },
+    });
 
-    expect(stack).to(haveResource('Custom::CDKBucketDeployment'));
+    expect(stack).toHaveResourceLike('AWS::Route53::RecordSet', {
+      Name: 'example.com.',
+      Type: 'A',
+    });
 
-    expect(stack).to(
-      haveResourceLike('AWS::S3::BucketPolicy', {
-        PolicyDocument: {
-          Statement: [
-            {
-              Action: 's3:GetObject',
-              Effect: 'Allow',
-              Principal: '*',
-            },
-          ],
-        },
-      }),
-    );
-
-    expect(stack).to(
-      haveResourceLike('AWS::Route53::RecordSet', {
-        Name: 'example.com.',
-        Type: 'A',
-      }),
-    );
-
-    expect(stack).to(
-      haveResourceLike('AWS::Route53::RecordSet', {
-        Name: 'sub.example.com.',
-        Type: 'A',
-      }),
-    );
+    expect(stack).toHaveResourceLike('AWS::Route53::RecordSet', {
+      Name: 'sub.example.com.',
+      Type: 'A',
+    });
   });
 });
 describe('Create cloudfront website', () => {
@@ -229,39 +203,94 @@ describe('Create cloudfront website', () => {
       hostedZone: 'example.com',
     });
 
-    expect(stack).to(
-      haveResourceLike('AWS::S3::BucketPolicy', {
-        PolicyDocument: {
-          Statement: [
-            {
-              Action: ['s3:GetObject*', 's3:GetBucket*', 's3:List*'],
-              Effect: 'Allow',
-            },
-          ],
+    expect(stack).toHaveResourceLike('AWS::S3::BucketPolicy', {
+      PolicyDocument: {
+        Statement: [
+          {
+            Action: ['s3:GetObject*', 's3:GetBucket*', 's3:List*'],
+            Effect: 'Allow',
+          },
+        ],
+      },
+    });
+
+    expect(stack).toHaveResource('Custom::CDKBucketDeployment');
+
+    expect(stack).toHaveResourceLike('AWS::CloudFront::Distribution', {
+      DistributionConfig: {
+        Aliases: ['example.com'],
+        DefaultRootObject: 'index.html',
+        Enabled: true,
+        HttpVersion: 'http2',
+        IPV6Enabled: true,
+      },
+    });
+
+    expect(stack).toHaveResourceLike('AWS::Route53::RecordSet', {
+      Name: 'example.com.',
+      Type: 'A',
+    });
+  });
+  it('should throw an error when domain and subDomain are defined for a cloudfront website', () => {
+    expect(() => {
+      const app = new cdk.App();
+      const stack = new cdk.Stack(app, 'TargetStack', {
+        env: {
+          account: '234567890123',
+          region: 'us-east-1',
         },
-      }),
-    );
+      });
+      new CreateCloudfrontSite(stack, 'test-website', {
+        websiteFolder: './test/my-website',
+        indexDoc: 'index.html',
+        hostedZone: 'example.com',
+        domain: 'domain.example.com',
+        subDomain: 'subdomain.example.com',
+      });
+    }).toThrow('Domain and sub domain parameters cannot both be defined');
+  });
+  it('should have a valid cloudfront website with single domain', () => {
+    const app = new cdk.App();
+    const stack = new cdk.Stack(app, 'TargetStack', {
+      env: {
+        account: '234567890123',
+        region: 'us-east-1',
+      },
+    });
+    new CreateCloudfrontSite(stack, 'test-website', {
+      websiteFolder: './test/my-website',
+      indexDoc: 'index.html',
+      hostedZone: 'example.com',
+      domain: 'sample.example.com',
+    });
 
-    expect(stack).to(haveResource('Custom::CDKBucketDeployment'));
+    expect(stack).toHaveResourceLike('AWS::S3::BucketPolicy', {
+      PolicyDocument: {
+        Statement: [
+          {
+            Action: ['s3:GetObject*', 's3:GetBucket*', 's3:List*'],
+            Effect: 'Allow',
+          },
+        ],
+      },
+    });
 
-    expect(stack).to(
-      haveResourceLike('AWS::CloudFront::Distribution', {
-        DistributionConfig: {
-          Aliases: ['example.com'],
-          DefaultRootObject: 'index.html',
-          Enabled: true,
-          HttpVersion: 'http2',
-          IPV6Enabled: true,
-        },
-      }),
-    );
+    expect(stack).toHaveResource('Custom::CDKBucketDeployment');
 
-    expect(stack).to(
-      haveResourceLike('AWS::Route53::RecordSet', {
-        Name: 'example.com.',
-        Type: 'A',
-      }),
-    );
+    expect(stack).toHaveResourceLike('AWS::CloudFront::Distribution', {
+      DistributionConfig: {
+        Aliases: ['sample.example.com'],
+        DefaultRootObject: 'index.html',
+        Enabled: true,
+        HttpVersion: 'http2',
+        IPV6Enabled: true,
+      },
+    });
+
+    expect(stack).toHaveResourceLike('AWS::Route53::RecordSet', {
+      Name: 'sample.example.com.',
+      Type: 'A',
+    });
   });
   it('should have a valid cloudfront website with custom error', () => {
     const app = new cdk.App();
@@ -279,55 +308,49 @@ describe('Create cloudfront website', () => {
       subDomain: 'www.example.com',
     });
 
-    expect(stack).to(
-      haveResourceLike('AWS::S3::BucketPolicy', {
-        PolicyDocument: {
-          Statement: [
-            {
-              Action: ['s3:GetObject*', 's3:GetBucket*', 's3:List*'],
-              Effect: 'Allow',
-            },
-          ],
-        },
-      }),
-    );
+    expect(stack).toHaveResourceLike('AWS::S3::BucketPolicy', {
+      PolicyDocument: {
+        Statement: [
+          {
+            Action: ['s3:GetObject*', 's3:GetBucket*', 's3:List*'],
+            Effect: 'Allow',
+          },
+        ],
+      },
+    });
 
-    expect(stack).to(haveResource('Custom::CDKBucketDeployment'));
+    expect(stack).toHaveResource('Custom::CDKBucketDeployment');
 
-    expect(stack).to(
-      haveResourceLike('AWS::CloudFront::Distribution', {
-        DistributionConfig: {
-          Aliases: ['example.com', 'www.example.com'],
-          CustomErrorResponses: [
-            {
-              ErrorCode: 404,
-              ResponseCode: 404,
-              ResponsePagePath: '/error.html',
-            },
-            {
-              ErrorCachingMinTTL: 2,
-              ErrorCode: 500,
-            },
-            {
-              ErrorCode: 403,
-              ResponseCode: 200,
-              ResponsePagePath: '/index.html',
-            },
-          ],
-          DefaultRootObject: 'index.html',
-          Enabled: true,
-          HttpVersion: 'http2',
-          IPV6Enabled: true,
-        },
-      }),
-    );
+    expect(stack).toHaveResourceLike('AWS::CloudFront::Distribution', {
+      DistributionConfig: {
+        Aliases: ['example.com', 'www.example.com'],
+        CustomErrorResponses: [
+          {
+            ErrorCode: 404,
+            ResponseCode: 404,
+            ResponsePagePath: '/error.html',
+          },
+          {
+            ErrorCachingMinTTL: 2,
+            ErrorCode: 500,
+          },
+          {
+            ErrorCode: 403,
+            ResponseCode: 200,
+            ResponsePagePath: '/index.html',
+          },
+        ],
+        DefaultRootObject: 'index.html',
+        Enabled: true,
+        HttpVersion: 'http2',
+        IPV6Enabled: true,
+      },
+    });
 
-    expect(stack).to(
-      haveResourceLike('AWS::Route53::RecordSet', {
-        Name: 'www.example.com.',
-        Type: 'A',
-      }),
-    );
+    expect(stack).toHaveResourceLike('AWS::Route53::RecordSet', {
+      Name: 'www.example.com.',
+      Type: 'A',
+    });
   });
   it('should have a valid cloudfront website with encrypted S3 bucket', () => {
     const app = new cdk.App();
@@ -345,46 +368,40 @@ describe('Create cloudfront website', () => {
       subDomain: 'www.example.com',
     });
 
-    expect(stack).to(
-      haveResource('AWS::S3::Bucket', {
-        BucketEncryption: {
-          ServerSideEncryptionConfiguration: [
-            {
-              ServerSideEncryptionByDefault: {
-                SSEAlgorithm: 'AES256',
-              },
+    expect(stack).toHaveResource('AWS::S3::Bucket', {
+      BucketEncryption: {
+        ServerSideEncryptionConfiguration: [
+          {
+            ServerSideEncryptionByDefault: {
+              SSEAlgorithm: 'AES256',
             },
-          ],
-        },
-      }),
-    );
+          },
+        ],
+      },
+    });
 
-    expect(stack).to(
-      haveResourceLike('AWS::S3::BucketPolicy', {
-        PolicyDocument: {
-          Statement: [
-            {
-              Action: ['s3:GetObject*', 's3:GetBucket*', 's3:List*'],
-              Effect: 'Allow',
-            },
-          ],
-        },
-      }),
-    );
+    expect(stack).toHaveResourceLike('AWS::S3::BucketPolicy', {
+      PolicyDocument: {
+        Statement: [
+          {
+            Action: ['s3:GetObject*', 's3:GetBucket*', 's3:List*'],
+            Effect: 'Allow',
+          },
+        ],
+      },
+    });
 
-    expect(stack).to(haveResource('Custom::CDKBucketDeployment'));
+    expect(stack).toHaveResource('Custom::CDKBucketDeployment');
 
-    expect(stack).to(
-      haveResourceLike('AWS::CloudFront::Distribution', {
-        DistributionConfig: {
-          Aliases: ['example.com', 'www.example.com'],
-          DefaultRootObject: 'index.html',
-          Enabled: true,
-          HttpVersion: 'http2',
-          IPV6Enabled: true,
-        },
-      }),
-    );
+    expect(stack).toHaveResourceLike('AWS::CloudFront::Distribution', {
+      DistributionConfig: {
+        Aliases: ['example.com', 'www.example.com'],
+        DefaultRootObject: 'index.html',
+        Enabled: true,
+        HttpVersion: 'http2',
+        IPV6Enabled: true,
+      },
+    });
   });
   it('should have a valid cloudfront website with price class all', () => {
     const app = new cdk.App();
@@ -402,33 +419,29 @@ describe('Create cloudfront website', () => {
       priceClass: cloudfront.PriceClass.PRICE_CLASS_ALL,
     });
 
-    expect(stack).to(
-      haveResourceLike('AWS::S3::BucketPolicy', {
-        PolicyDocument: {
-          Statement: [
-            {
-              Action: ['s3:GetObject*', 's3:GetBucket*', 's3:List*'],
-              Effect: 'Allow',
-            },
-          ],
-        },
-      }),
-    );
+    expect(stack).toHaveResourceLike('AWS::S3::BucketPolicy', {
+      PolicyDocument: {
+        Statement: [
+          {
+            Action: ['s3:GetObject*', 's3:GetBucket*', 's3:List*'],
+            Effect: 'Allow',
+          },
+        ],
+      },
+    });
 
-    expect(stack).to(haveResource('Custom::CDKBucketDeployment'));
+    expect(stack).toHaveResource('Custom::CDKBucketDeployment');
 
-    expect(stack).to(
-      haveResourceLike('AWS::CloudFront::Distribution', {
-        DistributionConfig: {
-          Aliases: ['example.com', 'www.example.com'],
-          DefaultRootObject: 'index.html',
-          Enabled: true,
-          HttpVersion: 'http2',
-          IPV6Enabled: true,
-          PriceClass: 'PriceClass_All',
-        },
-      }),
-    );
+    expect(stack).toHaveResourceLike('AWS::CloudFront::Distribution', {
+      DistributionConfig: {
+        Aliases: ['example.com', 'www.example.com'],
+        DefaultRootObject: 'index.html',
+        Enabled: true,
+        HttpVersion: 'http2',
+        IPV6Enabled: true,
+        PriceClass: 'PriceClass_All',
+      },
+    });
   });
   it('should have a valid cloudfront website with default price class 100', () => {
     const app = new cdk.App();
@@ -445,32 +458,28 @@ describe('Create cloudfront website', () => {
       subDomain: 'www.example.com',
     });
 
-    expect(stack).to(
-      haveResourceLike('AWS::S3::BucketPolicy', {
-        PolicyDocument: {
-          Statement: [
-            {
-              Action: ['s3:GetObject*', 's3:GetBucket*', 's3:List*'],
-              Effect: 'Allow',
-            },
-          ],
-        },
-      }),
-    );
+    expect(stack).toHaveResourceLike('AWS::S3::BucketPolicy', {
+      PolicyDocument: {
+        Statement: [
+          {
+            Action: ['s3:GetObject*', 's3:GetBucket*', 's3:List*'],
+            Effect: 'Allow',
+          },
+        ],
+      },
+    });
 
-    expect(stack).to(haveResource('Custom::CDKBucketDeployment'));
+    expect(stack).toHaveResource('Custom::CDKBucketDeployment');
 
-    expect(stack).to(
-      haveResourceLike('AWS::CloudFront::Distribution', {
-        DistributionConfig: {
-          Aliases: ['example.com', 'www.example.com'],
-          DefaultRootObject: 'index.html',
-          Enabled: true,
-          HttpVersion: 'http2',
-          IPV6Enabled: true,
-          PriceClass: 'PriceClass_100',
-        },
-      }),
-    );
+    expect(stack).toHaveResourceLike('AWS::CloudFront::Distribution', {
+      DistributionConfig: {
+        Aliases: ['example.com', 'www.example.com'],
+        DefaultRootObject: 'index.html',
+        Enabled: true,
+        HttpVersion: 'http2',
+        IPV6Enabled: true,
+        PriceClass: 'PriceClass_100',
+      },
+    });
   });
 });
