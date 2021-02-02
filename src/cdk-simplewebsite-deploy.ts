@@ -1,13 +1,33 @@
-import * as acm from '@aws-cdk/aws-certificatemanager';
-import * as cloudfront from '@aws-cdk/aws-cloudfront';
-import * as origins from '@aws-cdk/aws-cloudfront-origins';
-import * as route53 from '@aws-cdk/aws-route53';
-import * as targets from '@aws-cdk/aws-route53-targets';
-import * as s3 from '@aws-cdk/aws-s3';
-import * as s3deploy from '@aws-cdk/aws-s3-deployment';
-import * as cdk from '@aws-cdk/core';
+import * as acm from "@aws-cdk/aws-certificatemanager";
+import * as cloudfront from "@aws-cdk/aws-cloudfront";
+import * as origins from "@aws-cdk/aws-cloudfront-origins";
+import * as route53 from "@aws-cdk/aws-route53";
+import * as targets from "@aws-cdk/aws-route53-targets";
+import * as s3 from "@aws-cdk/aws-s3";
+import * as s3deploy from "@aws-cdk/aws-s3-deployment";
+import * as cdk from "@aws-cdk/core";
 
-export interface SimpleWebsiteConfiguration {
+export interface BasicSiteConfiguration {
+  /**
+   * Local path to the website folder you want to deploy on S3.
+   */
+  readonly websiteFolder: string;
+  /**
+   * The index document of the website.
+   */
+  readonly indexDoc: string;
+  /**
+   * The error document of the website.
+   * @default - No error document.
+   */
+  readonly errorDoc?: string;
+  /**
+   * Hosted Zone used to create the DNS record for the website.
+   */
+  readonly hostedZone: string;
+}
+
+export interface CloudfrontSiteConfiguration {
   /**
    * Local path to the website folder you want to deploy on S3.
    */
@@ -27,15 +47,18 @@ export interface SimpleWebsiteConfiguration {
   readonly hostedZone: string;
   /**
    * Used to deploy a Cloudfront site with a single domain. e.g. sample.example.com
-   * If you include a values for domain and subDomain,
-   * template creation will fail and an error will be thrown.
+   * If you include a value for both domain and subDomain,
+   * an error will be thrown.
    *
    * @default - no value
    */
   readonly domain?: string;
   /**
-   * The sub-domain name you want to deploy.
-   * @default www  e.g. www.example.com.
+   * The sub-domain name you want to deploy. e.g. www.example.com
+   * If you include a value for both domain and subDomain,
+   * an error will be thrown.
+   *
+   * @default - no value
    */
   readonly subDomain?: string;
   /**
@@ -47,38 +70,32 @@ export interface SimpleWebsiteConfiguration {
 }
 
 export class CreateBasicSite extends cdk.Construct {
-  constructor(
-    scope: cdk.Construct,
-    id: string,
-    props: SimpleWebsiteConfiguration,
-  ) {
+  constructor(scope: cdk.Construct, id: string, props: BasicSiteConfiguration) {
     super(scope, id);
 
     const hostedZoneLookup = route53.HostedZone.fromLookup(
       this,
-      'WebsiteHostedZone',
+      "WebsiteHostedZone",
       {
         domainName: props.hostedZone,
-      },
+      }
     );
 
     const websiteRedirectBucket = new s3.Bucket(
       scope,
-      'WebsiteRedirectBucket',
+      "WebsiteRedirectBucket",
       {
-        bucketName: props.subDomain
-          ? `www.${props.hostedZone}`
-          : props.subDomain,
+        bucketName: `www.${props.hostedZone}`,
         removalPolicy: cdk.RemovalPolicy.DESTROY,
         autoDeleteObjects: true,
         websiteRedirect: {
           hostName: props.hostedZone,
           protocol: s3.RedirectProtocol.HTTP,
         },
-      },
+      }
     );
 
-    const websiteBucket = new s3.Bucket(scope, 'WebsiteBucket', {
+    const websiteBucket = new s3.Bucket(scope, "WebsiteBucket", {
       bucketName: props.hostedZone,
       removalPolicy: cdk.RemovalPolicy.DESTROY,
       autoDeleteObjects: true,
@@ -88,24 +105,24 @@ export class CreateBasicSite extends cdk.Construct {
       encryption: s3.BucketEncryption.S3_MANAGED,
     });
 
-    new s3deploy.BucketDeployment(scope, 'WebsiteDeploy', {
+    new s3deploy.BucketDeployment(scope, "WebsiteDeploy", {
       sources: [s3deploy.Source.asset(props.websiteFolder)],
       destinationBucket: websiteBucket,
     });
 
-    new route53.ARecord(scope, 'WebisteAlias', {
+    new route53.ARecord(scope, "WebisteAlias", {
       zone: hostedZoneLookup,
       recordName: props.hostedZone,
       target: route53.RecordTarget.fromAlias(
-        new targets.BucketWebsiteTarget(websiteBucket),
+        new targets.BucketWebsiteTarget(websiteBucket)
       ),
     });
 
-    new route53.ARecord(scope, 'WebisteRedirectAlias', {
+    new route53.ARecord(scope, "WebisteRedirectAlias", {
       zone: hostedZoneLookup,
-      recordName: props.subDomain ? props.subDomain : `www.${props.hostedZone}`,
+      recordName: `www.${props.hostedZone}`,
       target: route53.RecordTarget.fromAlias(
-        new targets.BucketWebsiteTarget(websiteRedirectBucket),
+        new targets.BucketWebsiteTarget(websiteRedirectBucket)
       ),
     });
   }
@@ -115,36 +132,35 @@ export class CreateCloudfrontSite extends cdk.Construct {
   constructor(
     scope: cdk.Construct,
     id: string,
-    props: SimpleWebsiteConfiguration,
+    props: CloudfrontSiteConfiguration
   ) {
     super(scope, id);
 
     if (props.domain && props.subDomain) {
       throw new Error(
-        'Domain and sub domain parameters cannot both be defined',
+        "Domain and sub domain parameters cannot both be defined"
       );
     }
 
     const hostedZoneLookup = route53.HostedZone.fromLookup(
       this,
-      'WebsiteHostedZone',
+      "WebsiteHostedZone",
       {
         domainName: props.hostedZone,
-      },
+      }
     );
 
     const subjectAlternativeNames = [];
     if (props.subDomain) subjectAlternativeNames.push(props.subDomain);
-    if (props.domain) subjectAlternativeNames.push(props.domain);
 
-    const websiteCert = new acm.DnsValidatedCertificate(this, 'WebsiteCert', {
-      domainName: props.hostedZone,
+    const websiteCert = new acm.DnsValidatedCertificate(this, "WebsiteCert", {
+      domainName: props.domain ? props.domain : props.hostedZone,
       subjectAlternativeNames,
       hostedZone: hostedZoneLookup,
-      region: 'us-east-1',
+      region: "us-east-1",
     });
 
-    const websiteBucket = new s3.Bucket(scope, 'WebsiteBucket', {
+    const websiteBucket = new s3.Bucket(scope, "WebsiteBucket", {
       removalPolicy: cdk.RemovalPolicy.DESTROY,
       autoDeleteObjects: true,
       publicReadAccess: false,
@@ -160,7 +176,7 @@ export class CreateCloudfrontSite extends cdk.Construct {
 
     if (props.subDomain) domainNames.push(props.subDomain);
 
-    const websiteDist = new cloudfront.Distribution(scope, 'WebsiteDist', {
+    const websiteDist = new cloudfront.Distribution(scope, "WebsiteDist", {
       defaultBehavior: {
         origin: new origins.S3Origin(websiteBucket),
         allowedMethods: cloudfront.AllowedMethods.ALLOW_ALL,
@@ -192,27 +208,27 @@ export class CreateCloudfrontSite extends cdk.Construct {
       certificate: websiteCert,
     });
 
-    new s3deploy.BucketDeployment(scope, 'WebsiteDeploy', {
+    new s3deploy.BucketDeployment(scope, "WebsiteDeploy", {
       sources: [s3deploy.Source.asset(props.websiteFolder)],
       destinationBucket: websiteBucket,
       distribution: websiteDist,
-      distributionPaths: ['/', `/${props.indexDoc}`],
+      distributionPaths: ["/", `/${props.indexDoc}`],
     });
 
-    new route53.ARecord(scope, 'WebisteDomainAlias', {
+    new route53.ARecord(scope, "WebisteDomainAlias", {
       zone: hostedZoneLookup,
       recordName: props.domain ? props.domain : props.hostedZone,
       target: route53.RecordTarget.fromAlias(
-        new targets.CloudFrontTarget(websiteDist),
+        new targets.CloudFrontTarget(websiteDist)
       ),
     });
 
     if (props.subDomain) {
-      new route53.ARecord(scope, 'WebisteSubDomainAlias', {
+      new route53.ARecord(scope, "WebisteSubDomainAlias", {
         zone: hostedZoneLookup,
         recordName: props.subDomain,
         target: route53.RecordTarget.fromAlias(
-          new targets.CloudFrontTarget(websiteDist),
+          new targets.CloudFrontTarget(websiteDist)
         ),
       });
     }

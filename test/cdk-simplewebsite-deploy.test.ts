@@ -131,62 +131,6 @@ describe('Create basic website', () => {
       Type: 'A',
     });
   });
-  it('should have a valid basic website with custom sub domain', () => {
-    const app = new cdk.App();
-    const stack = new cdk.Stack(app, 'TargetStack', {
-      env: {
-        account: '234567890123',
-        region: 'us-east-1',
-      },
-    });
-    new CreateBasicSite(stack, 'test-website', {
-      websiteFolder: './test/my-website',
-      indexDoc: 'index.html',
-      hostedZone: 'example.com',
-      subDomain: 'sub.example.com',
-    });
-
-    expect(stack).toHaveResource('AWS::S3::Bucket', {
-      BucketName: 'example.com',
-      WebsiteConfiguration: {
-        IndexDocument: 'index.html',
-      },
-    });
-
-    expect(stack).toHaveResource('AWS::S3::Bucket', {
-      BucketName: 'www.example.com',
-      WebsiteConfiguration: {
-        RedirectAllRequestsTo: {
-          HostName: 'example.com',
-          Protocol: 'http',
-        },
-      },
-    });
-
-    expect(stack).toHaveResource('Custom::CDKBucketDeployment');
-
-    expect(stack).toHaveResourceLike('AWS::S3::BucketPolicy', {
-      PolicyDocument: {
-        Statement: [
-          {
-            Action: 's3:GetObject',
-            Effect: 'Allow',
-            Principal: '*',
-          },
-        ],
-      },
-    });
-
-    expect(stack).toHaveResourceLike('AWS::Route53::RecordSet', {
-      Name: 'example.com.',
-      Type: 'A',
-    });
-
-    expect(stack).toHaveResourceLike('AWS::Route53::RecordSet', {
-      Name: 'sub.example.com.',
-      Type: 'A',
-    });
-  });
 });
 describe('Create cloudfront website', () => {
   it('should have a valid cloudfront website', () => {
