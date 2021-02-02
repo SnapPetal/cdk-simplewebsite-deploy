@@ -55,7 +55,7 @@ namespace SimpleWebsiteDeploy
 ```
 
 ### [CreateCloudfrontSite](https://github.com/snappetal/cdk-simplewebsite-deploy/blob/main/API.md#cdk-cloudfront-deploy-createcloudfrontsite)
-#### Creates a simple website using CloudFront distribution with a domain hosted in Route 53.
+#### Creates a simple website using a CloudFront distribution with a domain hosted in Route 53.
 ##### Typescript
 ```console
 npm install cdk-simplewebsite-deploy
