@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.4.0](https://github.com/SnapPetal/cdk-simplewebsite-deploy/compare/v0.3.2...v0.4.0) (2021-02-02)
+
+
+### ⚠ BREAKING CHANGES
+
+* there are multiple breaking changes in how to construct a site.
+
+* fix(cloudfront):fixed support for single domain in Cloudfront. ([3ef69ee](https://github.com/SnapPetal/cdk-simplewebsite-deploy/commit/3ef69ee01233e3886466523263094644387152d6))
+
 ### [0.3.2](https://github.com/SnapPetal/cdk-simplewebsite-deploy/compare/v0.3.1...v0.3.2) (2021-01-30)
 
 ### [0.3.1](https://github.com/SnapPetal/cdk-simplewebsite-deploy/compare/v0.3.0...v0.3.1) (2021-01-27)
