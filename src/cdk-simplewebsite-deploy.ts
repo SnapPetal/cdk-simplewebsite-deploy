@@ -151,10 +151,11 @@ export class CreateCloudfrontSite extends cdk.Construct {
     );
 
     const subjectAlternativeNames = [];
+    if (props.domain) subjectAlternativeNames.push(props.domain);
     if (props.subDomain) subjectAlternativeNames.push(props.subDomain);
 
     const websiteCert = new acm.DnsValidatedCertificate(this, 'WebsiteCert', {
-      domainName: props.domain ? props.domain : props.hostedZone,
+      domainName: props.hostedZone,
       subjectAlternativeNames,
       hostedZone: hostedZoneLookup,
       region: 'us-east-1',
