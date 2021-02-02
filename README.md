@@ -24,8 +24,7 @@ export class PipelineStack extends cdk.Stack {
     new CreateBasicSite(stack, 'test-website', {
       websiteFolder: './src/build',
       indexDoc: 'index.html',
-      hostedZone: 'example.com',
-      subDomain: 'www.example.com',
+      hostedZone: 'example.com'
     });
   }
 }
@@ -44,12 +43,11 @@ namespace SimpleWebsiteDeploy
     {
         internal PipelineStack(Construct scope, string id, IStackProps props = null) : base(scope, id, props)
         {
-            new CreateBasicSite(scope, "test-website", new SimpleWebsiteConfiguration()
+            new CreateBasicSite(scope, "test-website", new BasicSiteConfiguration()
             {
                 WebsiteFolder = "./src/build",
                 IndexDoc = "index.html",
-                HostedZone = "example.com",
-                SubDomain = "www.example.com"
+                HostedZone = "example.com"
             });
         }
     }
@@ -93,7 +91,7 @@ namespace SimpleWebsiteDeploy
     {
         internal PipelineStack(Construct scope, string id, IStackProps props = null) : base(scope, id, props)
         {
-            new CreateCloudfrontSite(scope, "test-website", new SimpleWebsiteConfiguration()
+            new CreateCloudfrontSite(scope, "test-website", new CloudfrontSiteConfiguration()
             {
                 WebsiteFolder = "./src/build",
                 IndexDoc = "index.html",
