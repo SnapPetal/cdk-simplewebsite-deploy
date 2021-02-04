@@ -2,7 +2,7 @@
   "dependencies": [
     {
       "name": "@aws-cdk/assert",
-      "version": "1.87.1",
+      "version": "1.88.0",
       "type": "build"
     },
     {
@@ -66,17 +66,12 @@
       "type": "build"
     },
     {
-      "name": "jsii-release",
-      "version": "^0.2.11",
-      "type": "build"
-    },
-    {
       "name": "json-schema",
       "type": "build"
     },
     {
       "name": "projen",
-      "version": "^0.15.14",
+      "version": "^0.16.1",
       "type": "build"
     },
     {
@@ -99,42 +94,42 @@
     },
     {
       "name": "@aws-cdk/aws-certificatemanager",
-      "version": "1.87.1",
+      "version": "1.88.0",
       "type": "peer"
     },
     {
       "name": "@aws-cdk/aws-cloudfront-origins",
-      "version": "1.87.1",
+      "version": "1.88.0",
       "type": "peer"
     },
     {
       "name": "@aws-cdk/aws-cloudfront",
-      "version": "1.87.1",
+      "version": "1.88.0",
       "type": "peer"
     },
     {
       "name": "@aws-cdk/aws-route53-targets",
-      "version": "1.87.1",
+      "version": "1.88.0",
       "type": "peer"
     },
     {
       "name": "@aws-cdk/aws-route53",
-      "version": "1.87.1",
+      "version": "1.88.0",
       "type": "peer"
     },
     {
       "name": "@aws-cdk/aws-s3-deployment",
-      "version": "1.87.1",
+      "version": "1.88.0",
       "type": "peer"
     },
     {
       "name": "@aws-cdk/aws-s3",
-      "version": "1.87.1",
+      "version": "1.88.0",
       "type": "peer"
     },
     {
       "name": "@aws-cdk/core",
-      "version": "1.87.1",
+      "version": "1.88.0",
       "type": "peer"
     },
     {
@@ -144,42 +139,42 @@
     },
     {
       "name": "@aws-cdk/aws-certificatemanager",
-      "version": "1.87.1",
+      "version": "1.88.0",
       "type": "runtime"
     },
     {
       "name": "@aws-cdk/aws-cloudfront-origins",
-      "version": "1.87.1",
+      "version": "1.88.0",
       "type": "runtime"
     },
     {
       "name": "@aws-cdk/aws-cloudfront",
-      "version": "1.87.1",
+      "version": "1.88.0",
       "type": "runtime"
     },
     {
       "name": "@aws-cdk/aws-route53-targets",
-      "version": "1.87.1",
+      "version": "1.88.0",
       "type": "runtime"
     },
     {
       "name": "@aws-cdk/aws-route53",
-      "version": "1.87.1",
+      "version": "1.88.0",
       "type": "runtime"
     },
     {
       "name": "@aws-cdk/aws-s3-deployment",
-      "version": "1.87.1",
+      "version": "1.88.0",
       "type": "runtime"
     },
     {
       "name": "@aws-cdk/aws-s3",
-      "version": "1.87.1",
+      "version": "1.88.0",
       "type": "runtime"
     },
     {
       "name": "@aws-cdk/core",
-      "version": "1.87.1",
+      "version": "1.88.0",
       "type": "runtime"
     }
   ],

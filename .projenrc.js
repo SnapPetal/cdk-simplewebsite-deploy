@@ -4,7 +4,7 @@ const project = new AwsCdkConstructLibrary({
   authorAddress: 'thon.becker@gmail.com',
   authorName: 'Thon Becker',
   stability: 'experimental',
-  cdkVersion: '1.87.1',
+  cdkVersion: '1.88.0',
   cdkVersionPinning: true,
   name: 'cdk-simplewebsite-deploy',
   repository: 'https://github.com/SnapPetal/cdk-simplewebsite-deploy',
