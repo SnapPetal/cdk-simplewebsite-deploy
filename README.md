@@ -84,7 +84,24 @@ public class MyProjectStack extends Stack {
     }
 }
 ```
+##### Python
+```console
+pip install cdk-simplewebsite-deploy
+```
+```python
+from aws_cdk import core
+from cdk_simplewebsite_deploy import CreateBasicSite
 
+
+class MyProjectStack(core.Stack):
+
+    def __init__(self, scope: core.Construct, construct_id: str, **kwargs) -> None:
+        super().__init__(scope, construct_id, **kwargs)
+
+        CreateBasicSite(self, 'test-website', website_folder='./src/build',
+                        index_doc='index.html',
+                        hosted_zone='example.com')
+```
 ### [CreateCloudfrontSite](https://github.com/snappetal/cdk-simplewebsite-deploy/blob/main/API.md#cdk-cloudfront-deploy-createcloudfrontsite)
 #### Creates a simple website using a CloudFront distribution with a domain hosted in Route 53.
 ##### Typescript
@@ -164,6 +181,25 @@ public class MyProjectStack extends Stack {
         		.subDomain("www.example.com");
     }
 }
+```
+##### Python
+```console
+pip install cdk-simplewebsite-deploy
+```
+```python
+from aws_cdk import core
+from cdk_simplewebsite_deploy import CreateCloudfrontSite
+
+
+class MyProjectStack(core.Stack):
+
+    def __init__(self, scope: core.Construct, construct_id: str, **kwargs) -> None:
+        super().__init__(scope, construct_id, **kwargs)
+
+        CreateCloudfrontSite(self, 'test-website', website_folder='./src/build',
+                             index_doc='index.html',
+                             hosted_zone='example.com',
+                             sub_domain='www.example.com')
 ```
 
 ## License
