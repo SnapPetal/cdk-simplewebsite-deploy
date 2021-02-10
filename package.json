@@ -30,7 +30,7 @@
     "organization": false
   },
   "devDependencies": {
-    "@aws-cdk/assert": "1.88.0",
+    "@aws-cdk/assert": "^1.81.0",
     "@types/jest": "^26.0.20",
     "@types/node": "^10.17.0",
     "@typescript-eslint/eslint-plugin": "^4.3.0",
@@ -43,7 +43,7 @@
     "jest-junit": "^12",
     "jsii": "^1.20.1",
     "jsii-diff": "^1.20.1",
-    "jsii-docgen": "^1.8.36",
+    "jsii-docgen": "^1.8.37",
     "jsii-pacmak": "^1.20.1",
     "json-schema": "^0.3.0",
     "projen": "^0.16.3",
@@ -53,25 +53,25 @@
     "typescript": "^3.9.5"
   },
   "peerDependencies": {
-    "@aws-cdk/aws-certificatemanager": "1.88.0",
-    "@aws-cdk/aws-cloudfront": "1.88.0",
-    "@aws-cdk/aws-cloudfront-origins": "1.88.0",
-    "@aws-cdk/aws-route53": "1.88.0",
-    "@aws-cdk/aws-route53-targets": "1.88.0",
-    "@aws-cdk/aws-s3": "1.88.0",
-    "@aws-cdk/aws-s3-deployment": "1.88.0",
-    "@aws-cdk/core": "1.88.0",
+    "@aws-cdk/aws-certificatemanager": "^1.81.0",
+    "@aws-cdk/aws-cloudfront": "^1.81.0",
+    "@aws-cdk/aws-cloudfront-origins": "^1.81.0",
+    "@aws-cdk/aws-route53": "^1.81.0",
+    "@aws-cdk/aws-route53-targets": "^1.81.0",
+    "@aws-cdk/aws-s3": "^1.81.0",
+    "@aws-cdk/aws-s3-deployment": "^1.81.0",
+    "@aws-cdk/core": "^1.81.0",
     "constructs": "^3.2.27"
   },
   "dependencies": {
-    "@aws-cdk/aws-certificatemanager": "1.88.0",
-    "@aws-cdk/aws-cloudfront": "1.88.0",
-    "@aws-cdk/aws-cloudfront-origins": "1.88.0",
-    "@aws-cdk/aws-route53": "1.88.0",
-    "@aws-cdk/aws-route53-targets": "1.88.0",
-    "@aws-cdk/aws-s3": "1.88.0",
-    "@aws-cdk/aws-s3-deployment": "1.88.0",
-    "@aws-cdk/core": "1.88.0"
+    "@aws-cdk/aws-certificatemanager": "^1.81.0",
+    "@aws-cdk/aws-cloudfront": "^1.81.0",
+    "@aws-cdk/aws-cloudfront-origins": "^1.81.0",
+    "@aws-cdk/aws-route53": "^1.81.0",
+    "@aws-cdk/aws-route53-targets": "^1.81.0",
+    "@aws-cdk/aws-s3": "^1.81.0",
+    "@aws-cdk/aws-s3-deployment": "^1.81.0",
+    "@aws-cdk/core": "^1.81.0"
   },
   "bundledDependencies": [],
   "keywords": [
