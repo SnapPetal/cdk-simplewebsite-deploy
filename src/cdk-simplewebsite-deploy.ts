@@ -150,20 +150,12 @@ export class CreateCloudfrontSite extends Construct {
       },
     );
 
-    const errorResponses: cloudfront.ErrorResponse[] = [];
+    const errorResponses = [];
     const distributionPaths = ['/', `/${props.indexDoc}`];
     if (props.errorDoc) {
       distributionPaths.push(`/${props.errorDoc}`);
       errorResponses.push({
-        httpStatus: 403,
-        responsePagePath: `/${props.errorDoc}`,
-      });
-      errorResponses.push({
         httpStatus: 404,
-        responsePagePath: `/${props.errorDoc}`,
-      });
-      errorResponses.push({
-        httpStatus: 500,
         responsePagePath: `/${props.errorDoc}`,
       });
     }
