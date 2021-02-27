@@ -5,7 +5,7 @@ import * as route53 from '@aws-cdk/aws-route53';
 import * as targets from '@aws-cdk/aws-route53-targets';
 import * as s3 from '@aws-cdk/aws-s3';
 import * as s3deploy from '@aws-cdk/aws-s3-deployment';
-import * as cdk from '@aws-cdk/core';
+import { RemovalPolicy, Construct } from '@aws-cdk/core';
 
 export interface BasicSiteConfiguration {
   /**
@@ -69,8 +69,8 @@ export interface CloudfrontSiteConfiguration {
   readonly priceClass?: cloudfront.PriceClass;
 }
 
-export class CreateBasicSite extends cdk.Construct {
-  constructor(scope: cdk.Construct, id: string, props: BasicSiteConfiguration) {
+export class CreateBasicSite extends Construct {
+  constructor(scope: Construct, id: string, props: BasicSiteConfiguration) {
     super(scope, id);
 
     const hostedZoneLookup = route53.HostedZone.fromLookup(
@@ -86,7 +86,7 @@ export class CreateBasicSite extends cdk.Construct {
       'WebsiteRedirectBucket',
       {
         bucketName: `www.${props.hostedZone}`,
-        removalPolicy: cdk.RemovalPolicy.DESTROY,
+        removalPolicy: RemovalPolicy.DESTROY,
         autoDeleteObjects: true,
         websiteRedirect: {
           hostName: props.hostedZone,
@@ -97,7 +97,7 @@ export class CreateBasicSite extends cdk.Construct {
 
     const websiteBucket = new s3.Bucket(scope, 'WebsiteBucket', {
       bucketName: props.hostedZone,
-      removalPolicy: cdk.RemovalPolicy.DESTROY,
+      removalPolicy: RemovalPolicy.DESTROY,
       autoDeleteObjects: true,
       websiteIndexDocument: props.indexDoc,
       websiteErrorDocument: props.errorDoc,
@@ -128,9 +128,9 @@ export class CreateBasicSite extends cdk.Construct {
   }
 }
 
-export class CreateCloudfrontSite extends cdk.Construct {
+export class CreateCloudfrontSite extends Construct {
   constructor(
-    scope: cdk.Construct,
+    scope: Construct,
     id: string,
     props: CloudfrontSiteConfiguration,
   ) {
@@ -150,6 +150,22 @@ export class CreateCloudfrontSite extends cdk.Construct {
       },
     );
 
+    const errorResponses: cloudfront.ErrorResponse[] = [];
+    if (props.errorDoc) {
+      errorResponses.push({
+        httpStatus: 403,
+        responsePagePath: `/${props.errorDoc}`,
+      });
+      errorResponses.push({
+        httpStatus: 404,
+        responsePagePath: `/${props.errorDoc}`,
+      });
+      errorResponses.push({
+        httpStatus: 500,
+        responsePagePath: `/${props.errorDoc}`,
+      });
+    }
+
     const subjectAlternativeNames = [];
     if (props.domain) subjectAlternativeNames.push(props.domain);
     if (props.subDomain) subjectAlternativeNames.push(props.subDomain);
@@ -162,7 +178,7 @@ export class CreateCloudfrontSite extends cdk.Construct {
     });
 
     const websiteBucket = new s3.Bucket(scope, 'WebsiteBucket', {
-      removalPolicy: cdk.RemovalPolicy.DESTROY,
+      removalPolicy: RemovalPolicy.DESTROY,
       autoDeleteObjects: true,
       publicReadAccess: false,
       encryption: s3.BucketEncryption.S3_MANAGED,
@@ -187,23 +203,7 @@ export class CreateCloudfrontSite extends cdk.Construct {
       priceClass: props.priceClass
         ? props.priceClass
         : cloudfront.PriceClass.PRICE_CLASS_100,
-      errorResponses: [
-        {
-          httpStatus: 404,
-          responsePagePath: `/${
-            props.errorDoc ? props.errorDoc : props.indexDoc
-          }`,
-        },
-        {
-          httpStatus: 500,
-          ttl: cdk.Duration.seconds(2),
-        },
-        {
-          httpStatus: 403,
-          responseHttpStatus: 200,
-          responsePagePath: `/${props.indexDoc}`,
-        },
-      ],
+      errorResponses,
       defaultRootObject: props.indexDoc,
       domainNames,
       certificate: websiteCert,

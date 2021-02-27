@@ -270,18 +270,19 @@ describe('Create cloudfront website', () => {
         Aliases: ['example.com', 'www.example.com'],
         CustomErrorResponses: [
           {
+            ErrorCode: 403,
+            ResponseCode: 403,
+            ResponsePagePath: '/error.html',
+          },
+          {
             ErrorCode: 404,
             ResponseCode: 404,
             ResponsePagePath: '/error.html',
           },
           {
-            ErrorCachingMinTTL: 2,
             ErrorCode: 500,
-          },
-          {
-            ErrorCode: 403,
-            ResponseCode: 200,
-            ResponsePagePath: '/index.html',
+            ResponseCode: 500,
+            ResponsePagePath: '/error.html',
           },
         ],
         DefaultRootObject: 'index.html',
