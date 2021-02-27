@@ -158,6 +158,10 @@ export class CreateCloudfrontSite extends Construct {
         httpStatus: 404,
         responsePagePath: `/${props.errorDoc}`,
       });
+      errorResponses.push({
+        httpStatus: 403,
+        responsePagePath: `/${props.errorDoc}`,
+      });
     }
 
     const subjectAlternativeNames = [];
