@@ -151,7 +151,9 @@ export class CreateCloudfrontSite extends Construct {
     );
 
     const errorResponses: cloudfront.ErrorResponse[] = [];
+    const distributionPaths = ['/', `/${props.indexDoc}`];
     if (props.errorDoc) {
+      distributionPaths.push(`/${props.errorDoc}`);
       errorResponses.push({
         httpStatus: 403,
         responsePagePath: `/${props.errorDoc}`,
@@ -213,7 +215,7 @@ export class CreateCloudfrontSite extends Construct {
       sources: [s3deploy.Source.asset(props.websiteFolder)],
       destinationBucket: websiteBucket,
       distribution: websiteDist,
-      distributionPaths: ['/', `/${props.indexDoc}`],
+      distributionPaths,
     });
 
     new route53.ARecord(scope, 'WebisteDomainAlias', {
