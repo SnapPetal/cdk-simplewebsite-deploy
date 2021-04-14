@@ -162,6 +162,17 @@ export class CreateCloudfrontSite extends Construct {
         httpStatus: 403,
         responsePagePath: `/${props.errorDoc}`,
       });
+    } else {
+      errorResponses.push({
+        httpStatus: 404,
+        responseHttpStatus: 200,
+        responsePagePath: `/${props.indexDoc}`,
+      });
+      errorResponses.push({
+        httpStatus: 403,
+        responseHttpStatus: 200,
+        responsePagePath: `/${props.indexDoc}`,
+      });
     }
 
     const subjectAlternativeNames = [];
