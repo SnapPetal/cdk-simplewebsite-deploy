@@ -49,7 +49,7 @@
     "projen": "^0.17.49",
     "standard-version": "^9",
     "ts-jest": "^26.5.5",
-    "typedoc": "^2",
+    "typedoc": "^0.20.35",
     "typescript": "^4.2.4"
   },
   "peerDependencies": {
