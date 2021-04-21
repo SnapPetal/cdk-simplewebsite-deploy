@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.4.20](https://github.com/SnapPetal/cdk-simplewebsite-deploy/compare/v0.4.19...v0.4.20) (2021-04-21)
+
+
+### Bug Fixes
+
+* **dev-deps:** upgraded projen ([6b79fe8](https://github.com/SnapPetal/cdk-simplewebsite-deploy/commit/6b79fe8c004f945862fe9c4167e6f9615407d554))
+
 ### [0.4.19](https://github.com/SnapPetal/cdk-simplewebsite-deploy/compare/v0.4.18...v0.4.19) (2021-04-14)
 
 ### [0.4.18](https://github.com/SnapPetal/cdk-simplewebsite-deploy/compare/v0.4.17...v0.4.18) (2021-04-12)
