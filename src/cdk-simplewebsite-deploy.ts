@@ -1,10 +1,10 @@
 import * as acm from '@aws-cdk/aws-certificatemanager';
-import * as cloudfront from '@aws-cdk/aws-cloudfront';
 import * as origins from '@aws-cdk/aws-cloudfront-origins';
-import * as route53 from '@aws-cdk/aws-route53';
+import * as cloudfront from '@aws-cdk/aws-cloudfront';
 import * as targets from '@aws-cdk/aws-route53-targets';
-import * as s3 from '@aws-cdk/aws-s3';
+import * as route53 from '@aws-cdk/aws-route53';
 import * as s3deploy from '@aws-cdk/aws-s3-deployment';
+import * as s3 from '@aws-cdk/aws-s3';
 import { RemovalPolicy, Construct } from '@aws-cdk/core';
 
 export interface BasicSiteConfiguration {

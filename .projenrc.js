@@ -15,7 +15,7 @@ const project = new AwsCdkConstructLibrary({
   license: 'Apache-2.0',
   licensed: true,
   allowLibraryDependencies: true,
-  antitamper: true,
+  antitamper: false,
   autoDetectBin: true,
   buildWorkflow: true,
   defaultReleaseBranch: 'main',
