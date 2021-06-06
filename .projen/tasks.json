@@ -160,6 +160,9 @@
           "exec": "yarn install --check-files"
         },
         {
+          "exec": "yarn upgrade projen"
+        },
+        {
           "exec": "npx projen"
         }
       ]
