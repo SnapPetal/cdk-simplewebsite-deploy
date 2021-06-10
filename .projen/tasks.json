@@ -91,9 +91,6 @@
         },
         {
           "spawn": "package"
-        },
-        {
-          "spawn": "docgen"
         }
       ]
     },
@@ -143,6 +140,27 @@
       "steps": [
         {
           "builtin": "release/reset-version"
+        }
+      ]
+    },
+    "upgrade-dependencies": {
+      "name": "upgrade-dependencies",
+      "description": "upgrade dependencies",
+      "env": {
+        "CI": "0"
+      },
+      "steps": [
+        {
+          "exec": "npm-check-updates --upgrade --target=minor --reject='projen'"
+        },
+        {
+          "exec": "yarn install --check-files"
+        },
+        {
+          "exec": "yarn upgrade @aws-cdk/assert @types/jest @types/node @typescript-eslint/eslint-plugin @typescript-eslint/parser eslint eslint-import-resolver-node eslint-import-resolver-typescript eslint-plugin-import jest jest-junit jsii jsii-diff jsii-docgen jsii-pacmak json-schema npm-check-updates standard-version ts-jest typescript @aws-cdk/aws-certificatemanager @aws-cdk/aws-cloudfront-origins @aws-cdk/aws-cloudfront @aws-cdk/aws-route53-targets @aws-cdk/aws-route53 @aws-cdk/aws-s3-deployment @aws-cdk/aws-s3 @aws-cdk/core constructs @aws-cdk/aws-certificatemanager @aws-cdk/aws-cloudfront-origins @aws-cdk/aws-cloudfront @aws-cdk/aws-route53-targets @aws-cdk/aws-route53 @aws-cdk/aws-s3-deployment @aws-cdk/aws-s3 @aws-cdk/core"
+        },
+        {
+          "exec": "npx projen"
         }
       ]
     },
@@ -205,16 +223,6 @@
         }
       ]
     },
-    "docgen": {
-      "name": "docgen",
-      "category": "20.release",
-      "description": "Generate API.md from .jsii manifest",
-      "steps": [
-        {
-          "exec": "jsii-docgen"
-        }
-      ]
-    },
     "compat": {
       "name": "compat",
       "category": "20.release",
@@ -222,6 +230,16 @@
       "steps": [
         {
           "exec": "jsii-diff npm:$(node -p \"require('./package.json').name\") -k --ignore-file .compatignore || (echo \"\nUNEXPECTED BREAKING CHANGES: add keys such as 'removed:constructs.Node.of' to .compatignore to skip.\n\" && exit 1)"
+        }
+      ]
+    },
+    "docgen": {
+      "name": "docgen",
+      "category": "20.release",
+      "description": "Generate API.md from .jsii manifest",
+      "steps": [
+        {
+          "exec": "jsii-docgen"
         }
       ]
     }

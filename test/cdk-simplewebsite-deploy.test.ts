@@ -151,8 +151,68 @@ describe('Create cloudfront website', () => {
       PolicyDocument: {
         Statement: [
           {
-            Action: ['s3:GetObject*', 's3:GetBucket*', 's3:List*'],
+            Action: [
+              's3:GetBucket*',
+              's3:List*',
+              's3:DeleteObject*',
+            ],
             Effect: 'Allow',
+            Principal: {
+              AWS: {
+                'Fn::GetAtt': [
+                  'CustomS3AutoDeleteObjectsCustomResourceProviderRole3B1BD092',
+                  'Arn',
+                ],
+              },
+            },
+            Resource: [
+              {
+                'Fn::GetAtt': [
+                  'WebsiteBucket75C24D94',
+                  'Arn',
+                ],
+              },
+              {
+                'Fn::Join': [
+                  '',
+                  [
+                    {
+                      'Fn::GetAtt': [
+                        'WebsiteBucket75C24D94',
+                        'Arn',
+                      ],
+                    },
+                    '/*',
+                  ],
+                ],
+              },
+            ],
+          },
+          {
+            Action: 's3:GetObject',
+            Effect: 'Allow',
+            Principal: {
+              CanonicalUser: {
+                'Fn::GetAtt': [
+                  'WebsiteDistOrigin1S3Origin585D7174',
+                  'S3CanonicalUserId',
+                ],
+              },
+            },
+            Resource: {
+              'Fn::Join': [
+                '',
+                [
+                  {
+                    'Fn::GetAtt': [
+                      'WebsiteBucket75C24D94',
+                      'Arn',
+                    ],
+                  },
+                  '/*',
+                ],
+              ],
+            },
           },
         ],
       },
@@ -212,8 +272,68 @@ describe('Create cloudfront website', () => {
       PolicyDocument: {
         Statement: [
           {
-            Action: ['s3:GetObject*', 's3:GetBucket*', 's3:List*'],
+            Action: [
+              's3:GetBucket*',
+              's3:List*',
+              's3:DeleteObject*',
+            ],
             Effect: 'Allow',
+            Principal: {
+              AWS: {
+                'Fn::GetAtt': [
+                  'CustomS3AutoDeleteObjectsCustomResourceProviderRole3B1BD092',
+                  'Arn',
+                ],
+              },
+            },
+            Resource: [
+              {
+                'Fn::GetAtt': [
+                  'WebsiteBucket75C24D94',
+                  'Arn',
+                ],
+              },
+              {
+                'Fn::Join': [
+                  '',
+                  [
+                    {
+                      'Fn::GetAtt': [
+                        'WebsiteBucket75C24D94',
+                        'Arn',
+                      ],
+                    },
+                    '/*',
+                  ],
+                ],
+              },
+            ],
+          },
+          {
+            Action: 's3:GetObject',
+            Effect: 'Allow',
+            Principal: {
+              CanonicalUser: {
+                'Fn::GetAtt': [
+                  'WebsiteDistOrigin1S3Origin585D7174',
+                  'S3CanonicalUserId',
+                ],
+              },
+            },
+            Resource: {
+              'Fn::Join': [
+                '',
+                [
+                  {
+                    'Fn::GetAtt': [
+                      'WebsiteBucket75C24D94',
+                      'Arn',
+                    ],
+                  },
+                  '/*',
+                ],
+              ],
+            },
           },
         ],
       },
@@ -256,8 +376,68 @@ describe('Create cloudfront website', () => {
       PolicyDocument: {
         Statement: [
           {
-            Action: ['s3:GetObject*', 's3:GetBucket*', 's3:List*'],
+            Action: [
+              's3:GetBucket*',
+              's3:List*',
+              's3:DeleteObject*',
+            ],
             Effect: 'Allow',
+            Principal: {
+              AWS: {
+                'Fn::GetAtt': [
+                  'CustomS3AutoDeleteObjectsCustomResourceProviderRole3B1BD092',
+                  'Arn',
+                ],
+              },
+            },
+            Resource: [
+              {
+                'Fn::GetAtt': [
+                  'WebsiteBucket75C24D94',
+                  'Arn',
+                ],
+              },
+              {
+                'Fn::Join': [
+                  '',
+                  [
+                    {
+                      'Fn::GetAtt': [
+                        'WebsiteBucket75C24D94',
+                        'Arn',
+                      ],
+                    },
+                    '/*',
+                  ],
+                ],
+              },
+            ],
+          },
+          {
+            Action: 's3:GetObject',
+            Effect: 'Allow',
+            Principal: {
+              CanonicalUser: {
+                'Fn::GetAtt': [
+                  'WebsiteDistOrigin1S3Origin585D7174',
+                  'S3CanonicalUserId',
+                ],
+              },
+            },
+            Resource: {
+              'Fn::Join': [
+                '',
+                [
+                  {
+                    'Fn::GetAtt': [
+                      'WebsiteBucket75C24D94',
+                      'Arn',
+                    ],
+                  },
+                  '/*',
+                ],
+              ],
+            },
           },
         ],
       },
@@ -319,8 +499,68 @@ describe('Create cloudfront website', () => {
       PolicyDocument: {
         Statement: [
           {
-            Action: ['s3:GetObject*', 's3:GetBucket*', 's3:List*'],
+            Action: [
+              's3:GetBucket*',
+              's3:List*',
+              's3:DeleteObject*',
+            ],
             Effect: 'Allow',
+            Principal: {
+              AWS: {
+                'Fn::GetAtt': [
+                  'CustomS3AutoDeleteObjectsCustomResourceProviderRole3B1BD092',
+                  'Arn',
+                ],
+              },
+            },
+            Resource: [
+              {
+                'Fn::GetAtt': [
+                  'WebsiteBucket75C24D94',
+                  'Arn',
+                ],
+              },
+              {
+                'Fn::Join': [
+                  '',
+                  [
+                    {
+                      'Fn::GetAtt': [
+                        'WebsiteBucket75C24D94',
+                        'Arn',
+                      ],
+                    },
+                    '/*',
+                  ],
+                ],
+              },
+            ],
+          },
+          {
+            Action: 's3:GetObject',
+            Effect: 'Allow',
+            Principal: {
+              CanonicalUser: {
+                'Fn::GetAtt': [
+                  'WebsiteDistOrigin1S3Origin585D7174',
+                  'S3CanonicalUserId',
+                ],
+              },
+            },
+            Resource: {
+              'Fn::Join': [
+                '',
+                [
+                  {
+                    'Fn::GetAtt': [
+                      'WebsiteBucket75C24D94',
+                      'Arn',
+                    ],
+                  },
+                  '/*',
+                ],
+              ],
+            },
           },
         ],
       },
@@ -358,8 +598,68 @@ describe('Create cloudfront website', () => {
       PolicyDocument: {
         Statement: [
           {
-            Action: ['s3:GetObject*', 's3:GetBucket*', 's3:List*'],
+            Action: [
+              's3:GetBucket*',
+              's3:List*',
+              's3:DeleteObject*',
+            ],
             Effect: 'Allow',
+            Principal: {
+              AWS: {
+                'Fn::GetAtt': [
+                  'CustomS3AutoDeleteObjectsCustomResourceProviderRole3B1BD092',
+                  'Arn',
+                ],
+              },
+            },
+            Resource: [
+              {
+                'Fn::GetAtt': [
+                  'WebsiteBucket75C24D94',
+                  'Arn',
+                ],
+              },
+              {
+                'Fn::Join': [
+                  '',
+                  [
+                    {
+                      'Fn::GetAtt': [
+                        'WebsiteBucket75C24D94',
+                        'Arn',
+                      ],
+                    },
+                    '/*',
+                  ],
+                ],
+              },
+            ],
+          },
+          {
+            Action: 's3:GetObject',
+            Effect: 'Allow',
+            Principal: {
+              CanonicalUser: {
+                'Fn::GetAtt': [
+                  'WebsiteDistOrigin1S3Origin585D7174',
+                  'S3CanonicalUserId',
+                ],
+              },
+            },
+            Resource: {
+              'Fn::Join': [
+                '',
+                [
+                  {
+                    'Fn::GetAtt': [
+                      'WebsiteBucket75C24D94',
+                      'Arn',
+                    ],
+                  },
+                  '/*',
+                ],
+              ],
+            },
           },
         ],
       },
@@ -397,8 +697,68 @@ describe('Create cloudfront website', () => {
       PolicyDocument: {
         Statement: [
           {
-            Action: ['s3:GetObject*', 's3:GetBucket*', 's3:List*'],
+            Action: [
+              's3:GetBucket*',
+              's3:List*',
+              's3:DeleteObject*',
+            ],
             Effect: 'Allow',
+            Principal: {
+              AWS: {
+                'Fn::GetAtt': [
+                  'CustomS3AutoDeleteObjectsCustomResourceProviderRole3B1BD092',
+                  'Arn',
+                ],
+              },
+            },
+            Resource: [
+              {
+                'Fn::GetAtt': [
+                  'WebsiteBucket75C24D94',
+                  'Arn',
+                ],
+              },
+              {
+                'Fn::Join': [
+                  '',
+                  [
+                    {
+                      'Fn::GetAtt': [
+                        'WebsiteBucket75C24D94',
+                        'Arn',
+                      ],
+                    },
+                    '/*',
+                  ],
+                ],
+              },
+            ],
+          },
+          {
+            Action: 's3:GetObject',
+            Effect: 'Allow',
+            Principal: {
+              CanonicalUser: {
+                'Fn::GetAtt': [
+                  'WebsiteDistOrigin1S3Origin585D7174',
+                  'S3CanonicalUserId',
+                ],
+              },
+            },
+            Resource: {
+              'Fn::Join': [
+                '',
+                [
+                  {
+                    'Fn::GetAtt': [
+                      'WebsiteBucket75C24D94',
+                      'Arn',
+                    ],
+                  },
+                  '/*',
+                ],
+              ],
+            },
           },
         ],
       },
