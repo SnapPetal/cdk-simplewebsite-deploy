@@ -33,6 +33,8 @@ jobs:
         run: cp -f package.json package.json.bak.json
       - name: Unbump
         run: npx projen unbump
+      - name: Anti-tamper check
+        run: git diff --ignore-space-at-eol --exit-code
       - name: Check for new commits
         id: git_remote
         run: echo ::set-output name=latest_commit::"$(git ls-remote origin -h ${{
