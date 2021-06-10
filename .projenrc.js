@@ -9,7 +9,6 @@ const project = new AwsCdkConstructLibrary({
   repository: 'https://github.com/SnapPetal/cdk-simplewebsite-deploy',
   cdkDependencies: ['@aws-cdk/core', '@aws-cdk/aws-route53', '@aws-cdk/aws-route53-targets', '@aws-cdk/aws-s3', '@aws-cdk/aws-s3-deployment', '@aws-cdk/aws-certificatemanager', '@aws-cdk/aws-cloudfront', '@aws-cdk/aws-cloudfront-origins'],
   description: 'This is an AWS CDK Construct to simplify deploying a single-page website use CloudFront distributions.',
-  antitamper: false,
   defaultReleaseBranch: 'main',
   publishToPypi: {
     distName: 'cdk-simplewebsite-deploy',
