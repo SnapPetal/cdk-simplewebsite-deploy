@@ -4,7 +4,7 @@ const project = new AwsCdkConstructLibrary({
   authorAddress: 'thon.becker@gmail.com',
   authorName: 'Thon Becker',
   stability: 'stable',
-  cdkVersion: '1.108.0',
+  cdkVersion: '1.108.1',
   name: 'cdk-simplewebsite-deploy',
   repository: 'https://github.com/SnapPetal/cdk-simplewebsite-deploy',
   cdkDependencies: ['@aws-cdk/core', '@aws-cdk/aws-route53', '@aws-cdk/aws-route53-targets', '@aws-cdk/aws-s3', '@aws-cdk/aws-s3-deployment', '@aws-cdk/aws-certificatemanager', '@aws-cdk/aws-cloudfront', '@aws-cdk/aws-cloudfront-origins'],
