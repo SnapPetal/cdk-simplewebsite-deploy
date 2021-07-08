@@ -296,6 +296,9 @@
       },
       "steps": [
         {
+          "exec": "rm -fr dist"
+        },
+        {
           "spawn": "bump"
         },
         {
