@@ -37,7 +37,61 @@ describe('Create basic website', () => {
           {
             Action: 's3:GetObject',
             Effect: 'Allow',
-            Principal: '*',
+            Principal: {
+              AWS: '*',
+            },
+            Resource: {
+              'Fn::Join': [
+                '',
+                [
+                  {
+                    'Fn::GetAtt': [
+                      'WebsiteBucket75C24D94',
+                      'Arn',
+                    ],
+                  },
+                  '/*',
+                ],
+              ],
+            },
+          },
+          {
+            Action: [
+              's3:GetBucket*',
+              's3:List*',
+              's3:DeleteObject*',
+            ],
+            Effect: 'Allow',
+            Principal: {
+              AWS: {
+                'Fn::GetAtt': [
+                  'CustomS3AutoDeleteObjectsCustomResourceProviderRole3B1BD092',
+                  'Arn',
+                ],
+              },
+            },
+            Resource: [
+              {
+                'Fn::GetAtt': [
+                  'WebsiteBucket75C24D94',
+                  'Arn',
+                ],
+              },
+              {
+                'Fn::Join': [
+                  '',
+                  [
+                    {
+                      'Fn::GetAtt': [
+                        'WebsiteBucket75C24D94',
+                        'Arn',
+                      ],
+                    },
+                    '/*',
+                  ],
+                ],
+              },
+            ],
           },
         ],
       },
@@ -80,7 +134,61 @@ describe('Create basic website', () => {
           {
             Action: 's3:GetObject',
             Effect: 'Allow',
-            Principal: '*',
+            Principal: {
+              AWS: '*',
+            },
+            Resource: {
+              'Fn::Join': [
+                '',
+                [
+                  {
+                    'Fn::GetAtt': [
+                      'WebsiteBucket75C24D94',
+                      'Arn',
+                    ],
+                  },
+                  '/*',
+                ],
+              ],
+            },
+          },
+          {
+            Action: [
+              's3:GetBucket*',
+              's3:List*',
+              's3:DeleteObject*',
+            ],
+            Effect: 'Allow',
+            Principal: {
+              AWS: {
+                'Fn::GetAtt': [
+                  'CustomS3AutoDeleteObjectsCustomResourceProviderRole3B1BD092',
+                  'Arn',
+                ],
+              },
+            },
+            Resource: [
+              {
+                'Fn::GetAtt': [
+                  'WebsiteBucket75C24D94',
+                  'Arn',
+                ],
+              },
+              {
+                'Fn::Join': [
+                  '',
+                  [
+                    {
+                      'Fn::GetAtt': [
+                        'WebsiteBucket75C24D94',
+                        'Arn',
+                      ],
+                    },
+                    '/*',
+                  ],
+                ],
+              },
+            ],
           },
         ],
       },
@@ -115,7 +223,61 @@ describe('Create basic website', () => {
           {
             Action: 's3:GetObject',
             Effect: 'Allow',
-            Principal: '*',
+            Principal: {
+              AWS: '*',
+            },
+            Resource: {
+              'Fn::Join': [
+                '',
+                [
+                  {
+                    'Fn::GetAtt': [
+                      'WebsiteBucket75C24D94',
+                      'Arn',
+                    ],
+                  },
+                  '/*',
+                ],
+              ],
+            },
+          },
+          {
+            Action: [
+              's3:GetBucket*',
+              's3:List*',
+              's3:DeleteObject*',
+            ],
+            Effect: 'Allow',
+            Principal: {
+              AWS: {
+                'Fn::GetAtt': [
+                  'CustomS3AutoDeleteObjectsCustomResourceProviderRole3B1BD092',
+                  'Arn',
+                ],
+              },
+            },
+            Resource: [
+              {
+                'Fn::GetAtt': [
+                  'WebsiteBucket75C24D94',
+                  'Arn',
+                ],
+              },
+              {
+                'Fn::Join': [
+                  '',
+                  [
+                    {
+                      'Fn::GetAtt': [
+                        'WebsiteBucket75C24D94',
+                        'Arn',
+                      ],
+                    },
+                    '/*',
+                  ],
+                ],
+              },
+            ],
           },
         ],
       },
