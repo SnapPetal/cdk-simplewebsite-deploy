@@ -203,7 +203,7 @@ export class CreateCloudfrontSite extends Construct {
     const websiteDist = new cloudfront.Distribution(scope, 'WebsiteDist', {
       defaultBehavior: {
         origin: new origins.S3Origin(websiteBucket),
-        allowedMethods: cloudfront.AllowedMethods.ALLOW_ALL,
+        allowedMethods: cloudfront.AllowedMethods.ALLOW_GET_HEAD,
         viewerProtocolPolicy: cloudfront.ViewerProtocolPolicy.REDIRECT_TO_HTTPS,
       },
       minimumProtocolVersion: cloudfront.SecurityPolicyProtocol.TLS_V1_2_2019,
