@@ -36,7 +36,7 @@
     "organization": false
   },
   "devDependencies": {
-    "@aws-cdk/assert": "^1.116.0",
+    "@aws-cdk/assert": "^1.117.0",
     "@types/jest": "^26.0.24",
     "@types/node": "^10.17.0",
     "@typescript-eslint/eslint-plugin": "^4.29.0",
@@ -59,25 +59,25 @@
     "typescript": "^4.3.5"
   },
   "peerDependencies": {
-    "@aws-cdk/aws-certificatemanager": "^1.116.0",
-    "@aws-cdk/aws-cloudfront": "^1.116.0",
-    "@aws-cdk/aws-cloudfront-origins": "^1.116.0",
-    "@aws-cdk/aws-route53": "^1.116.0",
-    "@aws-cdk/aws-route53-targets": "^1.116.0",
-    "@aws-cdk/aws-s3": "^1.116.0",
-    "@aws-cdk/aws-s3-deployment": "^1.116.0",
-    "@aws-cdk/core": "^1.116.0",
+    "@aws-cdk/aws-certificatemanager": "^1.117.0",
+    "@aws-cdk/aws-cloudfront": "^1.117.0",
+    "@aws-cdk/aws-cloudfront-origins": "^1.117.0",
+    "@aws-cdk/aws-route53": "^1.117.0",
+    "@aws-cdk/aws-route53-targets": "^1.117.0",
+    "@aws-cdk/aws-s3": "^1.117.0",
+    "@aws-cdk/aws-s3-deployment": "^1.117.0",
+    "@aws-cdk/core": "^1.117.0",
     "constructs": "^3.2.27"
   },
   "dependencies": {
-    "@aws-cdk/aws-certificatemanager": "^1.116.0",
-    "@aws-cdk/aws-cloudfront": "^1.116.0",
-    "@aws-cdk/aws-cloudfront-origins": "^1.116.0",
-    "@aws-cdk/aws-route53": "^1.116.0",
-    "@aws-cdk/aws-route53-targets": "^1.116.0",
-    "@aws-cdk/aws-s3": "^1.116.0",
-    "@aws-cdk/aws-s3-deployment": "^1.116.0",
-    "@aws-cdk/core": "^1.116.0"
+    "@aws-cdk/aws-certificatemanager": "^1.117.0",
+    "@aws-cdk/aws-cloudfront": "^1.117.0",
+    "@aws-cdk/aws-cloudfront-origins": "^1.117.0",
+    "@aws-cdk/aws-route53": "^1.117.0",
+    "@aws-cdk/aws-route53-targets": "^1.117.0",
+    "@aws-cdk/aws-s3": "^1.117.0",
+    "@aws-cdk/aws-s3-deployment": "^1.117.0",
+    "@aws-cdk/core": "^1.117.0"
   },
   "bundledDependencies": [],
   "keywords": [
