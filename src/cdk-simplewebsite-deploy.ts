@@ -187,7 +187,7 @@ export class CreateCloudfrontSite extends Construct {
     const websiteBucket = new s3.Bucket(scope, 'WebsiteBucket', {
       removalPolicy: RemovalPolicy.DESTROY,
       autoDeleteObjects: true,
-      publicReadAccess: false,
+      blockPublicAccess: s3.BlockPublicAccess.BLOCK_ALL,
       encryption: s3.BucketEncryption.S3_MANAGED,
     });
 
@@ -203,7 +203,7 @@ export class CreateCloudfrontSite extends Construct {
     const websiteDist = new cloudfront.Distribution(scope, 'WebsiteDist', {
       defaultBehavior: {
         origin: new origins.S3Origin(websiteBucket),
-        allowedMethods: cloudfront.AllowedMethods.ALLOW_GET_HEAD,
+        allowedMethods: cloudfront.AllowedMethods.ALLOW_GET_HEAD_OPTIONS,
         viewerProtocolPolicy: cloudfront.ViewerProtocolPolicy.REDIRECT_TO_HTTPS,
       },
       minimumProtocolVersion: cloudfront.SecurityPolicyProtocol.TLS_V1_2_2019,
