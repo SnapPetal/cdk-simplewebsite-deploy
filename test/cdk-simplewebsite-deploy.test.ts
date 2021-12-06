@@ -1,6 +1,6 @@
 import '@aws-cdk/assert/jest';
-import * as cloudfront from '@aws-cdk/aws-cloudfront';
-import * as cdk from '@aws-cdk/core';
+import { App, Stack } from 'aws-cdk-lib';
+import * as cloudfront from 'aws-cdk-lib/aws-cloudfront';
 import {
   CreateBasicSite,
   CreateCloudfrontSite,
@@ -8,8 +8,8 @@ import {
 
 describe('Create basic website', () => {
   it('should have a valid basic website with error page', () => {
-    const app = new cdk.App();
-    const stack = new cdk.Stack(app, 'TargetStack', {
+    const app = new App();
+    const stack = new Stack(app, 'TargetStack', {
       env: {
         account: '234567890123',
         region: 'us-east-1',
@@ -98,8 +98,8 @@ describe('Create basic website', () => {
     });
   });
   it('should have a valid basic website with encryption', () => {
-    const app = new cdk.App();
-    const stack = new cdk.Stack(app, 'TargetStack', {
+    const app = new App();
+    const stack = new Stack(app, 'TargetStack', {
       env: {
         account: '234567890123',
         region: 'us-east-1',
@@ -195,8 +195,8 @@ describe('Create basic website', () => {
     });
   });
   it('should have a valid basic website with custom domain', () => {
-    const app = new cdk.App();
-    const stack = new cdk.Stack(app, 'TargetStack', {
+    const app = new App();
+    const stack = new Stack(app, 'TargetStack', {
       env: {
         account: '234567890123',
         region: 'us-east-1',
@@ -296,8 +296,8 @@ describe('Create basic website', () => {
 });
 describe('Create cloudfront website', () => {
   it('should have a valid cloudfront website', () => {
-    const app = new cdk.App();
-    const stack = new cdk.Stack(app, 'TargetStack', {
+    const app = new App();
+    const stack = new Stack(app, 'TargetStack', {
       env: {
         account: '234567890123',
         region: 'us-east-1',
@@ -399,8 +399,8 @@ describe('Create cloudfront website', () => {
   });
   it('should throw an error when domain and subDomain are defined for a cloudfront website', () => {
     expect(() => {
-      const app = new cdk.App();
-      const stack = new cdk.Stack(app, 'TargetStack', {
+      const app = new App();
+      const stack = new Stack(app, 'TargetStack', {
         env: {
           account: '234567890123',
           region: 'us-east-1',
@@ -416,8 +416,8 @@ describe('Create cloudfront website', () => {
     }).toThrow('Domain and sub domain parameters cannot both be defined');
   });
   it('should have a valid cloudfront website with single domain', () => {
-    const app = new cdk.App();
-    const stack = new cdk.Stack(app, 'TargetStack', {
+    const app = new App();
+    const stack = new Stack(app, 'TargetStack', {
       env: {
         account: '234567890123',
         region: 'us-east-1',
@@ -519,8 +519,8 @@ describe('Create cloudfront website', () => {
     });
   });
   it('should have a valid cloudfront website with custom error', () => {
-    const app = new cdk.App();
-    const stack = new cdk.Stack(app, 'TargetStack', {
+    const app = new App();
+    const stack = new Stack(app, 'TargetStack', {
       env: {
         account: '234567890123',
         region: 'us-east-1',
@@ -630,8 +630,8 @@ describe('Create cloudfront website', () => {
     });
   });
   it('should have a valid cloudfront website with encrypted S3 bucket', () => {
-    const app = new cdk.App();
-    const stack = new cdk.Stack(app, 'TargetStack', {
+    const app = new App();
+    const stack = new Stack(app, 'TargetStack', {
       env: {
         account: '234567890123',
         region: 'us-east-1',
@@ -741,8 +741,8 @@ describe('Create cloudfront website', () => {
     });
   });
   it('should have a valid cloudfront website with price class all', () => {
-    const app = new cdk.App();
-    const stack = new cdk.Stack(app, 'TargetStack', {
+    const app = new App();
+    const stack = new Stack(app, 'TargetStack', {
       env: {
         account: '234567890123',
         region: 'us-east-1',
@@ -841,8 +841,8 @@ describe('Create cloudfront website', () => {
     });
   });
   it('should have a valid cloudfront website with default price class 100', () => {
-    const app = new cdk.App();
-    const stack = new cdk.Stack(app, 'TargetStack', {
+    const app = new App();
+    const stack = new Stack(app, 'TargetStack', {
       env: {
         account: '234567890123',
         region: 'us-east-1',
