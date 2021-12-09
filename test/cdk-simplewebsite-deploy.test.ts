@@ -1,5 +1,5 @@
-import '@aws-cdk/assert/jest';
 import { App, Stack } from 'aws-cdk-lib';
+import { Template } from 'aws-cdk-lib/assertions';
 import * as cloudfront from 'aws-cdk-lib/aws-cloudfront';
 import {
   CreateBasicSite,
@@ -22,16 +22,14 @@ describe('Create basic website', () => {
       hostedZone: 'example.com',
     });
 
-    expect(stack).toHaveResource('AWS::S3::Bucket', {
+    Template.fromStack(stack).hasResourceProperties('AWS::S3::Bucket', {
       WebsiteConfiguration: {
         IndexDocument: 'index.html',
         ErrorDocument: 'error.html',
       },
     });
 
-    expect(stack).toHaveResource('Custom::CDKBucketDeployment');
-
-    expect(stack).toHaveResourceLike('AWS::S3::BucketPolicy', {
+    Template.fromStack(stack).hasResourceProperties('AWS::S3::BucketPolicy', {
       PolicyDocument: {
         Statement: [
           {
@@ -111,7 +109,7 @@ describe('Create basic website', () => {
       hostedZone: 'example.com',
     });
 
-    expect(stack).toHaveResource('AWS::S3::Bucket', {
+    Template.fromStack(stack).hasResourceProperties('AWS::S3::Bucket', {
       BucketEncryption: {
         ServerSideEncryptionConfiguration: [
           {
@@ -126,9 +124,7 @@ describe('Create basic website', () => {
       },
     });
 
-    expect(stack).toHaveResource('Custom::CDKBucketDeployment');
-
-    expect(stack).toHaveResourceLike('AWS::S3::BucketPolicy', {
+    Template.fromStack(stack).hasResourceProperties('AWS::S3::BucketPolicy', {
       PolicyDocument: {
         Statement: [
           {
@@ -208,16 +204,14 @@ describe('Create basic website', () => {
       hostedZone: 'example.com',
     });
 
-    expect(stack).toHaveResource('AWS::S3::Bucket', {
+    Template.fromStack(stack).hasResourceProperties('AWS::S3::Bucket', {
       BucketName: 'example.com',
       WebsiteConfiguration: {
         IndexDocument: 'index.html',
       },
     });
 
-    expect(stack).toHaveResource('Custom::CDKBucketDeployment');
-
-    expect(stack).toHaveResourceLike('AWS::S3::BucketPolicy', {
+    Template.fromStack(stack).hasResourceProperties('AWS::S3::BucketPolicy', {
       PolicyDocument: {
         Statement: [
           {
@@ -283,12 +277,12 @@ describe('Create basic website', () => {
       },
     });
 
-    expect(stack).toHaveResourceLike('AWS::Route53::RecordSet', {
+    Template.fromStack(stack).hasResourceProperties('AWS::Route53::RecordSet', {
       Name: 'example.com.',
       Type: 'A',
     });
 
-    expect(stack).toHaveResourceLike('AWS::Route53::RecordSet', {
+    Template.fromStack(stack).hasResourceProperties('AWS::Route53::RecordSet', {
       Name: 'www.example.com.',
       Type: 'A',
     });
@@ -309,7 +303,7 @@ describe('Create cloudfront website', () => {
       hostedZone: 'example.com',
     });
 
-    expect(stack).toHaveResourceLike('AWS::S3::BucketPolicy', {
+    Template.fromStack(stack).hasResourceProperties('AWS::S3::BucketPolicy', {
       PolicyDocument: {
         Statement: [
           {
@@ -380,9 +374,7 @@ describe('Create cloudfront website', () => {
       },
     });
 
-    expect(stack).toHaveResource('Custom::CDKBucketDeployment');
-
-    expect(stack).toHaveResourceLike('AWS::CloudFront::Distribution', {
+    Template.fromStack(stack).hasResourceProperties('AWS::CloudFront::Distribution', {
       DistributionConfig: {
         Aliases: ['example.com'],
         DefaultRootObject: 'index.html',
@@ -392,7 +384,7 @@ describe('Create cloudfront website', () => {
       },
     });
 
-    expect(stack).toHaveResourceLike('AWS::Route53::RecordSet', {
+    Template.fromStack(stack).hasResourceProperties('AWS::Route53::RecordSet', {
       Name: 'example.com.',
       Type: 'A',
     });
@@ -430,7 +422,7 @@ describe('Create cloudfront website', () => {
       domain: 'sample.example.com',
     });
 
-    expect(stack).toHaveResourceLike('AWS::S3::BucketPolicy', {
+    Template.fromStack(stack).hasResourceProperties('AWS::S3::BucketPolicy', {
       PolicyDocument: {
         Statement: [
           {
@@ -501,9 +493,7 @@ describe('Create cloudfront website', () => {
       },
     });
 
-    expect(stack).toHaveResource('Custom::CDKBucketDeployment');
-
-    expect(stack).toHaveResourceLike('AWS::CloudFront::Distribution', {
+    Template.fromStack(stack).hasResourceProperties('AWS::CloudFront::Distribution', {
       DistributionConfig: {
         Aliases: ['sample.example.com'],
         DefaultRootObject: 'index.html',
@@ -513,7 +503,7 @@ describe('Create cloudfront website', () => {
       },
     });
 
-    expect(stack).toHaveResourceLike('AWS::Route53::RecordSet', {
+    Template.fromStack(stack).hasResourceProperties('AWS::Route53::RecordSet', {
       Name: 'sample.example.com.',
       Type: 'A',
     });
@@ -534,7 +524,7 @@ describe('Create cloudfront website', () => {
       subDomain: 'www.example.com',
     });
 
-    expect(stack).toHaveResourceLike('AWS::S3::BucketPolicy', {
+    Template.fromStack(stack).hasResourceProperties('AWS::S3::BucketPolicy', {
       PolicyDocument: {
         Statement: [
           {
@@ -605,15 +595,18 @@ describe('Create cloudfront website', () => {
       },
     });
 
-    expect(stack).toHaveResource('Custom::CDKBucketDeployment');
-
-    expect(stack).toHaveResourceLike('AWS::CloudFront::Distribution', {
+    Template.fromStack(stack).hasResourceProperties('AWS::CloudFront::Distribution', {
       DistributionConfig: {
         Aliases: ['example.com', 'www.example.com'],
         CustomErrorResponses: [
           {
             ErrorCode: 404,
             ResponseCode: 404,
+            ResponsePagePath: '/error.html',
+          },
+          {
+            ErrorCode: 403,
+            ResponseCode: 403,
             ResponsePagePath: '/error.html',
           },
         ],
@@ -624,7 +617,7 @@ describe('Create cloudfront website', () => {
       },
     });
 
-    expect(stack).toHaveResourceLike('AWS::Route53::RecordSet', {
+    Template.fromStack(stack).hasResourceProperties('AWS::Route53::RecordSet', {
       Name: 'www.example.com.',
       Type: 'A',
     });
@@ -645,7 +638,7 @@ describe('Create cloudfront website', () => {
       subDomain: 'www.example.com',
     });
 
-    expect(stack).toHaveResource('AWS::S3::Bucket', {
+    Template.fromStack(stack).hasResourceProperties('AWS::S3::Bucket', {
       BucketEncryption: {
         ServerSideEncryptionConfiguration: [
           {
@@ -657,7 +650,7 @@ describe('Create cloudfront website', () => {
       },
     });
 
-    expect(stack).toHaveResourceLike('AWS::S3::BucketPolicy', {
+    Template.fromStack(stack).hasResourceProperties('AWS::S3::BucketPolicy', {
       PolicyDocument: {
         Statement: [
           {
@@ -728,9 +721,7 @@ describe('Create cloudfront website', () => {
       },
     });
 
-    expect(stack).toHaveResource('Custom::CDKBucketDeployment');
-
-    expect(stack).toHaveResourceLike('AWS::CloudFront::Distribution', {
+    Template.fromStack(stack).hasResourceProperties('AWS::CloudFront::Distribution', {
       DistributionConfig: {
         Aliases: ['example.com', 'www.example.com'],
         DefaultRootObject: 'index.html',
@@ -756,7 +747,7 @@ describe('Create cloudfront website', () => {
       priceClass: cloudfront.PriceClass.PRICE_CLASS_ALL,
     });
 
-    expect(stack).toHaveResourceLike('AWS::S3::BucketPolicy', {
+    Template.fromStack(stack).hasResourceProperties('AWS::S3::BucketPolicy', {
       PolicyDocument: {
         Statement: [
           {
@@ -827,9 +818,7 @@ describe('Create cloudfront website', () => {
       },
     });
 
-    expect(stack).toHaveResource('Custom::CDKBucketDeployment');
-
-    expect(stack).toHaveResourceLike('AWS::CloudFront::Distribution', {
+    Template.fromStack(stack).hasResourceProperties('AWS::CloudFront::Distribution', {
       DistributionConfig: {
         Aliases: ['example.com', 'www.example.com'],
         DefaultRootObject: 'index.html',
@@ -855,7 +844,7 @@ describe('Create cloudfront website', () => {
       subDomain: 'www.example.com',
     });
 
-    expect(stack).toHaveResourceLike('AWS::S3::BucketPolicy', {
+    Template.fromStack(stack).hasResourceProperties('AWS::S3::BucketPolicy', {
       PolicyDocument: {
         Statement: [
           {
@@ -926,9 +915,7 @@ describe('Create cloudfront website', () => {
       },
     });
 
-    expect(stack).toHaveResource('Custom::CDKBucketDeployment');
-
-    expect(stack).toHaveResourceLike('AWS::CloudFront::Distribution', {
+    Template.fromStack(stack).hasResourceProperties('AWS::CloudFront::Distribution', {
       DistributionConfig: {
         Aliases: ['example.com', 'www.example.com'],
         DefaultRootObject: 'index.html',
