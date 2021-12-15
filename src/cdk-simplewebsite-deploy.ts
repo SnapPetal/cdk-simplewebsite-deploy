@@ -8,6 +8,27 @@ import * as s3deploy from 'aws-cdk-lib/aws-s3-deployment';
 import { RemovalPolicy } from 'aws-cdk-lib/core';
 import { Construct } from 'constructs';
 
+export declare enum PriceClass {
+  /**
+     * USA, Canada, Europe, & Israel.
+     *
+     * @stability stable
+     */
+  PRICE_CLASS_100 = 'PriceClass_100',
+  /**
+     * PRICE_CLASS_100 + South Africa, Kenya, Middle East, Japan, Singapore, South Korea, Taiwan, Hong Kong, & Philippines.
+     *
+     * @stability stable
+     */
+  PRICE_CLASS_200 = 'PriceClass_200',
+  /**
+     * All locations.
+     *
+     * @stability stable
+     */
+  PRICE_CLASS_ALL = 'PriceClass_All'
+}
+
 export interface BasicSiteConfiguration {
   /**
    * Local path to the website folder you want to deploy on S3.
@@ -67,7 +88,7 @@ export interface CloudfrontSiteConfiguration {
    * @default PriceClass.PRICE_CLASS_100.
    * @see https://aws.amazon.com/cloudfront/pricing/.
    */
-  readonly priceClass?: cloudfront.PriceClass;
+  readonly priceClass?: PriceClass;
 }
 
 export class CreateBasicSite extends Construct {
