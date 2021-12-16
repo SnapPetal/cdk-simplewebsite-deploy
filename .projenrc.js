@@ -3,7 +3,7 @@ const project = new awscdk.AwsCdkConstructLibrary({
   authorAddress: 'thon.becker@gmail.com',
   authorName: 'Thon Becker',
   stability: 'stable',
-  cdkVersion: '2.1.0',
+  cdkVersion: '2.2.0',
   constructsVersion: '10.0.0',
   name: 'cdk-simplewebsite-deploy',
   repository: 'https://github.com/SnapPetal/cdk-simplewebsite-deploy',
