@@ -1,10 +1,11 @@
-const { awscdk } = require('projen');
+const { awscdk, majorVersion } = require('projen');
 const project = new awscdk.AwsCdkConstructLibrary({
   authorAddress: 'thon.becker@gmail.com',
   authorName: 'Thon Becker',
   stability: 'stable',
   cdkVersion: '2.3.0',
   constructsVersion: '10.0.0',
+  majorVersion: 1,
   name: 'cdk-simplewebsite-deploy',
   repository: 'https://github.com/SnapPetal/cdk-simplewebsite-deploy',
   description: 'This is an AWS CDK Construct to simplify deploying a single-page website use CloudFront distributions.',
