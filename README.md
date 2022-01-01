@@ -89,15 +89,15 @@ public class MyProjectStack extends Stack {
 pip install cdk-simplewebsite-deploy
 ```
 ```python
-from aws_cdk import core
+from aws_cdk import Stack
 from cdk_simplewebsite_deploy import CreateBasicSite
+from constructs import Construct
 
+class MyProjectStack(Stack):
 
-class MyProjectStack(core.Stack):
-
-    def __init__(self, scope: core.Construct, construct_id: str, **kwargs) -> None:
+    def __init__(self, scope: Construct, construct_id: str, **kwargs) -> None:
         super().__init__(scope, construct_id, **kwargs)
-
+        
         CreateBasicSite(self, 'test-website', website_folder='./src/build',
                         index_doc='index.html',
                         hosted_zone='example.com')
