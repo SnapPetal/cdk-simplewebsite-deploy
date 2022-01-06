@@ -3,7 +3,7 @@ const project = new awscdk.AwsCdkConstructLibrary({
   authorAddress: 'thon.becker@gmail.com',
   authorName: 'Thon Becker',
   stability: 'stable',
-  cdkVersion: '2.3.0',
+  cdkVersion: '2.4.0',
   constructsVersion: '10.0.26',
   majorVersion: 2,
   name: 'cdk-simplewebsite-deploy',
