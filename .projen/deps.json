@@ -22,12 +22,12 @@
     },
     {
       "name": "aws-cdk-lib",
-      "version": "2.50.0",
+      "version": "2.53.0",
       "type": "build"
     },
     {
       "name": "constructs",
-      "version": "10.1.150",
+      "version": "10.1.179",
       "type": "build"
     },
     {
@@ -101,18 +101,23 @@
       "type": "build"
     },
     {
+      "name": "@types/babel__traverse",
+      "version": "7.18.2",
+      "type": "override"
+    },
+    {
       "name": "@types/prettier",
       "version": "2.6.0",
       "type": "override"
     },
     {
       "name": "aws-cdk-lib",
-      "version": "^2.50.0",
+      "version": "^2.53.0",
       "type": "peer"
     },
     {
       "name": "constructs",
-      "version": "^10.1.150",
+      "version": "^10.1.179",
       "type": "peer"
     }
   ],
