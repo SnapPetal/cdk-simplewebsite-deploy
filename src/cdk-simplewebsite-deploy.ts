@@ -227,7 +227,7 @@ export class CreateCloudfrontSite extends Construct {
     });
 
     const forceRedirectFunction = new cloudfront.Function(this, 'ForceRedirectFunction', {
-      code: cloudfront.FunctionCode.fromInline(`function handler(e){return{statusCode:302,statusDescription:"Found",headers:{location:{value:'https://${props.subDomain}'}}}}`),
+      code: cloudfront.FunctionCode.fromInline(`function handler(e){var u=e.request;return u.uri.includes("www")?u:{statusCode:302,statusDescription:"Found",headers:{location:{value:https://${props.subDomain}}}}}`),
     });
 
     if (props.subDomain) domainNames.push(props.subDomain);
