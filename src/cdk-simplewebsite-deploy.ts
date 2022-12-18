@@ -8,6 +8,8 @@ import * as s3 from 'aws-cdk-lib/aws-s3';
 import * as s3deploy from 'aws-cdk-lib/aws-s3-deployment';
 import { Construct } from 'constructs';
 
+interface ErrorResponse { httpStatus: number; responseHttpStatus?: number; responsePagePath: string }
+
 export declare enum PriceClass {
   /**
      * USA, Canada, Europe, & Israel.
@@ -172,7 +174,7 @@ export class CreateCloudfrontSite extends Construct {
       },
     );
 
-    const errorResponses = [];
+    const errorResponses: ErrorResponse[] = [];
     if (props.errorDoc) {
       errorResponses.push({
         httpStatus: 404,
@@ -195,7 +197,7 @@ export class CreateCloudfrontSite extends Construct {
       });
     }
 
-    const subjectAlternativeNames = [];
+    const subjectAlternativeNames: string[] = [];
     if (props.domain) subjectAlternativeNames.push(props.domain);
     if (props.subDomain) subjectAlternativeNames.push(props.subDomain);
 
@@ -213,12 +215,20 @@ export class CreateCloudfrontSite extends Construct {
       encryption: s3.BucketEncryption.S3_MANAGED,
     });
 
-    const domainNames = [];
+    const domainNames: string[] = [];
     if (props.domain) {
       domainNames.push(props.domain);
     } else {
       domainNames.push(props.hostedZone);
     }
+
+    const defaultFunction = new cloudfront.Function(this, 'DefaultFunction', {
+      code: cloudfront.FunctionCode.fromInline('function handler(event) { return event.request }'),
+    });
+
+    const forceRedirectFunction = new cloudfront.Function(this, 'ForceRedirectFunction', {
+      code: cloudfront.FunctionCode.fromInline(`function handler(e){return{statusCode:302,statusDescription:"Found",headers:{location:{value:'https://${props.subDomain}'}}}}`),
+    });
 
     if (props.subDomain) domainNames.push(props.subDomain);
 
@@ -227,6 +237,10 @@ export class CreateCloudfrontSite extends Construct {
         origin: new origins.S3Origin(websiteBucket),
         allowedMethods: cloudfront.AllowedMethods.ALLOW_GET_HEAD_OPTIONS,
         viewerProtocolPolicy: cloudfront.ViewerProtocolPolicy.REDIRECT_TO_HTTPS,
+        functionAssociations: [{
+          function: props.subDomain ? forceRedirectFunction : defaultFunction,
+          eventType: cloudfront.FunctionEventType.VIEWER_REQUEST,
+        }],
       },
       minimumProtocolVersion: cloudfront.SecurityPolicyProtocol.TLS_V1_2_2019,
       priceClass: props.priceClass
