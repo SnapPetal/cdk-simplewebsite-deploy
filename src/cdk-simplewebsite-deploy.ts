@@ -222,14 +222,6 @@ export class CreateCloudfrontSite extends Construct {
       domainNames.push(props.hostedZone);
     }
 
-    const defaultFunction = new cloudfront.Function(this, 'DefaultFunction', {
-      code: cloudfront.FunctionCode.fromInline('function handler(event) { return event.request }'),
-    });
-
-    const forceRedirectFunction = new cloudfront.Function(this, 'ForceRedirectFunction', {
-      code: cloudfront.FunctionCode.fromInline(`function handler(e){var u=e.request;return u.uri.includes("www")?u:{statusCode:302,statusDescription:"Found",headers:{location:{value:"https://${props.subDomain}"}}}}`),
-    });
-
     if (props.subDomain) domainNames.push(props.subDomain);
 
     const websiteDist = new cloudfront.Distribution(scope, 'WebsiteDist', {
@@ -237,12 +229,8 @@ export class CreateCloudfrontSite extends Construct {
         origin: new origins.S3Origin(websiteBucket),
         allowedMethods: cloudfront.AllowedMethods.ALLOW_GET_HEAD_OPTIONS,
         viewerProtocolPolicy: cloudfront.ViewerProtocolPolicy.REDIRECT_TO_HTTPS,
-        functionAssociations: [{
-          function: props.subDomain ? forceRedirectFunction : defaultFunction,
-          eventType: cloudfront.FunctionEventType.VIEWER_REQUEST,
-        }],
       },
-      minimumProtocolVersion: cloudfront.SecurityPolicyProtocol.TLS_V1_2_2019,
+      minimumProtocolVersion: cloudfront.SecurityPolicyProtocol.TLS_V1_2_2021,
       priceClass: props.priceClass
         ? props.priceClass
         : cloudfront.PriceClass.PRICE_CLASS_100,
