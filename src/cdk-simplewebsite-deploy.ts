@@ -231,6 +231,7 @@ export class CreateCloudfrontSite extends Construct {
         viewerProtocolPolicy: cloudfront.ViewerProtocolPolicy.REDIRECT_TO_HTTPS,
       },
       minimumProtocolVersion: cloudfront.SecurityPolicyProtocol.TLS_V1_2_2021,
+      httpVersion: cloudfront.HttpVersion.HTTP2_AND_3,
       priceClass: props.priceClass
         ? props.priceClass
         : cloudfront.PriceClass.PRICE_CLASS_100,
