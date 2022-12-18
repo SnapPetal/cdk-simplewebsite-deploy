@@ -379,7 +379,7 @@ describe('Create cloudfront website', () => {
         Aliases: ['example.com'],
         DefaultRootObject: 'index.html',
         Enabled: true,
-        HttpVersion: 'http2',
+        HttpVersion: 'http2and3',
         IPV6Enabled: true,
       },
     });
@@ -498,7 +498,7 @@ describe('Create cloudfront website', () => {
         Aliases: ['sample.example.com'],
         DefaultRootObject: 'index.html',
         Enabled: true,
-        HttpVersion: 'http2',
+        HttpVersion: 'http2and3',
         IPV6Enabled: true,
       },
     });
@@ -612,7 +612,7 @@ describe('Create cloudfront website', () => {
         ],
         DefaultRootObject: 'index.html',
         Enabled: true,
-        HttpVersion: 'http2',
+        HttpVersion: 'http2and3',
         IPV6Enabled: true,
       },
     });
@@ -726,7 +726,7 @@ describe('Create cloudfront website', () => {
         Aliases: ['example.com', 'www.example.com'],
         DefaultRootObject: 'index.html',
         Enabled: true,
-        HttpVersion: 'http2',
+        HttpVersion: 'http2and3',
         IPV6Enabled: true,
       },
     });
@@ -823,7 +823,7 @@ describe('Create cloudfront website', () => {
         Aliases: ['example.com', 'www.example.com'],
         DefaultRootObject: 'index.html',
         Enabled: true,
-        HttpVersion: 'http2',
+        HttpVersion: 'http2and3',
         IPV6Enabled: true,
         PriceClass: 'PriceClass_All',
       },
@@ -920,7 +920,7 @@ describe('Create cloudfront website', () => {
         Aliases: ['example.com', 'www.example.com'],
         DefaultRootObject: 'index.html',
         Enabled: true,
-        HttpVersion: 'http2',
+        HttpVersion: 'http2and3',
         IPV6Enabled: true,
         PriceClass: 'PriceClass_100',
       },
