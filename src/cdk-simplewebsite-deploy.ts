@@ -201,11 +201,9 @@ export class CreateCloudfrontSite extends Construct {
     if (props.domain) subjectAlternativeNames.push(props.domain);
     if (props.subDomain) subjectAlternativeNames.push(props.subDomain);
 
-    const websiteCert = new acm.DnsValidatedCertificate(this, 'WebsiteCert', {
+    const websiteCert = new acm.Certificate(this, 'WebsiteCert', {
       domainName: props.hostedZone,
       subjectAlternativeNames,
-      hostedZone: hostedZoneLookup,
-      region: 'us-east-1',
     });
 
     const websiteBucket = new s3.Bucket(scope, 'WebsiteBucket', {
