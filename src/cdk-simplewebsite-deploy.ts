@@ -204,6 +204,7 @@ export class CreateCloudfrontSite extends Construct {
     const websiteCert = new acm.Certificate(this, 'WebsiteCert', {
       domainName: props.hostedZone,
       subjectAlternativeNames,
+      validation: acm.CertificateValidation.fromDns(hostedZoneLookup),
     });
 
     const websiteBucket = new s3.Bucket(scope, 'WebsiteBucket', {
