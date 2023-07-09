@@ -1,0 +1,138 @@
+{
+  // These tasks will run in order when initializing your CodeSandbox project.
+  "setupTasks": [
+    {
+      "name": "Install Dependencies",
+      "command": "yarn install"
+    }
+  ],
+
+  // These tasks can be run from CodeSandbox. Running one will open a log in the app.
+  "tasks": {
+    "build": {
+      "name": "build",
+      "command": "yarn build",
+      "runAtStart": false
+    },
+    "bump": {
+      "name": "bump",
+      "command": "yarn bump",
+      "runAtStart": false
+    },
+    "clobber": {
+      "name": "clobber",
+      "command": "yarn clobber",
+      "runAtStart": false
+    },
+    "compat": {
+      "name": "compat",
+      "command": "yarn compat",
+      "runAtStart": false
+    },
+    "compile": {
+      "name": "compile",
+      "command": "yarn compile",
+      "runAtStart": false
+    },
+    "default": {
+      "name": "default",
+      "command": "yarn default",
+      "runAtStart": false
+    },
+    "docgen": {
+      "name": "docgen",
+      "command": "yarn docgen",
+      "runAtStart": false
+    },
+    "eject": {
+      "name": "eject",
+      "command": "yarn eject",
+      "runAtStart": false
+    },
+    "eslint": {
+      "name": "eslint",
+      "command": "yarn eslint",
+      "runAtStart": false
+    },
+    "package": {
+      "name": "package",
+      "command": "yarn package",
+      "runAtStart": false
+    },
+    "package-all": {
+      "name": "package-all",
+      "command": "yarn package-all",
+      "runAtStart": false
+    },
+    "package:dotnet": {
+      "name": "package:dotnet",
+      "command": "yarn package:dotnet",
+      "runAtStart": false
+    },
+    "package:java": {
+      "name": "package:java",
+      "command": "yarn package:java",
+      "runAtStart": false
+    },
+    "package:js": {
+      "name": "package:js",
+      "command": "yarn package:js",
+      "runAtStart": false
+    },
+    "package:python": {
+      "name": "package:python",
+      "command": "yarn package:python",
+      "runAtStart": false
+    },
+    "post-compile": {
+      "name": "post-compile",
+      "command": "yarn post-compile",
+      "runAtStart": false
+    },
+    "post-upgrade": {
+      "name": "post-upgrade",
+      "command": "yarn post-upgrade",
+      "runAtStart": false
+    },
+    "pre-compile": {
+      "name": "pre-compile",
+      "command": "yarn pre-compile",
+      "runAtStart": false
+    },
+    "release": {
+      "name": "release",
+      "command": "yarn release",
+      "runAtStart": false
+    },
+    "test": {
+      "name": "test",
+      "command": "yarn test",
+      "runAtStart": false
+    },
+    "test:watch": {
+      "name": "test:watch",
+      "command": "yarn test:watch",
+      "runAtStart": false
+    },
+    "unbump": {
+      "name": "unbump",
+      "command": "yarn unbump",
+      "runAtStart": false
+    },
+    "upgrade": {
+      "name": "upgrade",
+      "command": "yarn upgrade",
+      "runAtStart": true
+    },
+    "watch": {
+      "name": "watch",
+      "command": "yarn watch",
+      "runAtStart": false
+    },
+    "projen": {
+      "name": "projen",
+      "command": "yarn projen",
+      "runAtStart": false
+    }
+  }
+}
