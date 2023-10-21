@@ -55,6 +55,7 @@ describe('Create basic website', () => {
           },
           {
             Action: [
+              's3:PutBucketPolicy',
               's3:GetBucket*',
               's3:List*',
               's3:DeleteObject*',
@@ -150,6 +151,7 @@ describe('Create basic website', () => {
           },
           {
             Action: [
+              's3:PutBucketPolicy',
               's3:GetBucket*',
               's3:List*',
               's3:DeleteObject*',
@@ -237,6 +239,7 @@ describe('Create basic website', () => {
           },
           {
             Action: [
+              's3:PutBucketPolicy',
               's3:GetBucket*',
               's3:List*',
               's3:DeleteObject*',
@@ -308,6 +311,7 @@ describe('Create cloudfront website', () => {
         Statement: [
           {
             Action: [
+              's3:PutBucketPolicy',
               's3:GetBucket*',
               's3:List*',
               's3:DeleteObject*',
@@ -427,6 +431,7 @@ describe('Create cloudfront website', () => {
         Statement: [
           {
             Action: [
+              's3:PutBucketPolicy',
               's3:GetBucket*',
               's3:List*',
               's3:DeleteObject*',
@@ -529,6 +534,7 @@ describe('Create cloudfront website', () => {
         Statement: [
           {
             Action: [
+              's3:PutBucketPolicy',
               's3:GetBucket*',
               's3:List*',
               's3:DeleteObject*',
@@ -655,6 +661,7 @@ describe('Create cloudfront website', () => {
         Statement: [
           {
             Action: [
+              's3:PutBucketPolicy',
               's3:GetBucket*',
               's3:List*',
               's3:DeleteObject*',
@@ -752,6 +759,7 @@ describe('Create cloudfront website', () => {
         Statement: [
           {
             Action: [
+              's3:PutBucketPolicy',
               's3:GetBucket*',
               's3:List*',
               's3:DeleteObject*',
@@ -849,6 +857,7 @@ describe('Create cloudfront website', () => {
         Statement: [
           {
             Action: [
+              's3:PutBucketPolicy',
               's3:GetBucket*',
               's3:List*',
               's3:DeleteObject*',

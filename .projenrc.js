@@ -1,4 +1,4 @@
-const { awscdk, majorVersion } = require('projen');
+const { awscdk } = require('projen');
 const project = new awscdk.AwsCdkConstructLibrary({
   authorAddress: 'thon.becker@gmail.com',
   authorName: 'Thon Becker',
