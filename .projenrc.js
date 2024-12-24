@@ -4,7 +4,6 @@ const project = new awscdk.AwsCdkConstructLibrary({
   authorName: 'Thon Becker',
   stability: 'stable',
   cdkVersion: '2.170.0',
-  cdkMinimumVersion: '2.170.0',
   majorVersion: 2,
   minorVersion: 170,
   gitignore: ['.DS_Store', '.idea'],
