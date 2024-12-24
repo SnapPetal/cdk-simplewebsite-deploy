@@ -292,7 +292,7 @@ const cloudfrontSiteConfiguration: CloudfrontSiteConfiguration = { ... }
 | <code><a href="#cdk-simplewebsite-deploy.CloudfrontSiteConfiguration.property.domain">domain</a></code> | <code>string</code> | Used to deploy a Cloudfront site with a single domain. |
 | <code><a href="#cdk-simplewebsite-deploy.CloudfrontSiteConfiguration.property.errorDoc">errorDoc</a></code> | <code>string</code> | The error document of the website. |
 | <code><a href="#cdk-simplewebsite-deploy.CloudfrontSiteConfiguration.property.priceClass">priceClass</a></code> | <code><a href="#cdk-simplewebsite-deploy.PriceClass">PriceClass</a></code> | The price class determines how many edge locations CloudFront will use for your distribution. |
-| <code><a href="#cdk-simplewebsite-deploy.CloudfrontSiteConfiguration.property.subDomain">subDomain</a></code> | <code>string</code> | The sub-domain name you want to deploy. |
+| <code><a href="#cdk-simplewebsite-deploy.CloudfrontSiteConfiguration.property.subDomain">subDomain</a></code> | <code>string</code> | The subdomain name you want to deploy. |
 
 ---
 
@@ -386,7 +386,7 @@ public readonly subDomain: string;
 - *Type:* string
 - *Default:* no value
 
-The sub-domain name you want to deploy.
+The subdomain name you want to deploy.
 
 e.g. www.example.com
 If you include a value for both domain and subDomain,
