@@ -78,7 +78,7 @@ export interface CloudfrontSiteConfiguration {
    */
   readonly domain?: string;
   /**
-   * The sub-domain name you want to deploy. e.g. www.example.com
+   * The subdomain name you want to deploy. e.g. www.example.com
    * If you include a value for both domain and subDomain,
    * an error will be thrown.
    *
@@ -134,7 +134,7 @@ export class CreateBasicSite extends Construct {
       destinationBucket: websiteBucket,
     });
 
-    new route53.ARecord(scope, 'WebisteAlias', {
+    new route53.ARecord(scope, 'WebsiteAlias', {
       zone: hostedZoneLookup,
       recordName: props.hostedZone,
       target: route53.RecordTarget.fromAlias(
@@ -142,7 +142,7 @@ export class CreateBasicSite extends Construct {
       ),
     });
 
-    new route53.ARecord(scope, 'WebisteRedirectAlias', {
+    new route53.ARecord(scope, 'WebsiteRedirectAlias', {
       zone: hostedZoneLookup,
       recordName: `www.${props.hostedZone}`,
       target: route53.RecordTarget.fromAlias(
@@ -225,7 +225,7 @@ export class CreateCloudfrontSite extends Construct {
 
     const websiteDist = new cloudfront.Distribution(scope, 'WebsiteDist', {
       defaultBehavior: {
-        origin: new origins.S3Origin(websiteBucket),
+        origin: new origins.S3StaticWebsiteOrigin(websiteBucket),
         allowedMethods: cloudfront.AllowedMethods.ALLOW_GET_HEAD_OPTIONS,
         viewerProtocolPolicy: cloudfront.ViewerProtocolPolicy.REDIRECT_TO_HTTPS,
       },
@@ -246,7 +246,7 @@ export class CreateCloudfrontSite extends Construct {
       distribution: websiteDist,
     });
 
-    new route53.ARecord(scope, 'WebisteDomainAlias', {
+    new route53.ARecord(scope, 'WebsiteDomainAlias', {
       zone: hostedZoneLookup,
       recordName: props.domain ? props.domain : props.hostedZone,
       target: route53.RecordTarget.fromAlias(
@@ -255,7 +255,7 @@ export class CreateCloudfrontSite extends Construct {
     });
 
     if (props.subDomain) {
-      new route53.ARecord(scope, 'WebisteSubDomainAlias', {
+      new route53.ARecord(scope, 'WebsiteSubDomainAlias', {
         zone: hostedZoneLookup,
         recordName: props.subDomain,
         target: route53.RecordTarget.fromAlias(
