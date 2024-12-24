@@ -126,6 +126,12 @@ export class CreateBasicSite extends Construct {
       websiteIndexDocument: props.indexDoc,
       websiteErrorDocument: props.errorDoc,
       publicReadAccess: true,
+      blockPublicAccess: {
+        blockPublicPolicy: false,
+        blockPublicAcls: false,
+        ignorePublicAcls: false,
+        restrictPublicBuckets: false,
+      },
       encryption: s3.BucketEncryption.S3_MANAGED,
     });
 
@@ -210,7 +216,6 @@ export class CreateCloudfrontSite extends Construct {
     const websiteBucket = new s3.Bucket(scope, 'WebsiteBucket', {
       removalPolicy: RemovalPolicy.DESTROY,
       autoDeleteObjects: true,
-      blockPublicAccess: s3.BlockPublicAccess.BLOCK_ALL,
       encryption: s3.BucketEncryption.S3_MANAGED,
     });
 
