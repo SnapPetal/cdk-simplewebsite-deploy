@@ -1,6 +1,8 @@
 # Changelog
 
-All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
+All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
+
+## [2.175.0](https://github.com/SnapPetal/cdk-simplewebsite-deploy/compare/v2.0.94...v2.175.0) (2025-01-13)
 
 ### [0.4.20](https://github.com/SnapPetal/cdk-simplewebsite-deploy/compare/v0.4.19...v0.4.20) (2021-04-21)
 
