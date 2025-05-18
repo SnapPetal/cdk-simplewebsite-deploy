@@ -28,7 +28,7 @@ export declare enum PriceClass {
      *
      * @stability stable
      */
-  PRICE_CLASS_ALL = 'PriceClass_All'
+  PRICE_CLASS_ALL = 'PriceClass_All',
 }
 
 export interface BasicSiteConfiguration {
