@@ -23,6 +23,7 @@ const project = new awscdk.AwsCdkConstructLibrary({
     javaPackage: 'com.thonbecker.simplewebsitedeploy',
     mavenGroupId: 'com.thonbecker.simplewebsitedeploy',
     mavenArtifactId: 'cdk-simplewebsite-deploy',
+    mavenServerId: 'central-ossrh',
   },
 });
 
