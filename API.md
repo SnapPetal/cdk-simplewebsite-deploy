@@ -289,10 +289,17 @@ const cloudfrontSiteConfiguration: CloudfrontSiteConfiguration = { ... }
 | <code><a href="#cdk-simplewebsite-deploy.CloudfrontSiteConfiguration.property.hostedZone">hostedZone</a></code> | <code>string</code> | Hosted Zone used to create the DNS record for the website. |
 | <code><a href="#cdk-simplewebsite-deploy.CloudfrontSiteConfiguration.property.indexDoc">indexDoc</a></code> | <code>string</code> | The index document of the website. |
 | <code><a href="#cdk-simplewebsite-deploy.CloudfrontSiteConfiguration.property.websiteFolder">websiteFolder</a></code> | <code>string</code> | Local path to the website folder you want to deploy on S3. |
+| <code><a href="#cdk-simplewebsite-deploy.CloudfrontSiteConfiguration.property.additionalBehaviors">additionalBehaviors</a></code> | <code>{[ key: string ]: aws-cdk-lib.aws_cloudfront.BehaviorOptions}</code> | Optional cache behaviors for different path patterns. |
+| <code><a href="#cdk-simplewebsite-deploy.CloudfrontSiteConfiguration.property.customErrorResponses">customErrorResponses</a></code> | <code>aws-cdk-lib.aws_cloudfront.ErrorResponse[]</code> | Custom error responses for different HTTP status codes. |
 | <code><a href="#cdk-simplewebsite-deploy.CloudfrontSiteConfiguration.property.domain">domain</a></code> | <code>string</code> | Used to deploy a Cloudfront site with a single domain. |
+| <code><a href="#cdk-simplewebsite-deploy.CloudfrontSiteConfiguration.property.enableIpv6">enableIpv6</a></code> | <code>boolean</code> | Enable IPv6 support with AAAA records. |
+| <code><a href="#cdk-simplewebsite-deploy.CloudfrontSiteConfiguration.property.enableLogging">enableLogging</a></code> | <code>boolean</code> | Enable CloudFront access logging. |
+| <code><a href="#cdk-simplewebsite-deploy.CloudfrontSiteConfiguration.property.enableSecurityHeaders">enableSecurityHeaders</a></code> | <code>boolean</code> | Enable response headers policy for security headers. |
 | <code><a href="#cdk-simplewebsite-deploy.CloudfrontSiteConfiguration.property.errorDoc">errorDoc</a></code> | <code>string</code> | The error document of the website. |
-| <code><a href="#cdk-simplewebsite-deploy.CloudfrontSiteConfiguration.property.priceClass">priceClass</a></code> | <code><a href="#cdk-simplewebsite-deploy.PriceClass">PriceClass</a></code> | The price class determines how many edge locations CloudFront will use for your distribution. |
+| <code><a href="#cdk-simplewebsite-deploy.CloudfrontSiteConfiguration.property.logsBucket">logsBucket</a></code> | <code>aws-cdk-lib.aws_s3.IBucket</code> | S3 bucket for CloudFront access logs. |
+| <code><a href="#cdk-simplewebsite-deploy.CloudfrontSiteConfiguration.property.priceClass">priceClass</a></code> | <code>aws-cdk-lib.aws_cloudfront.PriceClass</code> | The price class determines how many edge locations CloudFront will use for your distribution. |
 | <code><a href="#cdk-simplewebsite-deploy.CloudfrontSiteConfiguration.property.subDomain">subDomain</a></code> | <code>string</code> | The subdomain name you want to deploy. |
+| <code><a href="#cdk-simplewebsite-deploy.CloudfrontSiteConfiguration.property.webAclId">webAclId</a></code> | <code>string</code> | Optional WAF Web ACL ARN for enhanced security. |
 
 ---
 
@@ -332,6 +339,32 @@ Local path to the website folder you want to deploy on S3.
 
 ---
 
+##### `additionalBehaviors`<sup>Optional</sup> <a name="additionalBehaviors" id="cdk-simplewebsite-deploy.CloudfrontSiteConfiguration.property.additionalBehaviors"></a>
+
+```typescript
+public readonly additionalBehaviors: {[ key: string ]: BehaviorOptions};
+```
+
+- *Type:* {[ key: string ]: aws-cdk-lib.aws_cloudfront.BehaviorOptions}
+- *Default:* No additional cache behaviors.
+
+Optional cache behaviors for different path patterns.
+
+---
+
+##### `customErrorResponses`<sup>Optional</sup> <a name="customErrorResponses" id="cdk-simplewebsite-deploy.CloudfrontSiteConfiguration.property.customErrorResponses"></a>
+
+```typescript
+public readonly customErrorResponses: ErrorResponse[];
+```
+
+- *Type:* aws-cdk-lib.aws_cloudfront.ErrorResponse[]
+- *Default:* Default error responses based on errorDoc setting.
+
+Custom error responses for different HTTP status codes.
+
+---
+
 ##### `domain`<sup>Optional</sup> <a name="domain" id="cdk-simplewebsite-deploy.CloudfrontSiteConfiguration.property.domain"></a>
 
 ```typescript
@@ -349,6 +382,45 @@ an error will be thrown.
 
 ---
 
+##### `enableIpv6`<sup>Optional</sup> <a name="enableIpv6" id="cdk-simplewebsite-deploy.CloudfrontSiteConfiguration.property.enableIpv6"></a>
+
+```typescript
+public readonly enableIpv6: boolean;
+```
+
+- *Type:* boolean
+- *Default:* false - No IPv6 support.
+
+Enable IPv6 support with AAAA records.
+
+---
+
+##### `enableLogging`<sup>Optional</sup> <a name="enableLogging" id="cdk-simplewebsite-deploy.CloudfrontSiteConfiguration.property.enableLogging"></a>
+
+```typescript
+public readonly enableLogging: boolean;
+```
+
+- *Type:* boolean
+- *Default:* false - No access logging.
+
+Enable CloudFront access logging.
+
+---
+
+##### `enableSecurityHeaders`<sup>Optional</sup> <a name="enableSecurityHeaders" id="cdk-simplewebsite-deploy.CloudfrontSiteConfiguration.property.enableSecurityHeaders"></a>
+
+```typescript
+public readonly enableSecurityHeaders: boolean;
+```
+
+- *Type:* boolean
+- *Default:* false - No security headers policy applied.
+
+Enable response headers policy for security headers.
+
+---
+
 ##### `errorDoc`<sup>Optional</sup> <a name="errorDoc" id="cdk-simplewebsite-deploy.CloudfrontSiteConfiguration.property.errorDoc"></a>
 
 ```typescript
@@ -362,13 +434,28 @@ The error document of the website.
 
 ---
 
+##### `logsBucket`<sup>Optional</sup> <a name="logsBucket" id="cdk-simplewebsite-deploy.CloudfrontSiteConfiguration.property.logsBucket"></a>
+
+```typescript
+public readonly logsBucket: IBucket;
+```
+
+- *Type:* aws-cdk-lib.aws_s3.IBucket
+- *Default:* New bucket created if logging is enabled.
+
+S3 bucket for CloudFront access logs.
+
+If not provided and logging is enabled, a new bucket will be created.
+
+---
+
 ##### `priceClass`<sup>Optional</sup> <a name="priceClass" id="cdk-simplewebsite-deploy.CloudfrontSiteConfiguration.property.priceClass"></a>
 
 ```typescript
 public readonly priceClass: PriceClass;
 ```
 
-- *Type:* <a href="#cdk-simplewebsite-deploy.PriceClass">PriceClass</a>
+- *Type:* aws-cdk-lib.aws_cloudfront.PriceClass
 - *Default:* PriceClass.PRICE_CLASS_100.
 
 The price class determines how many edge locations CloudFront will use for your distribution.
@@ -394,39 +481,18 @@ an error will be thrown.
 
 ---
 
+##### `webAclId`<sup>Optional</sup> <a name="webAclId" id="cdk-simplewebsite-deploy.CloudfrontSiteConfiguration.property.webAclId"></a>
 
+```typescript
+public readonly webAclId: string;
+```
 
-## Enums <a name="Enums" id="Enums"></a>
+- *Type:* string
+- *Default:* No WAF integration.
 
-### PriceClass <a name="PriceClass" id="cdk-simplewebsite-deploy.PriceClass"></a>
-
-#### Members <a name="Members" id="Members"></a>
-
-| **Name** | **Description** |
-| --- | --- |
-| <code><a href="#cdk-simplewebsite-deploy.PriceClass.PRICE_CLASS_100">PRICE_CLASS_100</a></code> | USA, Canada, Europe, & Israel. |
-| <code><a href="#cdk-simplewebsite-deploy.PriceClass.PRICE_CLASS_200">PRICE_CLASS_200</a></code> | PRICE_CLASS_100 + South Africa, Kenya, Middle East, Japan, Singapore, South Korea, Taiwan, Hong Kong, & Philippines. |
-| <code><a href="#cdk-simplewebsite-deploy.PriceClass.PRICE_CLASS_ALL">PRICE_CLASS_ALL</a></code> | All locations. |
-
----
-
-##### `PRICE_CLASS_100` <a name="PRICE_CLASS_100" id="cdk-simplewebsite-deploy.PriceClass.PRICE_CLASS_100"></a>
-
-USA, Canada, Europe, & Israel.
+Optional WAF Web ACL ARN for enhanced security.
 
 ---
 
 
-##### `PRICE_CLASS_200` <a name="PRICE_CLASS_200" id="cdk-simplewebsite-deploy.PriceClass.PRICE_CLASS_200"></a>
-
-PRICE_CLASS_100 + South Africa, Kenya, Middle East, Japan, Singapore, South Korea, Taiwan, Hong Kong, & Philippines.
-
----
-
-
-##### `PRICE_CLASS_ALL` <a name="PRICE_CLASS_ALL" id="cdk-simplewebsite-deploy.PriceClass.PRICE_CLASS_ALL"></a>
-
-All locations.
-
----
 
