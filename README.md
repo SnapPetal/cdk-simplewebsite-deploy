@@ -3,108 +3,12 @@
 ![Release](https://github.com/SnapPetal/cdk-simplewebsite-deploy/workflows/release/badge.svg?branch=main)
 
 # cdk-simplewebsite-deploy
-This is an AWS CDK Construct to simplify deploying a single-page website using either S3 buckets or CloudFront distributions with enhanced security, performance, and monitoring capabilities.
+This is an AWS CDK v2 construct library for deploying a single-page website with S3, CloudFront, Route 53, and ACM. `CreateCloudfrontSite` is the recommended construct because it uses a private S3 origin with CloudFront Origin Access Control (OAC), while `CreateBasicSite` is deprecated because it creates a public S3 website endpoint.
 
 ## Installation and Usage
 
-### [CreateBasicSite](https://github.com/snappetal/cdk-simplewebsite-deploy/blob/main/API.md#cdk-cloudfront-deploy-createbasicsite)
-#### Creates a simple website using S3 buckets with a domain hosted in Route 53.
-##### Typescript
-```console
-yarn add cdk-simplewebsite-deploy
-```
-```typescript
-import * as cdk from 'aws-cdk-lib';
-import { CreateBasicSite } from 'cdk-simplewebsite-deploy';
-import { Construct } from 'constructs';
-
-export class PipelineStack extends cdk.Stack {
-  constructor(scope: Construct, id: string, props?: cdk.StackProps) {
-    super(scope, id, props);
-
-    new CreateBasicSite(this, 'test-website', {
-      websiteFolder: './src/build',
-      indexDoc: 'index.html',
-      hostedZone: 'example.com',
-    });
-  }
-}
-```
-##### C#
-```console
-dotnet add package ThonBecker.CDK.SimpleWebsiteDeploy
-```
-```cs
-using Amazon.CDK;
-using ThonBecker.CDK.SimpleWebsiteDeploy;
-
-namespace SimpleWebsiteDeploy
-{
-    public class PipelineStack : Stack
-    {
-        internal PipelineStack(Construct scope, string id, IStackProps props = null) : base(scope, id, props)
-        {
-            new CreateBasicSite(scope, "test-website", new BasicSiteConfiguration()
-            {
-                WebsiteFolder = "./src/build",
-                IndexDoc = "index.html",
-                HostedZone = "example.com",
-            });
-        }
-    }
-}
-```
-##### Java
-```xml
-<dependency>
-	<groupId>com.thonbecker.simplewebsitedeploy</groupId>
-	<artifactId>cdk-simplewebsite-deploy</artifactId>
-	<version>0.4.2</version>
-</dependency>
-```
-```java
-package com.myorg;
-
-import software.amazon.awscdk.core.Construct;
-import software.amazon.awscdk.core.Stack;
-import software.amazon.awscdk.core.StackProps;
-import com.thonbecker.simplewebsitedeploy.CreateBasicSite;
-
-public class MyProjectStack extends Stack {
-    public MyProjectStack(final Construct scope, final String id) {
-        this(scope, id, null);
-    }
-
-    public MyProjectStack(final Construct scope, final String id, final StackProps props) {
-        super(scope, id, props);
-        
-        CreateBasicSite.Builder.create(this, "test-website")
-        		.websiteFolder("./src/build")
-        		.indexDoc("index.html")
-        		.hostedZone("example.com");
-    }
-}
-```
-##### Python
-```console
-pip install cdk-simplewebsite-deploy
-```
-```python
-from aws_cdk import Stack
-from cdk_simplewebsite_deploy import CreateBasicSite
-from constructs import Construct
-
-class MyProjectStack(Stack):
-
-    def __init__(self, scope: Construct, construct_id: str, **kwargs) -> None:
-        super().__init__(scope, construct_id, **kwargs)
-        
-        CreateBasicSite(self, 'test-website', website_folder='./src/build',
-                        index_doc='index.html',
-                        hosted_zone='example.com')
-```
 ### [CreateCloudfrontSite](https://github.com/snappetal/cdk-simplewebsite-deploy/blob/main/API.md#cdk-cloudfront-deploy-createcloudfrontsite)
-#### Creates a simple website using a CloudFront distribution with a domain hosted in Route 53.
+#### Creates a website using a private S3 bucket, a CloudFront distribution, and DNS records in Route 53.
 ##### Typescript
 ```console
 yarn add cdk-simplewebsite-deploy
@@ -133,6 +37,7 @@ dotnet add package ThonBecker.CDK.SimpleWebsiteDeploy
 ```
 ```cs
 using Amazon.CDK;
+using Constructs;
 using ThonBecker.CDK.SimpleWebsiteDeploy;
 
 namespace SimpleWebsiteDeploy
@@ -163,10 +68,10 @@ namespace SimpleWebsiteDeploy
 ```java
 package com.myorg;
 
-import software.amazon.awscdk.core.Construct;
-import software.amazon.awscdk.core.Stack;
-import software.amazon.awscdk.core.StackProps;
 import com.thonbecker.simplewebsitedeploy.CreateCloudfrontSite;
+import software.amazon.awscdk.Stack;
+import software.amazon.awscdk.StackProps;
+import software.constructs.Construct;
 
 public class MyProjectStack extends Stack {
     public MyProjectStack(final Construct scope, final String id) {
@@ -175,12 +80,13 @@ public class MyProjectStack extends Stack {
 
     public MyProjectStack(final Construct scope, final String id, final StackProps props) {
         super(scope, id, props);
-        
+
         CreateCloudfrontSite.Builder.create(this, "test-website")
-        		.websiteFolder("./src/build")
-        		.indexDoc("index.html")
-        		.hostedZone("example.com")
-        		.subDomain("www.example.com");
+                .websiteFolder("./src/build")
+                .indexDoc("index.html")
+                .hostedZone("example.com")
+                .subDomain("www.example.com")
+                .build();
     }
 }
 ```
@@ -189,13 +95,14 @@ public class MyProjectStack extends Stack {
 pip install cdk-simplewebsite-deploy
 ```
 ```python
-from aws_cdk import core
+from aws_cdk import Stack
 from cdk_simplewebsite_deploy import CreateCloudfrontSite
+from constructs import Construct
 
 
-class MyProjectStack(core.Stack):
+class MyProjectStack(Stack):
 
-    def __init__(self, scope: core.Construct, construct_id: str, **kwargs) -> None:
+    def __init__(self, scope: Construct, construct_id: str, **kwargs) -> None:
         super().__init__(scope, construct_id, **kwargs)
 
         CreateCloudfrontSite(self, 'test-website', website_folder='./src/build',
@@ -204,9 +111,109 @@ class MyProjectStack(core.Stack):
                              sub_domain='www.example.com')
 ```
 
+### [CreateBasicSite](https://github.com/snappetal/cdk-simplewebsite-deploy/blob/main/API.md#cdk-cloudfront-deploy-createbasicsite)
+#### Deprecated. Creates a website using public S3 website endpoints with a domain hosted in Route 53.
+Use `CreateCloudfrontSite` for new sites. `CreateBasicSite` configures public bucket access so Route 53 can alias directly to the S3 website endpoint.
+##### Typescript
+```console
+yarn add cdk-simplewebsite-deploy
+```
+```typescript
+import * as cdk from 'aws-cdk-lib';
+import { CreateBasicSite } from 'cdk-simplewebsite-deploy';
+import { Construct } from 'constructs';
+
+export class PipelineStack extends cdk.Stack {
+  constructor(scope: Construct, id: string, props?: cdk.StackProps) {
+    super(scope, id, props);
+
+    new CreateBasicSite(this, 'test-website', {
+      websiteFolder: './src/build',
+      indexDoc: 'index.html',
+      hostedZone: 'example.com',
+    });
+  }
+}
+```
+##### C#
+```console
+dotnet add package ThonBecker.CDK.SimpleWebsiteDeploy
+```
+```cs
+using Amazon.CDK;
+using Constructs;
+using ThonBecker.CDK.SimpleWebsiteDeploy;
+
+namespace SimpleWebsiteDeploy
+{
+    public class PipelineStack : Stack
+    {
+        internal PipelineStack(Construct scope, string id, IStackProps props = null) : base(scope, id, props)
+        {
+            new CreateBasicSite(scope, "test-website", new BasicSiteConfiguration()
+            {
+                WebsiteFolder = "./src/build",
+                IndexDoc = "index.html",
+                HostedZone = "example.com",
+            });
+        }
+    }
+}
+```
+##### Java
+```xml
+<dependency>
+	<groupId>com.thonbecker.simplewebsitedeploy</groupId>
+	<artifactId>cdk-simplewebsite-deploy</artifactId>
+	<version>0.4.2</version>
+</dependency>
+```
+```java
+package com.myorg;
+
+import com.thonbecker.simplewebsitedeploy.CreateBasicSite;
+import software.amazon.awscdk.Stack;
+import software.amazon.awscdk.StackProps;
+import software.constructs.Construct;
+
+public class MyProjectStack extends Stack {
+    public MyProjectStack(final Construct scope, final String id) {
+        this(scope, id, null);
+    }
+
+    public MyProjectStack(final Construct scope, final String id, final StackProps props) {
+        super(scope, id, props);
+
+        CreateBasicSite.Builder.create(this, "test-website")
+                .websiteFolder("./src/build")
+                .indexDoc("index.html")
+                .hostedZone("example.com")
+                .build();
+    }
+}
+```
+##### Python
+```console
+pip install cdk-simplewebsite-deploy
+```
+```python
+from aws_cdk import Stack
+from cdk_simplewebsite_deploy import CreateBasicSite
+from constructs import Construct
+
+class MyProjectStack(Stack):
+
+    def __init__(self, scope: Construct, construct_id: str, **kwargs) -> None:
+        super().__init__(scope, construct_id, **kwargs)
+
+        CreateBasicSite(self, 'test-website', website_folder='./src/build',
+                        index_doc='index.html',
+                        hosted_zone='example.com')
+```
+
 ## 🚀 Enhanced Features
 
-The `CreateCloudfrontSite` construct now includes several optional advanced features for improved security, performance, and monitoring:
+The `CreateCloudfrontSite` construct includes optional advanced features for security, performance, and monitoring.
 
 ### Security Headers
 Enable comprehensive security headers including HSTS, X-Frame-Options, Content-Type-Options, and XSS protection:
@@ -254,6 +261,48 @@ new CreateCloudfrontSite(this, 'waf-protected-website', {
   indexDoc: 'index.html',
   hostedZone: 'example.com',
   webAclId: 'arn:aws:wafv2:us-east-1:123456789012:global/webacl/my-web-acl/12345678-1234-1234-1234-123456789012', // 🛡️ WAF protection
+});
+```
+
+### Origin Access Levels
+Grant additional OAC permissions to the website bucket. This can be useful when you need CloudFront to distinguish missing objects from access-denied responses.
+
+```typescript
+import * as cloudfront from 'aws-cdk-lib/aws-cloudfront';
+
+new CreateCloudfrontSite(this, 'website-with-list-access', {
+  websiteFolder: './src/dist',
+  indexDoc: 'index.html',
+  hostedZone: 'example.com',
+  originAccessLevels: [
+    cloudfront.AccessLevel.READ,
+    cloudfront.AccessLevel.LIST,
+  ],
+});
+```
+
+### CloudFront Function Associations
+Attach CloudFront Functions to the default behavior for lightweight viewer request or viewer response logic.
+
+```typescript
+import * as cloudfront from 'aws-cdk-lib/aws-cloudfront';
+
+const rewriteFunction = new cloudfront.Function(this, 'RewriteFunction', {
+  code: cloudfront.FunctionCode.fromInline(
+    'function handler(event) { return event.request; }',
+  ),
+});
+
+new CreateCloudfrontSite(this, 'website-with-function', {
+  websiteFolder: './src/dist',
+  indexDoc: 'index.html',
+  hostedZone: 'example.com',
+  functionAssociations: [
+    {
+      eventType: cloudfront.FunctionEventType.VIEWER_REQUEST,
+      function: rewriteFunction,
+    },
+  ],
 });
 ```
 
@@ -314,6 +363,12 @@ export class AdvancedWebsiteStack extends cdk.Stack {
   constructor(scope: Construct, id: string, props?: cdk.StackProps) {
     super(scope, id, props);
 
+    const rewriteFunction = new cloudfront.Function(this, 'RewriteFunction', {
+      code: cloudfront.FunctionCode.fromInline(
+        'function handler(event) { return event.request; }',
+      ),
+    });
+
     new CreateCloudfrontSite(this, 'advanced-website', {
       websiteFolder: './dist',
       indexDoc: 'index.html',
@@ -325,6 +380,10 @@ export class AdvancedWebsiteStack extends cdk.Stack {
       priceClass: cloudfront.PriceClass.PRICE_CLASS_ALL,
       enableSecurityHeaders: true,
       enableIpv6: true,
+      originAccessLevels: [
+        cloudfront.AccessLevel.READ,
+        cloudfront.AccessLevel.LIST,
+      ],
       
       // Monitoring & Protection
       enableLogging: true,
@@ -337,6 +396,14 @@ export class AdvancedWebsiteStack extends cdk.Stack {
           cachePolicy: cloudfront.CachePolicy.CACHING_DISABLED,
         },
       },
+
+      // Edge Logic
+      functionAssociations: [
+        {
+          eventType: cloudfront.FunctionEventType.VIEWER_REQUEST,
+          function: rewriteFunction,
+        },
+      ],
       
       // SPA Error Handling
       customErrorResponses: [
@@ -357,12 +424,14 @@ export class AdvancedWebsiteStack extends cdk.Stack {
 - **Security Headers**: Automatic HSTS, X-Frame-Options, Content-Type-Options, and XSS protection
 - **WAF Integration**: Support for AWS WAF Web ACLs for advanced threat protection
 - **Origin Access Control**: Modern S3 bucket protection (replaces deprecated OAI)
+- **Configurable OAC Permissions**: Optional origin access levels for the website bucket
 
 ### ⚡ **Optimized Performance** 
 - **Smart Caching**: Optimized cache policies for better performance
 - **HTTP/2 & HTTP/3**: Latest protocol support for faster loading
 - **Global Edge Locations**: Configurable price classes for worldwide distribution
 - **IPv6 Support**: Dual-stack networking for better connectivity
+- **CloudFront Functions**: Optional viewer request and response function associations
 
 ### 📊 **Comprehensive Monitoring**
 - **Access Logging**: CloudFront access logs for analytics

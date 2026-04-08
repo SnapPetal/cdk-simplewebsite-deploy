@@ -1,5 +1,5 @@
 import { App, Stack } from 'aws-cdk-lib';
-import { Template } from 'aws-cdk-lib/assertions';
+import { Match, Template } from 'aws-cdk-lib/assertions';
 import * as cloudfront from 'aws-cdk-lib/aws-cloudfront';
 import {
   CreateBasicSite,
@@ -462,6 +462,82 @@ describe('Create cloudfront website', () => {
         HttpVersion: 'http2and3',
         IPV6Enabled: true,
         PriceClass: 'PriceClass_100',
+      },
+    });
+  });
+  it('should support origin access levels for the default S3 origin', () => {
+    const app = new App();
+    const stack = new Stack(app, 'TargetStack', {
+      env: {
+        account: '234567890123',
+        region: 'us-east-1',
+      },
+    });
+    new CreateCloudfrontSite(stack, 'test-website', {
+      websiteFolder: './test/my-website',
+      indexDoc: 'index.html',
+      hostedZone: 'example.com',
+      originAccessLevels: [
+        cloudfront.AccessLevel.READ,
+        cloudfront.AccessLevel.LIST,
+      ],
+    });
+
+    Template.fromStack(stack).hasResourceProperties('AWS::S3::BucketPolicy', {
+      PolicyDocument: {
+        Statement: Match.arrayWith([
+          Match.objectLike({
+            Action: Match.arrayWith(['s3:ListBucket']),
+            Effect: 'Allow',
+            Principal: {
+              Service: 'cloudfront.amazonaws.com',
+            },
+          }),
+        ]),
+      },
+    });
+  });
+  it('should support cloudfront function associations for the default behavior', () => {
+    const app = new App();
+    const stack = new Stack(app, 'TargetStack', {
+      env: {
+        account: '234567890123',
+        region: 'us-east-1',
+      },
+    });
+    const rewriteFunction = new cloudfront.Function(stack, 'RewriteFunction', {
+      code: cloudfront.FunctionCode.fromInline(
+        'function handler(event) { return event.request; }',
+      ),
+    });
+
+    new CreateCloudfrontSite(stack, 'test-website', {
+      websiteFolder: './test/my-website',
+      indexDoc: 'index.html',
+      hostedZone: 'example.com',
+      functionAssociations: [
+        {
+          eventType: cloudfront.FunctionEventType.VIEWER_REQUEST,
+          function: rewriteFunction,
+        },
+      ],
+    });
+
+    Template.fromStack(stack).hasResourceProperties('AWS::CloudFront::Distribution', {
+      DistributionConfig: {
+        DefaultCacheBehavior: Match.objectLike({
+          FunctionAssociations: [
+            {
+              EventType: 'viewer-request',
+              FunctionARN: {
+                'Fn::GetAtt': [
+                  Match.stringLikeRegexp('RewriteFunction'),
+                  'FunctionARN',
+                ],
+              },
+            },
+          ],
+        }),
       },
     });
   });

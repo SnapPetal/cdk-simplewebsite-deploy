@@ -47,7 +47,7 @@ new CreateBasicSite(scope: Construct, id: string, props: BasicSiteConfiguration)
 
 ---
 
-##### `toString` <a name="toString" id="cdk-simplewebsite-deploy.CreateBasicSite.toString"></a>
+##### ~~`toString`~~ <a name="toString" id="cdk-simplewebsite-deploy.CreateBasicSite.toString"></a>
 
 ```typescript
 public toString(): string
@@ -55,7 +55,7 @@ public toString(): string
 
 Returns a string representation of this construct.
 
-##### `with` <a name="with" id="cdk-simplewebsite-deploy.CreateBasicSite.with"></a>
+##### ~~`with`~~ <a name="with" id="cdk-simplewebsite-deploy.CreateBasicSite.with"></a>
 
 ```typescript
 public with(mixins: ...IMixin[]): IConstruct
@@ -84,7 +84,7 @@ The mixins to apply.
 
 ---
 
-##### `isConstruct` <a name="isConstruct" id="cdk-simplewebsite-deploy.CreateBasicSite.isConstruct"></a>
+##### ~~`isConstruct`~~ <a name="isConstruct" id="cdk-simplewebsite-deploy.CreateBasicSite.isConstruct"></a>
 
 ```typescript
 import { CreateBasicSite } from 'cdk-simplewebsite-deploy'
@@ -124,7 +124,9 @@ Any object.
 
 ---
 
-##### `node`<sup>Required</sup> <a name="node" id="cdk-simplewebsite-deploy.CreateBasicSite.property.node"></a>
+##### ~~`node`~~<sup>Required</sup> <a name="node" id="cdk-simplewebsite-deploy.CreateBasicSite.property.node"></a>
+
+- *Deprecated:* Use CreateCloudfrontSite instead. CreateBasicSite configures a public S3 website endpoint.
 
 ```typescript
 public readonly node: Node;
@@ -368,7 +370,9 @@ const cloudfrontSiteConfiguration: CloudfrontSiteConfiguration = { ... }
 | <code><a href="#cdk-simplewebsite-deploy.CloudfrontSiteConfiguration.property.enableLogging">enableLogging</a></code> | <code>boolean</code> | Enable CloudFront access logging. |
 | <code><a href="#cdk-simplewebsite-deploy.CloudfrontSiteConfiguration.property.enableSecurityHeaders">enableSecurityHeaders</a></code> | <code>boolean</code> | Enable response headers policy for security headers. |
 | <code><a href="#cdk-simplewebsite-deploy.CloudfrontSiteConfiguration.property.errorDoc">errorDoc</a></code> | <code>string</code> | The error document of the website. |
+| <code><a href="#cdk-simplewebsite-deploy.CloudfrontSiteConfiguration.property.functionAssociations">functionAssociations</a></code> | <code>aws-cdk-lib.aws_cloudfront.FunctionAssociation[]</code> | CloudFront Functions to associate with the default behavior. |
 | <code><a href="#cdk-simplewebsite-deploy.CloudfrontSiteConfiguration.property.logsBucket">logsBucket</a></code> | <code>aws-cdk-lib.aws_s3.IBucket</code> | S3 bucket for CloudFront access logs. |
+| <code><a href="#cdk-simplewebsite-deploy.CloudfrontSiteConfiguration.property.originAccessLevels">originAccessLevels</a></code> | <code>aws-cdk-lib.aws_cloudfront.AccessLevel[]</code> | Additional permissions granted to the CloudFront Origin Access Control for the website bucket. |
 | <code><a href="#cdk-simplewebsite-deploy.CloudfrontSiteConfiguration.property.priceClass">priceClass</a></code> | <code>aws-cdk-lib.aws_cloudfront.PriceClass</code> | The price class determines how many edge locations CloudFront will use for your distribution. |
 | <code><a href="#cdk-simplewebsite-deploy.CloudfrontSiteConfiguration.property.subDomain">subDomain</a></code> | <code>string</code> | The subdomain name you want to deploy. |
 | <code><a href="#cdk-simplewebsite-deploy.CloudfrontSiteConfiguration.property.webAclId">webAclId</a></code> | <code>string</code> | Optional WAF Web ACL ARN for enhanced security. |
@@ -506,6 +510,19 @@ The error document of the website.
 
 ---
 
+##### `functionAssociations`<sup>Optional</sup> <a name="functionAssociations" id="cdk-simplewebsite-deploy.CloudfrontSiteConfiguration.property.functionAssociations"></a>
+
+```typescript
+public readonly functionAssociations: FunctionAssociation[];
+```
+
+- *Type:* aws-cdk-lib.aws_cloudfront.FunctionAssociation[]
+- *Default:* No CloudFront Function associations.
+
+CloudFront Functions to associate with the default behavior.
+
+---
+
 ##### `logsBucket`<sup>Optional</sup> <a name="logsBucket" id="cdk-simplewebsite-deploy.CloudfrontSiteConfiguration.property.logsBucket"></a>
 
 ```typescript
@@ -518,6 +535,19 @@ public readonly logsBucket: IBucket;
 S3 bucket for CloudFront access logs.
 
 If not provided and logging is enabled, a new bucket will be created.
+
+---
+
+##### `originAccessLevels`<sup>Optional</sup> <a name="originAccessLevels" id="cdk-simplewebsite-deploy.CloudfrontSiteConfiguration.property.originAccessLevels"></a>
+
+```typescript
+public readonly originAccessLevels: AccessLevel[];
+```
+
+- *Type:* aws-cdk-lib.aws_cloudfront.AccessLevel[]
+- *Default:* [cloudfront.AccessLevel.READ]
+
+Additional permissions granted to the CloudFront Origin Access Control for the website bucket.
 
 ---
 

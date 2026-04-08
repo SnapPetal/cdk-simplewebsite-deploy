@@ -74,6 +74,16 @@ export interface CloudfrontSiteConfiguration {
    */
   readonly additionalBehaviors?: Record<string, cloudfront.BehaviorOptions>;
   /**
+   * Additional permissions granted to the CloudFront Origin Access Control for the website bucket.
+   * @default [cloudfront.AccessLevel.READ]
+   */
+  readonly originAccessLevels?: cloudfront.AccessLevel[];
+  /**
+   * CloudFront Functions to associate with the default behavior.
+   * @default - No CloudFront Function associations.
+   */
+  readonly functionAssociations?: cloudfront.FunctionAssociation[];
+  /**
    * Enable response headers policy for security headers.
    * @default false - No security headers policy applied.
    */
@@ -105,6 +115,9 @@ export interface CloudfrontSiteConfiguration {
   readonly webAclId?: string;
 }
 
+/**
+ * @deprecated Use CreateCloudfrontSite instead. CreateBasicSite configures a public S3 website endpoint.
+ */
 export class CreateBasicSite extends Construct {
   constructor(scope: Construct, id: string, props: BasicSiteConfiguration) {
     super(scope, id);
@@ -272,12 +285,15 @@ export class CreateCloudfrontSite extends Construct {
 
     const websiteDist = new cloudfront.Distribution(scope, 'WebsiteDist', {
       defaultBehavior: {
-        origin: origins.S3BucketOrigin.withOriginAccessControl(websiteBucket),
+        origin: origins.S3BucketOrigin.withOriginAccessControl(websiteBucket, {
+          originAccessLevels: props.originAccessLevels,
+        }),
         allowedMethods: cloudfront.AllowedMethods.ALLOW_GET_HEAD_OPTIONS,
         viewerProtocolPolicy: cloudfront.ViewerProtocolPolicy.REDIRECT_TO_HTTPS,
         cachePolicy: cloudfront.CachePolicy.CACHING_OPTIMIZED,
         originRequestPolicy: cloudfront.OriginRequestPolicy.CORS_S3_ORIGIN,
         responseHeadersPolicy,
+        functionAssociations: props.functionAssociations,
       },
       additionalBehaviors: props.additionalBehaviors,
       minimumProtocolVersion: cloudfront.SecurityPolicyProtocol.TLS_V1_2_2021,

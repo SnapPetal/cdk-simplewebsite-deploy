@@ -157,6 +157,11 @@
     "package": {
       "name": "package",
       "description": "Creates the distribution package",
+      "env": {
+        "ASDF_NODEJS_VERSION": "24.14.1",
+        "ASDF_MAVEN_VERSION": "3.9.14",
+        "ASDF_JAVA_VERSION": "corretto-21.0.7.6.1"
+      },
       "steps": [
         {
           "spawn": "package:js",
@@ -171,6 +176,11 @@
     "package-all": {
       "name": "package-all",
       "description": "Packages artifacts for all target languages",
+      "env": {
+        "ASDF_NODEJS_VERSION": "24.14.1",
+        "ASDF_MAVEN_VERSION": "3.9.14",
+        "ASDF_JAVA_VERSION": "corretto-21.0.7.6.1"
+      },
       "steps": [
         {
           "spawn": "package:js"
@@ -198,6 +208,11 @@
     "package:java": {
       "name": "package:java",
       "description": "Create java language bindings",
+      "env": {
+        "ASDF_NODEJS_VERSION": "24.14.1",
+        "ASDF_MAVEN_VERSION": "3.9.14",
+        "ASDF_JAVA_VERSION": "corretto-21.0.7.6.1"
+      },
       "steps": [
         {
           "exec": "jsii-pacmak -v --target java"
@@ -311,7 +326,7 @@
       },
       "steps": [
         {
-          "exec": "npx npm-check-updates@18 --upgrade --target=minor --peer --no-deprecated --dep=dev,peer,prod,optional --filter=@types/jest,@types/node,eslint-import-resolver-typescript,eslint-plugin-import,jest,jsii-diff,jsii-pacmak,projen,ts-jest,typescript"
+          "exec": "npx npm-check-updates@18 --upgrade --target=minor --peer --no-deprecated --dep=dev,peer,prod,optional --filter=@types/jest,@types/node,eslint-import-resolver-typescript,eslint-plugin-import,jest,jsii-diff,jsii-pacmak,ts-jest,typescript"
         },
         {
           "exec": "yarn install --check-files"
