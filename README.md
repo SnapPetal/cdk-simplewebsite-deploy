@@ -31,32 +31,6 @@ export class PipelineStack extends cdk.Stack {
   }
 }
 ```
-##### C#
-```console
-dotnet add package ThonBecker.CDK.SimpleWebsiteDeploy
-```
-```cs
-using Amazon.CDK;
-using Constructs;
-using ThonBecker.CDK.SimpleWebsiteDeploy;
-
-namespace SimpleWebsiteDeploy
-{
-    public class PipelineStack : Stack
-    {
-        internal PipelineStack(Construct scope, string id, IStackProps props = null) : base(scope, id, props)
-        {
-            new CreateCloudfrontSite(scope, "test-website", new CloudfrontSiteConfiguration()
-            {
-                WebsiteFolder = "./src/build",
-                IndexDoc = "index.html",
-                HostedZone = "example.com",
-                SubDomain = "www.example.com",
-            });
-        }
-    }
-}
-```
 ##### Java
 ```xml
 <dependency>
@@ -133,31 +107,6 @@ export class PipelineStack extends cdk.Stack {
       hostedZone: 'example.com',
     });
   }
-}
-```
-##### C#
-```console
-dotnet add package ThonBecker.CDK.SimpleWebsiteDeploy
-```
-```cs
-using Amazon.CDK;
-using Constructs;
-using ThonBecker.CDK.SimpleWebsiteDeploy;
-
-namespace SimpleWebsiteDeploy
-{
-    public class PipelineStack : Stack
-    {
-        internal PipelineStack(Construct scope, string id, IStackProps props = null) : base(scope, id, props)
-        {
-            new CreateBasicSite(scope, "test-website", new BasicSiteConfiguration()
-            {
-                WebsiteFolder = "./src/build",
-                IndexDoc = "index.html",
-                HostedZone = "example.com",
-            });
-        }
-    }
 }
 ```
 ##### Java
@@ -442,7 +391,7 @@ export class AdvancedWebsiteStack extends cdk.Stack {
 - **Backward Compatible**: All existing configurations continue to work
 - **Type Safe**: Full TypeScript support with comprehensive interfaces
 - **CDK v2 Ready**: Built for the latest AWS CDK version
-- **Multi-Language**: Support for TypeScript, Python, Java, and C#
+- **Multi-Language**: Support for TypeScript, Python, and Java
 
 ## License
 

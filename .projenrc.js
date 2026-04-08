@@ -24,10 +24,6 @@ const project = new awscdk.AwsCdkConstructLibrary({
     distName: 'cdk-simplewebsite-deploy',
     module: 'cdk_simplewebsite_deploy',
   },
-  publishToNuget: {
-    dotNetNamespace: 'ThonBecker.CDK.SimpleWebsiteDeploy',
-    packageId: 'ThonBecker.CDK.SimpleWebsiteDeploy',
-  },
   publishToMaven: {
     javaPackage: 'com.thonbecker.simplewebsitedeploy',
     mavenGroupId: 'com.thonbecker.simplewebsitedeploy',
