@@ -168,6 +168,20 @@ jobs:
         run: cd .repo && npx projen package:java
       - name: Collect java artifact
         run: mv .repo/dist dist
+      - name: Check Maven Central version
+        id: maven_version
+        run: |-
+          set -euo pipefail
+          VERSION="$(node -p "require('./.repo/package.json').version")"
+          GROUP_PATH="com/thonbecker/simplewebsitedeploy"
+          ARTIFACT_ID="cdk-simplewebsite-deploy"
+          POM_URL="https://repo1.maven.org/maven2/${GROUP_PATH}/${ARTIFACT_ID}/${VERSION}/${ARTIFACT_ID}-${VERSION}.pom"
+          if curl -fsI "$POM_URL" >/dev/null; then
+            echo "exists=true" >> "$GITHUB_OUTPUT"
+            echo "Maven artifact ${GROUP_PATH}:${ARTIFACT_ID}:${VERSION} already exists; skipping publish."
+          else
+            echo "exists=false" >> "$GITHUB_OUTPUT"
+          fi
       - name: Release
         env:
           MAVEN_SERVER_ID: central-ossrh
@@ -176,7 +190,9 @@ jobs:
           MAVEN_PASSWORD: ${{ secrets.MAVEN_PASSWORD }}
           MAVEN_USERNAME: ${{ secrets.MAVEN_USERNAME }}
           MAVEN_STAGING_PROFILE_ID: ${{ secrets.MAVEN_STAGING_PROFILE_ID }}
+          MAVEN_VERBOSE: "true"
         run: npx -p publib@latest publib-maven
+        if: steps.maven_version.outputs.exists != 'true'
   release_pypi:
     name: Publish to PyPI
     needs: release

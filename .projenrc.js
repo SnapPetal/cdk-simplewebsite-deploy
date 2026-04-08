@@ -1,4 +1,4 @@
-const { awscdk, javascript } = require('projen');
+const { JsonPatch, awscdk, javascript } = require('projen');
 
 const nodeVersion = '24.14.1';
 const mavenVersion = '3.9.14';
@@ -38,5 +38,27 @@ for (const taskName of ['package:java', 'package-all', 'package']) {
   task?.env('ASDF_MAVEN_VERSION', mavenVersion);
   task?.env('ASDF_JAVA_VERSION', javaVersion);
 }
+
+project.tryFindObjectFile('.github/workflows/release.yml')?.patch(
+  JsonPatch.add('/jobs/release_maven/steps/10', {
+    name: 'Check Maven Central version',
+    id: 'maven_version',
+    run: [
+      'set -euo pipefail',
+      'VERSION="$(node -p "require(\'./.repo/package.json\').version")"',
+      'GROUP_PATH="com/thonbecker/simplewebsitedeploy"',
+      'ARTIFACT_ID="cdk-simplewebsite-deploy"',
+      'POM_URL="https://repo1.maven.org/maven2/${GROUP_PATH}/${ARTIFACT_ID}/${VERSION}/${ARTIFACT_ID}-${VERSION}.pom"',
+      'if curl -fsI "$POM_URL" >/dev/null; then',
+      '  echo "exists=true" >> "$GITHUB_OUTPUT"',
+      '  echo "Maven artifact ${GROUP_PATH}:${ARTIFACT_ID}:${VERSION} already exists; skipping publish."',
+      'else',
+      '  echo "exists=false" >> "$GITHUB_OUTPUT"',
+      'fi',
+    ].join('\n'),
+  }),
+  JsonPatch.add('/jobs/release_maven/steps/11/if', "steps.maven_version.outputs.exists != 'true'"),
+  JsonPatch.add('/jobs/release_maven/steps/11/env/MAVEN_VERBOSE', 'true'),
+);
 
 project.synth();
