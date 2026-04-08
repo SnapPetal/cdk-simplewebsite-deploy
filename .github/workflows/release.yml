@@ -191,7 +191,29 @@ jobs:
           MAVEN_USERNAME: ${{ secrets.MAVEN_USERNAME }}
           MAVEN_STAGING_PROFILE_ID: ${{ secrets.MAVEN_STAGING_PROFILE_ID }}
           MAVEN_VERBOSE: "true"
-        run: npx -p publib@latest publib-maven
+        run: |-
+          set -euo pipefail
+          VERSION="$(node -p "require('./.repo/package.json').version")"
+          GROUP_PATH="com/thonbecker/simplewebsitedeploy"
+          ARTIFACT_ID="cdk-simplewebsite-deploy"
+          POM_URL="https://repo1.maven.org/maven2/${GROUP_PATH}/${ARTIFACT_ID}/${VERSION}/${ARTIFACT_ID}-${VERSION}.pom"
+          set +e
+          npx -p publib@latest publib-maven
+          STATUS=$?
+          set -e
+          if [ "$STATUS" -eq 0 ]; then
+            exit 0
+          fi
+          echo "publib-maven failed with status ${STATUS}; checking Maven Central before failing."
+          for attempt in 1 2 3 4 5 6 7 8 9 10; do
+            if curl -fsI "$POM_URL" >/dev/null; then
+              echo "Maven artifact ${GROUP_PATH}:${ARTIFACT_ID}:${VERSION} is available in Maven Central; treating publish as successful."
+              exit 0
+            fi
+            echo "Maven artifact is not visible yet; retry ${attempt}/10."
+            sleep 30
+          done
+          exit "$STATUS"
         if: steps.maven_version.outputs.exists != 'true'
   release_pypi:
     name: Publish to PyPI
