@@ -1,5 +1,5 @@
 [tools]
-java = "corretto-25"
+java = "21"
 maven = "3.9"
 python = "3.12"
 node = "24"

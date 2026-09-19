@@ -5,7 +5,7 @@ const project = new awscdk.AwsCdkConstructLibrary({
   stability: 'stable',
   cdkVersion: '2.270.0',
   constructsVersion: '10.8.1',
-  minNodeVersion: '20.0.0',
+  minNodeVersion: '24.0.0',
   jsiiVersion: '~5.9.37',
   packageManager: javascript.NodePackageManager.PNPM,
   pnpmVersion: '12.4.2',
