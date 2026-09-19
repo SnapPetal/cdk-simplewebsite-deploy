@@ -1,23 +1,27 @@
-const { JsonPatch, awscdk, javascript } = require('projen');
+import { awscdk, javascript, JsonPatch, TomlFile } from 'projen';
 
-const nodeVersion = '24.14.1';
-const mavenVersion = '3.9.14';
-const javaVersion = 'corretto-21.0.7.6.1';
+const nodeVersion = '24.21.0';
+const mavenVersion = '3.9.16';
+const javaVersion = 'corretto-25.0.3.9.1';
+const pnpmVersion = '12.4.2';
+const pythonVersion = '3.12.14';
 
 const project = new awscdk.AwsCdkConstructLibrary({
+  author: 'Thon Becker',
   authorAddress: 'thon.becker@gmail.com',
-  authorName: 'Thon Becker',
   stability: 'stable',
-  cdkVersion: '2.248.0',
-  constructsVersion: '10.6.0',
+  cdkVersion: '2.270.0',
+  constructsVersion: '10.8.1',
+  minNodeVersion: '20.0.0',
   jsiiVersion: '~5.9.37',
-  packageManager: javascript.NodePackageManager.YARN_CLASSIC,
-  projenVersion: '^0.99.38',
+  packageManager: javascript.NodePackageManager.PNPM,
+  pnpmVersion,
+  projenVersion: '^0.103.25',
+  projenrcTs: true,
   majorVersion: 2,
-  minorVersion: 248,
   gitignore: ['.DS_Store', '.idea'],
   name: 'cdk-simplewebsite-deploy',
-  repository: 'https://github.com/SnapPetal/cdk-simplewebsite-deploy',
+  repositoryUrl: 'https://github.com/SnapPetal/cdk-simplewebsite-deploy',
   description: 'This is an AWS CDK v2 Construct to simplify deploying a single-page website use CloudFront distributions.',
   defaultReleaseBranch: 'main',
   publishToPypi: {
@@ -32,15 +36,32 @@ const project = new awscdk.AwsCdkConstructLibrary({
   },
 });
 
+new TomlFile(project, 'mise.toml', {
+  obj: {
+    tools: {
+      node: nodeVersion,
+      java: javaVersion,
+      maven: mavenVersion,
+      pnpm: pnpmVersion,
+      python: pythonVersion,
+    },
+  },
+});
+
 for (const taskName of ['package:java', 'package-all', 'package']) {
   const task = project.tasks.tryFind(taskName);
+  task?.env('MISE_NODE_VERSION', nodeVersion);
+  task?.env('MISE_MAVEN_VERSION', mavenVersion);
+  task?.env('MISE_JAVA_VERSION', javaVersion);
+  task?.env('MISE_PNPM_VERSION', pnpmVersion);
   task?.env('ASDF_NODEJS_VERSION', nodeVersion);
   task?.env('ASDF_MAVEN_VERSION', mavenVersion);
   task?.env('ASDF_JAVA_VERSION', javaVersion);
+  task?.env('ASDF_PNPM_VERSION', pnpmVersion);
 }
 
 project.tryFindObjectFile('.github/workflows/release.yml')?.patch(
-  JsonPatch.add('/jobs/release_maven/steps/10', {
+  JsonPatch.add('/jobs/release_maven/steps/11', {
     name: 'Check Maven Central version',
     id: 'maven_version',
     run: [
@@ -57,9 +78,9 @@ project.tryFindObjectFile('.github/workflows/release.yml')?.patch(
       'fi',
     ].join('\n'),
   }),
-  JsonPatch.add('/jobs/release_maven/steps/11/if', "steps.maven_version.outputs.exists != 'true'"),
-  JsonPatch.add('/jobs/release_maven/steps/11/env/MAVEN_VERBOSE', 'true'),
-  JsonPatch.replace('/jobs/release_maven/steps/11/run', [
+  JsonPatch.add('/jobs/release_maven/steps/12/if', "steps.maven_version.outputs.exists != 'true'"),
+  JsonPatch.add('/jobs/release_maven/steps/12/env/MAVEN_VERBOSE', 'true'),
+  JsonPatch.replace('/jobs/release_maven/steps/12/run', [
     'set -euo pipefail',
     'VERSION="$(node -p "require(\'./.repo/package.json\').version")"',
     'GROUP_PATH="com/thonbecker/simplewebsitedeploy"',
