@@ -18,7 +18,6 @@
 /.projen/tasks.json linguist-generated
 /API.md linguist-generated
 /LICENSE linguist-generated
-/mise.toml linguist-generated
 /package.json linguist-generated
 /pnpm-lock.yaml linguist-generated
 /pnpm-workspace.yaml linguist-generated

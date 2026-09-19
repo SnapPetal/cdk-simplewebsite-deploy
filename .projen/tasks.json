@@ -223,16 +223,6 @@
     "package": {
       "name": "package",
       "description": "Creates the distribution package",
-      "env": {
-        "MISE_NODE_VERSION": "24.21.0",
-        "MISE_MAVEN_VERSION": "3.9.16",
-        "MISE_JAVA_VERSION": "corretto-25.0.3.9.1",
-        "MISE_PNPM_VERSION": "12.4.2",
-        "ASDF_NODEJS_VERSION": "24.21.0",
-        "ASDF_MAVEN_VERSION": "3.9.16",
-        "ASDF_JAVA_VERSION": "corretto-25.0.3.9.1",
-        "ASDF_PNPM_VERSION": "12.4.2"
-      },
       "steps": [
         {
           "spawn": "package:js",
@@ -247,16 +237,6 @@
     "package-all": {
       "name": "package-all",
       "description": "Packages artifacts for all target languages",
-      "env": {
-        "MISE_NODE_VERSION": "24.21.0",
-        "MISE_MAVEN_VERSION": "3.9.16",
-        "MISE_JAVA_VERSION": "corretto-25.0.3.9.1",
-        "MISE_PNPM_VERSION": "12.4.2",
-        "ASDF_NODEJS_VERSION": "24.21.0",
-        "ASDF_MAVEN_VERSION": "3.9.16",
-        "ASDF_JAVA_VERSION": "corretto-25.0.3.9.1",
-        "ASDF_PNPM_VERSION": "12.4.2"
-      },
       "steps": [
         {
           "spawn": "package:js"
@@ -272,16 +252,6 @@
     "package:java": {
       "name": "package:java",
       "description": "Create java language bindings",
-      "env": {
-        "MISE_NODE_VERSION": "24.21.0",
-        "MISE_MAVEN_VERSION": "3.9.16",
-        "MISE_JAVA_VERSION": "corretto-25.0.3.9.1",
-        "MISE_PNPM_VERSION": "12.4.2",
-        "ASDF_NODEJS_VERSION": "24.21.0",
-        "ASDF_MAVEN_VERSION": "3.9.16",
-        "ASDF_JAVA_VERSION": "corretto-25.0.3.9.1",
-        "ASDF_PNPM_VERSION": "12.4.2"
-      },
       "steps": [
         {
           "execArgs": [
