@@ -8,26 +8,6 @@ import * as s3 from 'aws-cdk-lib/aws-s3';
 import * as s3deploy from 'aws-cdk-lib/aws-s3-deployment';
 import { Construct } from 'constructs';
 
-export interface BasicSiteConfiguration {
-  /**
-   * Local path to the website folder you want to deploy on S3.
-   */
-  readonly websiteFolder: string;
-  /**
-   * The index document of the website.
-   */
-  readonly indexDoc: string;
-  /**
-   * The error document of the website.
-   * @default - No error document.
-   */
-  readonly errorDoc?: string;
-  /**
-   * Hosted Zone used to create the DNS record for the website.
-   */
-  readonly hostedZone: string;
-}
-
 export interface CloudfrontSiteConfiguration {
   /**
    * Local path to the website folder you want to deploy on S3.
@@ -115,74 +95,6 @@ export interface CloudfrontSiteConfiguration {
   readonly webAclId?: string;
 }
 
-/**
- * @deprecated Use CreateCloudfrontSite instead. CreateBasicSite configures a public S3 website endpoint.
- */
-export class CreateBasicSite extends Construct {
-  constructor(scope: Construct, id: string, props: BasicSiteConfiguration) {
-    super(scope, id);
-
-    const hostedZoneLookup = route53.HostedZone.fromLookup(
-      this,
-      'WebsiteHostedZone',
-      {
-        domainName: props.hostedZone,
-      },
-    );
-
-    const websiteRedirectBucket = new s3.Bucket(
-      scope,
-      'WebsiteRedirectBucket',
-      {
-        bucketName: `www.${props.hostedZone}`,
-        removalPolicy: RemovalPolicy.DESTROY,
-        autoDeleteObjects: true,
-        websiteRedirect: {
-          hostName: props.hostedZone,
-          protocol: s3.RedirectProtocol.HTTP,
-        },
-      },
-    );
-
-    const websiteBucket = new s3.Bucket(scope, 'WebsiteBucket', {
-      bucketName: props.hostedZone,
-      removalPolicy: RemovalPolicy.DESTROY,
-      autoDeleteObjects: true,
-      websiteIndexDocument: props.indexDoc,
-      websiteErrorDocument: props.errorDoc,
-      publicReadAccess: true,
-      blockPublicAccess: {
-        blockPublicPolicy: false,
-        blockPublicAcls: false,
-        ignorePublicAcls: false,
-        restrictPublicBuckets: false,
-      },
-      encryption: s3.BucketEncryption.S3_MANAGED,
-    });
-
-    new s3deploy.BucketDeployment(scope, 'WebsiteDeploy', {
-      sources: [s3deploy.Source.asset(props.websiteFolder)],
-      destinationBucket: websiteBucket,
-    });
-
-    new route53.ARecord(scope, 'WebsiteAlias', {
-      zone: hostedZoneLookup,
-      recordName: props.hostedZone,
-      target: route53.RecordTarget.fromAlias(
-        new targets.BucketWebsiteTarget(websiteBucket),
-      ),
-    });
-
-    new route53.ARecord(scope, 'WebsiteRedirectAlias', {
-      zone: hostedZoneLookup,
-      recordName: `www.${props.hostedZone}`,
-      target: route53.RecordTarget.fromAlias(
-        new targets.BucketWebsiteTarget(websiteRedirectBucket),
-      ),
-    });
-  }
-}
-
 export class CreateCloudfrontSite extends Construct {
   constructor(
     scope: Construct,
@@ -241,7 +153,7 @@ export class CreateCloudfrontSite extends Construct {
       validation: acm.CertificateValidation.fromDns(hostedZoneLookup),
     });
 
-    const websiteBucket = new s3.Bucket(scope, 'WebsiteBucket', {
+    const websiteBucket = new s3.Bucket(this, 'WebsiteBucket', {
       removalPolicy: RemovalPolicy.DESTROY,
       autoDeleteObjects: true,
       encryption: s3.BucketEncryption.S3_MANAGED,
@@ -278,12 +190,11 @@ export class CreateCloudfrontSite extends Construct {
             preload: true,
             override: true,
           },
-          xssProtection: { protection: true, modeBlock: true, override: true },
         },
       })
       : undefined;
 
-    const websiteDist = new cloudfront.Distribution(scope, 'WebsiteDist', {
+    const websiteDist = new cloudfront.Distribution(this, 'WebsiteDist', {
       defaultBehavior: {
         origin: origins.S3BucketOrigin.withOriginAccessControl(websiteBucket, {
           originAccessLevels: props.originAccessLevels,
@@ -308,13 +219,13 @@ export class CreateCloudfrontSite extends Construct {
       webAclId: props.webAclId,
     });
 
-    new s3deploy.BucketDeployment(scope, 'WebsiteDeploy', {
+    new s3deploy.BucketDeployment(this, 'WebsiteDeploy', {
       sources: [s3deploy.Source.asset(props.websiteFolder)],
       destinationBucket: websiteBucket,
       distribution: websiteDist,
     });
 
-    new route53.ARecord(scope, 'WebsiteDomainAlias', {
+    new route53.ARecord(this, 'WebsiteDomainAlias', {
       zone: hostedZoneLookup,
       recordName: props.domain ? props.domain : props.hostedZone,
       target: route53.RecordTarget.fromAlias(
@@ -324,7 +235,7 @@ export class CreateCloudfrontSite extends Construct {
 
     // Add IPv6 support if enabled
     if (props.enableIpv6) {
-      new route53.AaaaRecord(scope, 'WebsiteDomainAliasIpv6', {
+      new route53.AaaaRecord(this, 'WebsiteDomainAliasIpv6', {
         zone: hostedZoneLookup,
         recordName: props.domain ? props.domain : props.hostedZone,
         target: route53.RecordTarget.fromAlias(
@@ -334,7 +245,7 @@ export class CreateCloudfrontSite extends Construct {
     }
 
     if (props.subDomain) {
-      new route53.ARecord(scope, 'WebsiteSubDomainAlias', {
+      new route53.ARecord(this, 'WebsiteSubDomainAlias', {
         zone: hostedZoneLookup,
         recordName: props.subDomain,
         target: route53.RecordTarget.fromAlias(
@@ -344,7 +255,7 @@ export class CreateCloudfrontSite extends Construct {
 
       // Add IPv6 support for subdomain if enabled
       if (props.enableIpv6) {
-        new route53.AaaaRecord(scope, 'WebsiteSubDomainAliasIpv6', {
+        new route53.AaaaRecord(this, 'WebsiteSubDomainAliasIpv6', {
           zone: hostedZoneLookup,
           recordName: props.subDomain,
           target: route53.RecordTarget.fromAlias(

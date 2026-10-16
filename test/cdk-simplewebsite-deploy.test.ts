@@ -1,296 +1,8 @@
 import { App, Stack } from 'aws-cdk-lib';
 import { Match, Template } from 'aws-cdk-lib/assertions';
 import * as cloudfront from 'aws-cdk-lib/aws-cloudfront';
-import {
-  CreateBasicSite,
-  CreateCloudfrontSite,
-} from '../src';
+import { CreateCloudfrontSite } from '../src';
 
-describe('Create basic website', () => {
-  it('should have a valid basic website with error page', () => {
-    const app = new App();
-    const stack = new Stack(app, 'TargetStack', {
-      env: {
-        account: '234567890123',
-        region: 'us-east-1',
-      },
-    });
-    new CreateBasicSite(stack, 'test-website', {
-      websiteFolder: './test/my-website',
-      indexDoc: 'index.html',
-      errorDoc: 'error.html',
-      hostedZone: 'example.com',
-    });
-
-    Template.fromStack(stack).hasResourceProperties('AWS::S3::Bucket', {
-      WebsiteConfiguration: {
-        IndexDocument: 'index.html',
-        ErrorDocument: 'error.html',
-      },
-    });
-
-    Template.fromStack(stack).hasResourceProperties('AWS::S3::BucketPolicy', {
-      PolicyDocument: {
-        Statement: [
-          {
-            Action: 's3:GetObject',
-            Effect: 'Allow',
-            Principal: {
-              AWS: '*',
-            },
-            Resource: {
-              'Fn::Join': [
-                '',
-                [
-                  {
-                    'Fn::GetAtt': [
-                      'WebsiteBucket75C24D94',
-                      'Arn',
-                    ],
-                  },
-                  '/*',
-                ],
-              ],
-            },
-          },
-          {
-            Action: [
-              's3:PutBucketPolicy',
-              's3:GetBucket*',
-              's3:List*',
-              's3:DeleteObject*',
-            ],
-            Effect: 'Allow',
-            Principal: {
-              AWS: {
-                'Fn::GetAtt': [
-                  'CustomS3AutoDeleteObjectsCustomResourceProviderRole3B1BD092',
-                  'Arn',
-                ],
-              },
-            },
-            Resource: [
-              {
-                'Fn::GetAtt': [
-                  'WebsiteBucket75C24D94',
-                  'Arn',
-                ],
-              },
-              {
-                'Fn::Join': [
-                  '',
-                  [
-                    {
-                      'Fn::GetAtt': [
-                        'WebsiteBucket75C24D94',
-                        'Arn',
-                      ],
-                    },
-                    '/*',
-                  ],
-                ],
-              },
-            ],
-          },
-        ],
-      },
-    });
-  });
-  it('should have a valid basic website with encryption', () => {
-    const app = new App();
-    const stack = new Stack(app, 'TargetStack', {
-      env: {
-        account: '234567890123',
-        region: 'us-east-1',
-      },
-    });
-    new CreateBasicSite(stack, 'test-website', {
-      websiteFolder: './test/my-website',
-      indexDoc: 'index.html',
-      hostedZone: 'example.com',
-    });
-
-    Template.fromStack(stack).hasResourceProperties('AWS::S3::Bucket', {
-      BucketEncryption: {
-        ServerSideEncryptionConfiguration: [
-          {
-            ServerSideEncryptionByDefault: {
-              SSEAlgorithm: 'AES256',
-            },
-          },
-        ],
-      },
-      WebsiteConfiguration: {
-        IndexDocument: 'index.html',
-      },
-    });
-
-    Template.fromStack(stack).hasResourceProperties('AWS::S3::BucketPolicy', {
-      PolicyDocument: {
-        Statement: [
-          {
-            Action: 's3:GetObject',
-            Effect: 'Allow',
-            Principal: {
-              AWS: '*',
-            },
-            Resource: {
-              'Fn::Join': [
-                '',
-                [
-                  {
-                    'Fn::GetAtt': [
-                      'WebsiteBucket75C24D94',
-                      'Arn',
-                    ],
-                  },
-                  '/*',
-                ],
-              ],
-            },
-          },
-          {
-            Action: [
-              's3:PutBucketPolicy',
-              's3:GetBucket*',
-              's3:List*',
-              's3:DeleteObject*',
-            ],
-            Effect: 'Allow',
-            Principal: {
-              AWS: {
-                'Fn::GetAtt': [
-                  'CustomS3AutoDeleteObjectsCustomResourceProviderRole3B1BD092',
-                  'Arn',
-                ],
-              },
-            },
-            Resource: [
-              {
-                'Fn::GetAtt': [
-                  'WebsiteBucket75C24D94',
-                  'Arn',
-                ],
-              },
-              {
-                'Fn::Join': [
-                  '',
-                  [
-                    {
-                      'Fn::GetAtt': [
-                        'WebsiteBucket75C24D94',
-                        'Arn',
-                      ],
-                    },
-                    '/*',
-                  ],
-                ],
-              },
-            ],
-          },
-        ],
-      },
-    });
-  });
-  it('should have a valid basic website with custom domain', () => {
-    const app = new App();
-    const stack = new Stack(app, 'TargetStack', {
-      env: {
-        account: '234567890123',
-        region: 'us-east-1',
-      },
-    });
-    new CreateBasicSite(stack, 'test-website', {
-      websiteFolder: './test/my-website',
-      indexDoc: 'index.html',
-      hostedZone: 'example.com',
-    });
-
-    Template.fromStack(stack).hasResourceProperties('AWS::S3::Bucket', {
-      BucketName: 'example.com',
-      WebsiteConfiguration: {
-        IndexDocument: 'index.html',
-      },
-    });
-
-    Template.fromStack(stack).hasResourceProperties('AWS::S3::BucketPolicy', {
-      PolicyDocument: {
-        Statement: [
-          {
-            Action: 's3:GetObject',
-            Effect: 'Allow',
-            Principal: {
-              AWS: '*',
-            },
-            Resource: {
-              'Fn::Join': [
-                '',
-                [
-                  {
-                    'Fn::GetAtt': [
-                      'WebsiteBucket75C24D94',
-                      'Arn',
-                    ],
-                  },
-                  '/*',
-                ],
-              ],
-            },
-          },
-          {
-            Action: [
-              's3:PutBucketPolicy',
-              's3:GetBucket*',
-              's3:List*',
-              's3:DeleteObject*',
-            ],
-            Effect: 'Allow',
-            Principal: {
-              AWS: {
-                'Fn::GetAtt': [
-                  'CustomS3AutoDeleteObjectsCustomResourceProviderRole3B1BD092',
-                  'Arn',
-                ],
-              },
-            },
-            Resource: [
-              {
-                'Fn::GetAtt': [
-                  'WebsiteBucket75C24D94',
-                  'Arn',
-                ],
-              },
-              {
-                'Fn::Join': [
-                  '',
-                  [
-                    {
-                      'Fn::GetAtt': [
-                        'WebsiteBucket75C24D94',
-                        'Arn',
-                      ],
-                    },
-                    '/*',
-                  ],
-                ],
-              },
-            ],
-          },
-        ],
-      },
-    });
-
-    Template.fromStack(stack).hasResourceProperties('AWS::Route53::RecordSet', {
-      Name: 'example.com.',
-      Type: 'A',
-    });
-
-    Template.fromStack(stack).hasResourceProperties('AWS::Route53::RecordSet', {
-      Name: 'www.example.com.',
-      Type: 'A',
-    });
-  });
-});
 describe('Create cloudfront website', () => {
   it('should have a valid cloudfront website', () => {
     const app = new App();
@@ -540,5 +252,25 @@ describe('Create cloudfront website', () => {
         }),
       },
     });
+  });
+  it('can be instantiated twice in one stack', () => {
+    const app = new App();
+    const stack = new Stack(app, 'TargetStack', {
+      env: {
+        account: '234567890123',
+        region: 'us-east-1',
+      },
+    });
+    const props = {
+      websiteFolder: './test/my-website',
+      indexDoc: 'index.html',
+      hostedZone: 'example.com',
+    };
+    new CreateCloudfrontSite(stack, 'site-a', props);
+    new CreateCloudfrontSite(stack, 'site-b', props);
+
+    const template = Template.fromStack(stack);
+    template.resourceCountIs('AWS::S3::Bucket', 2);
+    template.resourceCountIs('AWS::CloudFront::Distribution', 2);
   });
 });

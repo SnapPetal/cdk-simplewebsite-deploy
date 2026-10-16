@@ -319,7 +319,7 @@
       "description": "Prepare a release from \"main\" branch",
       "env": {
         "RELEASE": "true",
-        "MAJOR": "2"
+        "MAJOR": "3"
       },
       "steps": [
         {
@@ -406,7 +406,7 @@
             "--peer",
             "--no-deprecated",
             "--dep=dev,prod,peer,optional",
-            "--filter=@types/jest,eslint-import-resolver-typescript,eslint-plugin-import,jest,jsii-diff,jsii-pacmak,ts-jest,ts-node,typescript"
+            "--filter=eslint-import-resolver-typescript,eslint-plugin-import,jsii-diff,jsii-pacmak,ts-node"
           ]
         },
         {
@@ -425,8 +425,8 @@
             "eslint-import-resolver-typescript",
             "eslint-plugin-import",
             "eslint",
-            "jest",
             "jest-junit",
+            "jest",
             "jsii-diff",
             "jsii-docgen",
             "jsii-pacmak",
