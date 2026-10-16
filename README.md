@@ -1,9 +1,12 @@
 [![License](https://img.shields.io/badge/License-Apache%202.0-yellowgreen.svg)](https://opensource.org/licenses/Apache-2.0)
 ![Build](https://github.com/SnapPetal/cdk-simplewebsite-deploy/workflows/build/badge.svg)
 ![Release](https://github.com/SnapPetal/cdk-simplewebsite-deploy/workflows/release/badge.svg?branch=main)
+[![npm](https://img.shields.io/npm/v/cdk-simplewebsite-deploy.svg)](https://www.npmjs.com/package/cdk-simplewebsite-deploy)
+[![PyPI](https://img.shields.io/pypi/v/cdk-simplewebsite-deploy.svg)](https://pypi.org/project/cdk-simplewebsite-deploy/)
+[![Maven Central](https://img.shields.io/maven-central/v/com.thonbecker.simplewebsitedeploy/cdk-simplewebsite-deploy.svg)](https://central.sonatype.com/artifact/com.thonbecker.simplewebsitedeploy/cdk-simplewebsite-deploy)
 
 # cdk-simplewebsite-deploy
-This is an AWS CDK v2 construct library for deploying a single-page website with S3, CloudFront, Route 53, and ACM. `CreateCloudfrontSite` is the recommended construct because it uses a private S3 origin with CloudFront Origin Access Control (OAC), while `CreateBasicSite` is deprecated because it creates a public S3 website endpoint.
+This is an AWS CDK v2 construct library for deploying a single-page website using CloudFront distributions, with S3, Route 53, and ACM. `CreateCloudfrontSite` uses a private S3 origin with CloudFront Origin Access Control (OAC).
 
 ## Installation and Usage
 
@@ -36,9 +39,10 @@ export class PipelineStack extends cdk.Stack {
 <dependency>
 	<groupId>com.thonbecker.simplewebsitedeploy</groupId>
 	<artifactId>cdk-simplewebsite-deploy</artifactId>
-	<version>0.4.2</version>
+	<version>VERSION</version>
 </dependency>
 ```
+Replace `VERSION` with the version shown on the Maven Central badge.
 ```java
 package com.myorg;
 
@@ -85,87 +89,18 @@ class MyProjectStack(Stack):
                              sub_domain='www.example.com')
 ```
 
-### [CreateBasicSite](https://github.com/snappetal/cdk-simplewebsite-deploy/blob/main/API.md#cdk-cloudfront-deploy-createbasicsite)
-#### Deprecated. Creates a website using public S3 website endpoints with a domain hosted in Route 53.
-Use `CreateCloudfrontSite` for new sites. `CreateBasicSite` configures public bucket access so Route 53 can alias directly to the S3 website endpoint.
-##### Typescript
-```console
-yarn add cdk-simplewebsite-deploy
-```
-```typescript
-import * as cdk from 'aws-cdk-lib';
-import { CreateBasicSite } from 'cdk-simplewebsite-deploy';
-import { Construct } from 'constructs';
+## Upgrading to 3.0.0
 
-export class PipelineStack extends cdk.Stack {
-  constructor(scope: Construct, id: string, props?: cdk.StackProps) {
-    super(scope, id, props);
+`CreateBasicSite` is removed. Use `CreateCloudfrontSite`.
 
-    new CreateBasicSite(this, 'test-website', {
-      websiteFolder: './src/build',
-      indexDoc: 'index.html',
-      hostedZone: 'example.com',
-    });
-  }
-}
-```
-##### Java
-```xml
-<dependency>
-	<groupId>com.thonbecker.simplewebsitedeploy</groupId>
-	<artifactId>cdk-simplewebsite-deploy</artifactId>
-	<version>0.4.2</version>
-</dependency>
-```
-```java
-package com.myorg;
-
-import com.thonbecker.simplewebsitedeploy.CreateBasicSite;
-import software.amazon.awscdk.Stack;
-import software.amazon.awscdk.StackProps;
-import software.constructs.Construct;
-
-public class MyProjectStack extends Stack {
-    public MyProjectStack(final Construct scope, final String id) {
-        this(scope, id, null);
-    }
-
-    public MyProjectStack(final Construct scope, final String id, final StackProps props) {
-        super(scope, id, props);
-
-        CreateBasicSite.Builder.create(this, "test-website")
-                .websiteFolder("./src/build")
-                .indexDoc("index.html")
-                .hostedZone("example.com")
-                .build();
-    }
-}
-```
-##### Python
-```console
-pip install cdk-simplewebsite-deploy
-```
-```python
-from aws_cdk import Stack
-from cdk_simplewebsite_deploy import CreateBasicSite
-from constructs import Construct
-
-class MyProjectStack(Stack):
-
-    def __init__(self, scope: Construct, construct_id: str, **kwargs) -> None:
-        super().__init__(scope, construct_id, **kwargs)
-
-        CreateBasicSite(self, 'test-website', website_folder='./src/build',
-                        index_doc='index.html',
-                        hosted_zone='example.com')
-```
+`CreateCloudfrontSite` now creates the bucket, distribution, deployment, and DNS records on the construct instead of the parent stack. CloudFormation logical IDs change, so an upgrade replaces those resources. The website bucket is replaced: the previous bucket is deleted (`RemovalPolicy.DESTROY` with auto-delete) and a new bucket is created. Redeploy the site contents from `websiteFolder` after the replacement.
 
 ## 🚀 Enhanced Features
 
 The `CreateCloudfrontSite` construct includes optional advanced features for security, performance, and monitoring.
 
 ### Security Headers
-Enable comprehensive security headers including HSTS, X-Frame-Options, Content-Type-Options, and XSS protection:
+Enable security headers including HSTS, X-Frame-Options, Content-Type-Options, and a referrer policy:
 
 ```typescript
 new CreateCloudfrontSite(this, 'secure-website', {
@@ -370,7 +305,7 @@ export class AdvancedWebsiteStack extends cdk.Stack {
 ## 🎯 Key Benefits
 
 ### 🔒 **Enhanced Security**
-- **Security Headers**: Automatic HSTS, X-Frame-Options, Content-Type-Options, and XSS protection
+- **Security Headers**: Automatic HSTS, X-Frame-Options, Content-Type-Options, and a referrer policy
 - **WAF Integration**: Support for AWS WAF Web ACLs for advanced threat protection
 - **Origin Access Control**: Modern S3 bucket protection (replaces deprecated OAI)
 - **Configurable OAC Permissions**: Optional origin access levels for the website bucket
@@ -388,7 +323,7 @@ export class AdvancedWebsiteStack extends cdk.Stack {
 - **SPA Support**: Built-in single-page application routing support
 
 ### 🚀 **Developer Experience**
-- **Backward Compatible**: All existing configurations continue to work
+- **v3 migration**: See [Upgrading to 3.0.0](#upgrading-to-300) before upgrading an existing stack
 - **Type Safe**: Full TypeScript support with comprehensive interfaces
 - **CDK v2 Ready**: Built for the latest AWS CDK version
 - **Multi-Language**: Support for TypeScript, Python, and Java
