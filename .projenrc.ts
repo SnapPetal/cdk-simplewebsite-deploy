@@ -17,6 +17,11 @@ const project = new awscdk.AwsCdkConstructLibrary({
   repositoryUrl: 'https://github.com/SnapPetal/cdk-simplewebsite-deploy',
   description: 'This is an AWS CDK v2 Construct to simplify deploying a single-page website use CloudFront distributions.',
   defaultReleaseBranch: 'main',
+  // OIDC trusted publishing. Node 24.0.0 bundles npm 11.0.0, which cannot
+  // authenticate with a trusted publisher; npm 11.5.1+ ships with Node >= 24.5.
+  npmTrustedPublishing: true,
+  npmProvenance: true,
+  workflowNodeVersion: '24.x',
   publishToPypi: {
     distName: 'cdk-simplewebsite-deploy',
     module: 'cdk_simplewebsite_deploy',
