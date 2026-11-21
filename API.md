@@ -4,6 +4,8 @@
 
 ### CreateCloudfrontSite <a name="CreateCloudfrontSite" id="cdk-simplewebsite-deploy.CreateCloudfrontSite"></a>
 
+- *Implements:* constructs.IConstruct, constructs.IDependable
+
 #### Initializers <a name="Initializers" id="cdk-simplewebsite-deploy.CreateCloudfrontSite.Initializer"></a>
 
 ```typescript
